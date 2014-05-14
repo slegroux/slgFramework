@@ -4,7 +4,7 @@ Sylvain Le Groux 2013
 
 ## About
 
-A repository of cross-platform C++ classes for real-time audio, midi and graphics processing
+A repository of cross-platform (only thoroughly tested on OS X for now) C++ classes for real-time audio, midi and graphics processing
 
 * slgAudio
 * slgFx
