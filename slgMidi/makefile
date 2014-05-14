@@ -1,8 +1,17 @@
 CXX=g++
 INCLUDES=
-FLAGS=-D__MACOSX_CORE__ -c
+
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Linux)
+FLAGS=-D__UNIX_JACK__ -c
+LIBS=-lasound -lpthread -ljack -lstdc++ -lm
+endif
+ifeq ($(UNAME), Darwin)
+FLAGS=-D__MACOSX_CORE__ -c -g
 LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 	-framework IOKit -framework Carbon -lstdc++ -lm
+endif
 
 OBJS=   RtMidi.o slgMidi.o test.o
 
