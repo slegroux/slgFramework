@@ -1,3 +1,8 @@
+/**
+ * read audio input from microphone
+ * pass it through one pole filter and output to system audio out
+ */
+
 #include <iostream>
 #include <string>
 #include <math.h>

@@ -1,3 +1,6 @@
+/**
+ * Base class filter consitst of inputs, outputs and gain
+ */
 #ifndef __SLGFILTER_H__
 #define __SLGFILTER_H__
 #include "Definitions.h"

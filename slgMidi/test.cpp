@@ -1,3 +1,9 @@
+/**
+ * printout MIDI messages received via default midi port
+ * send MIDI control messages to default midi output
+ * requires midi input and output devices to be connected
+ */
+
 #include <stdlib.h>
 #include <iostream>
 using namespace std;

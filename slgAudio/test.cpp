@@ -1,3 +1,7 @@
+/**
+ * Example rading microphone input and sending it to default system audio output
+ */
+ 
 #include <iostream>
 #include <string>
 #include <math.h>

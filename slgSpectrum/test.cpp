@@ -1,3 +1,7 @@
+/**
+ * Extract spectral information from audio input using FFT
+ */
+
 #include <iostream>
 #include <string>
 #include <math.h>

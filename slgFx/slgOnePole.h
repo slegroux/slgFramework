@@ -1,3 +1,6 @@
+/**
+ * One pole filter
+ */
 #ifndef __SLGONEPOLE_H__
 #define __SLGONEPOLE_H__
 
