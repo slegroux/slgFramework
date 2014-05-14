@@ -12,10 +12,8 @@ A repository of cross-platform (only thoroughly tested on OS X for now) C++ clas
 * slgMidi
 
 ## Dependencies
+* **Linux:** need to install jack-audio dev
 
-* RtAudio
-* RtMidi
-* chuck_fft
 
 ## Compilation
 In each slgName subdirectory
