@@ -8,6 +8,7 @@
 
 #include "Definitions.h"
 #include "FFT/chuck_fft.h"
+#include "FFT/realFFT.h"
 #include <math.h>
 using namespace std;
 
@@ -18,7 +19,7 @@ public:
 	~slgSpectrum();
 public:
 	void init(int bufferSize);
-	float* getSpectrum(float *buffer, int bufferSize);
+	double* getSpectrum(float *buffer, int bufferSize, string mode="carl");
 protected:
 	// input
 	float *_buffer;
@@ -26,7 +27,9 @@ protected:
 	// Analysis window
 	float *_fftWindow;
 	// FFT bins
-	float *_fftBuff;
+	double *_fftBuff;
+	realFFTData *_fftData;
+	realFFT *_rfft;
 
 };
 

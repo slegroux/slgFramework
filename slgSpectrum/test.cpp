@@ -9,7 +9,6 @@
 #include "Definitions.h"
 #include "slgAudio.h"
 #include "slgSpectrum.h"
-#define BUFFER_SIZE 1024
 
 using namespace std;
 
@@ -34,11 +33,14 @@ int audioCallback( void * outputBuffer, void * inputBuffer,
         myIn[i] = (float) in[i];
     }
 
-    float *my_spectrum = new float[BUFFER_SIZE/2];
+    double *my_spectrum = new double[BUFFER_SIZE/2];
+    double *m_spectrum = new double[BUFFER_SIZE/2];
 
     my_spectrum = g_spectrum.getSpectrum(myIn,bufferSize);
-    cout<<"First bin of spectrum: "<<my_spectrum[0]<<endl;
-/*
+    cout<<"carl bin: "<<my_spectrum[0]<<endl;
+    m_spectrum = g_spectrum.getSpectrum(myIn,bufferSize,"fftw");
+    cout<<"fftw bin: "<<m_spectrum[0]<<endl;
+    /*
     for(size_t i = 0; i < bufferSize; ++i)
     {
         out[i*g_numChannels] = in[i*g_numChannels];
