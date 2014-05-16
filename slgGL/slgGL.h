@@ -40,13 +40,13 @@ public:
     ~slgGL();
 
 public:
-	// probably better to just have those as plain helper functions outside a class
-	// just wanted to try this as a practice exercise
+	// maybe better to just have those as plain helper functions outside a class
 	static void changeLookAt( pt3d look_from, pt3d look_to, pt3d head_up );
 	static void idleFunc( );
 	static void displayFunc( void(*myFunc)());
 	static void reshapeFunc( int width, int height );
 	static void keyboardFunc( unsigned char, int, int );
+	static void specialFunc(int key, int x, int y);
 	static void mouseFunc( int button, int state, int x, int y );
 	static void glutLoop();
 	void initGraphics( );

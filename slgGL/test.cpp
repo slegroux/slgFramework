@@ -3,11 +3,17 @@
 #include <math.h>
 
 #include "slgGL.h"
+#include "slgGFX.h"
 
 using namespace std;
 
 void displayFunc( );
 void my_func();
+
+float g_angle = 0.0;
+pt3d g_from( 0.0, 0.0, 10.0);
+pt3d g_to( 0.0, 0.0, 0.0 );
+pt3d g_up( 0.0, 1.0, 0.0 );
 
 //-----------------------------------------------
 // name: main
@@ -19,14 +25,16 @@ int main ( int argc, char *argv[] )
 
 
     slgGL myGL;
+
     // OPENGL //
     
     myGL.initWindow(argc, argv, 800,600, 100,100);
     myGL.initGraphics( );
     myGL.initUi();
+    
     //display
     myGL.displayFunc(*displayFunc);
-
+    
     // let GLUT handle the current thread from here
     myGL.glutLoop();
     
@@ -35,41 +43,33 @@ int main ( int argc, char *argv[] )
 }
 
 void my_func(){
-        cout<<"toto"<<endl;
-    }
+    cout<<"toto"<<endl;
+}
 
 void displayFunc(){
+    slgGFX myGFX;
 
-    static int count;
     // white background
     glClearColor(1,1,1,1);
     // clear the color and depth buffers
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLoadIdentity();
-    
+    gluLookAt(  0,0, 10,0.0f, 0.0f,  0.0f,0.0f, 1.0f,  0.0f);
+
+    glRotatef(g_angle, 0.0f, 1.0f, 0.0f);
+
     glPushMatrix();
-
-    //count = count+1;
-    glTranslatef(0,0, -5);
-    
-    /*glBegin(GL_QUADS);
-    glColor3ub(255, 0, 0); 
-    glVertex2f(0, 3);
-    glVertex2f(6, 3);
-    glColor3ub(255, 255, 0);
-    glVertex2f(6, 0);
-    glVertex2f(0, 0);
-    glEnd();
-
-    glPopMatrix();*/
+    myGFX.drawAxis();
+    myGFX.drawSnowMan();
     glColor3f(0,0,0);
     glBegin(GL_TRIANGLES);
-    glVertex2f(-0.6f, -0.5f);
-    glVertex2f(0.1f, 0.8f);
-    glVertex2f(0.9f, -0.1f);
+    glVertex3f(-2.0f,-2.0f, 0.0f);
+    glVertex3f( 2.0f, 0.0f, 0.0);
+    glVertex3f( 0.0f, 2.0f, 0.0);
     glEnd();
-
     glPopMatrix();
+
+    g_angle+=0.1f;
 
     // flush!
     glFlush( );

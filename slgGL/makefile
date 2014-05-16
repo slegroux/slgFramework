@@ -25,7 +25,7 @@ INC_PATH = -I./
 # executable
 
 #OBJS= RtAudio.o MyAudio.o chuck_fft.o Utilities.o Math.o ofVec2f.o ofVec4f.o MyGraphics.o Waveform.o Spectrum.o Waterfall.o ScrollingWaveform.o Thread.o Stk.o MyOpenGL.o letsPlay.o
-OBJS= slgGL.o test.o
+OBJS= slgGL.o slgGFX.o test.o
 
 test: $(OBJS)
 	$(CXX) -o test $(OBJS) $(LIB_PATH) $(LIBS)
@@ -35,6 +35,9 @@ test.o: test.cpp
 
 slgGL.o: slgGL.h slgGL.cpp
 	$(CXX) $(FLAGS) slgGL.cpp
+
+slgGFX.o: slgGFX.h slgGFX.cpp
+	$(CXX) $(FLAGS) slgGFX.cpp
 
 clean:
 	rm -f *~ *# *.o test

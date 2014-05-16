@@ -16,9 +16,10 @@ float slgGL::g_factor2 = 1.0f;
 int slgGL::g_freeze = 0;
 GLfloat slgGL::g_inc;
 
-pt3d slgGL::g_look_from( 0, 0, 1);
-pt3d slgGL::g_look_to( 0, 0, 0 );
-pt3d slgGL::g_head_up( 0, 1, 0 );
+// eye, center, up vector
+pt3d slgGL::g_look_from( 0.0, 0.0, 10.0);
+pt3d slgGL::g_look_to( 0.0, 0.0, 0.0 );
+pt3d slgGL::g_head_up( 0.0, 1.0, 0.0 );
 //cout<<typid(g_head_up).name()<<endl;
 
 slgGL::slgGL(){
@@ -60,7 +61,6 @@ slgGL::slgGL(){
 
 slgGL::~slgGL(){
     cout<<"clean slgGL Object"<<endl;
-
 }
 
 void slgGL::initWindow(int argc, char *argv[], int width, int height, int x,int y){
@@ -122,12 +122,15 @@ void slgGL::initUi(){
     glutReshapeFunc( slgGL::reshapeFunc);
     // set the keyboard function - called on keyboard events
     glutKeyboardFunc( slgGL::keyboardFunc );
+    // glut special keys
+    glutSpecialFunc(slgGL::specialFunc);
     // set the mouse function - called on mouse stuff
     glutMouseFunc( slgGL::mouseFunc ); 
     
 }
 
 void slgGL::displayFunc(void (*myDisplayFunc)()){
+
     glutDisplayFunc( myDisplayFunc );
 }
 
@@ -140,7 +143,7 @@ void slgGL::glutLoop(){
 //-----------------------------------------------------------------------------
 void slgGL::reshapeFunc( int w, int h )
 {
-    // map the view port to the client area
+    // map the view port to be the entire window
     glViewport( 0, 0, w, h );
     // set the matrix mode to project
     glMatrixMode( GL_PROJECTION );
@@ -166,7 +169,23 @@ void slgGL::reshapeFunc( int w, int h )
     glLightfv( GL_LIGHT1, GL_POSITION, g_light1_pos );
 }
 
-
+void slgGL::specialFunc(int key, int x, int y){
+    switch(key)
+    {
+        case GLUT_KEY_LEFT:
+        cout<<"left"<<endl;
+        break;
+        case GLUT_KEY_RIGHT:
+        cout<<"right"<<endl;
+        break;
+        case GLUT_KEY_UP:
+        cout<<"up"<<endl;
+        break;
+        case GLUT_KEY_DOWN:
+        cout<<"down"<<endl;
+        break;
+    }
+}
 //-----------------------------------------------------------------------------
 // Name: keyboardFunc( )
 // Desc: key event
@@ -175,7 +194,12 @@ void slgGL::keyboardFunc( unsigned char key, int x, int y )
 {
     switch( key )
     {
-    case '[':
+    case 27:
+    exit(0);
+    break;
+
+    
+   /* case '[':
         g_eye_y -= .01f;
     break;
     case ']':
@@ -259,10 +283,10 @@ void slgGL::keyboardFunc( unsigned char key, int x, int y )
         
         break;
     case '>':
+
+    
         
-        
-        
-        break;
+        break;*/
     case 's':
     {
         static GLuint w, h;
@@ -279,8 +303,8 @@ void slgGL::keyboardFunc( unsigned char key, int x, int y )
         g_fullscreen = !g_fullscreen;
     }
     break;
-    case 'g':
-        g_freeze = !g_freeze;
+    /*case 'g':
+        g_freeze = !g_freeze;*/
     break;
     }
 
@@ -324,7 +348,6 @@ void slgGL::mouseFunc( int button, int state, int x, int y )
 //-----------------------------------------------------------------------------
 void slgGL::idleFunc( )
 {
-    //cout<<"Idle func"<<endl;
     // render the scene
     glutPostRedisplay( );
 }
@@ -335,6 +358,7 @@ void slgGL::idleFunc( )
 //-----------------------------------------------------------------------------
 void slgGL::changeLookAt( pt3d look_from, pt3d look_to, pt3d head_up )
 {
+    // eye, center, up vector
     gluLookAt(  look_from.x, look_from.y, look_from.z, 
                 look_to.x, look_to.y, look_to.z, 
                 head_up.x, head_up.y, head_up.z );
