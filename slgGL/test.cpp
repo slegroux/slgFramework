@@ -7,6 +7,7 @@
 using namespace std;
 
 void displayFunc( );
+void my_func();
 
 //-----------------------------------------------
 // name: main
@@ -17,43 +18,58 @@ int main ( int argc, char *argv[] )
     // INIT //
 
 
-    slgGL g_myGL;
+    slgGL myGL;
     // OPENGL //
-    g_myGL.initWindow(argc, argv);
-    g_myGL.initGraphics( );
-    g_myGL.initUi();
+    
+    myGL.initWindow(argc, argv, 800,600, 100,100);
+    myGL.initGraphics( );
+    myGL.initUi();
     //display
-    glutDisplayFunc( displayFunc );
+    myGL.displayFunc(*displayFunc);
 
     // let GLUT handle the current thread from here
-    glutMainLoop();
+    myGL.glutLoop();
+    
     
     return 0;
 }
 
-void displayFunc( ){
+void my_func(){
+        cout<<"toto"<<endl;
+    }
+
+void displayFunc(){
+
+    static int count;
+    // white background
     glClearColor(1,1,1,1);
     // clear the color and depth buffers
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    // line width
-    glLineWidth( 2.0 );
-    glColor3f(0.,0.,0.);
-
+    glLoadIdentity();
+    
     glPushMatrix();
-        //drawAxis();
-        //glColor3f(0,0,0);
-        //drawString(0,0,0,"Hola!",1);
-        //line(0,0,1,1);
-        //cout<<"x: "<<glutGet(GLUT_WINDOW_X);
-        //cout<<"width: "<<glutGet(GLUT_SCREEN_WIDTH);
 
-        //glColor4f(0.5,0.5,0.5,0.2);
-        //rect(0,0,0.1,0.5);
-        //glScalef(0.5,0.5,1);
-        //renderPulse();
-        
+    //count = count+1;
+    glTranslatef(0,0, -5);
+    
+    /*glBegin(GL_QUADS);
+    glColor3ub(255, 0, 0); 
+    glVertex2f(0, 3);
+    glVertex2f(6, 3);
+    glColor3ub(255, 255, 0);
+    glVertex2f(6, 0);
+    glVertex2f(0, 0);
+    glEnd();
+
+    glPopMatrix();*/
+    glColor3f(0,0,0);
+    glBegin(GL_TRIANGLES);
+    glVertex2f(-0.6f, -0.5f);
+    glVertex2f(0.1f, 0.8f);
+    glVertex2f(0.9f, -0.1f);
+    glEnd();
+
     glPopMatrix();
-    //rotate(0.01,1,0,1);
 
     // flush!
     glFlush( );

@@ -37,4 +37,4 @@ slgGL.o: slgGL.h slgGL.cpp
 	$(CXX) $(FLAGS) slgGL.cpp
 
 clean:
-	rm -f *~ *# *.o letsPlay
+	rm -f *~ *# *.o test

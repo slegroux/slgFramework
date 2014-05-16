@@ -44,12 +44,13 @@ public:
 	// just wanted to try this as a practice exercise
 	static void changeLookAt( pt3d look_from, pt3d look_to, pt3d head_up );
 	static void idleFunc( );
-	static void displayFunc( );
+	static void displayFunc( void(*myFunc)());
 	static void reshapeFunc( int width, int height );
 	static void keyboardFunc( unsigned char, int, int );
 	static void mouseFunc( int button, int state, int x, int y );
+	static void glutLoop();
 	void initGraphics( );
-	void initWindow(int argc, char *argv[]);
+	void initWindow(int argc, char *argv[],int width=800, int height=600, int x=100,int y=100);
 	void initUi();
 	
 

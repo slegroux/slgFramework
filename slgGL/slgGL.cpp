@@ -63,18 +63,17 @@ slgGL::~slgGL(){
 
 }
 
-void slgGL::initWindow(int argc, char *argv[]){
+void slgGL::initWindow(int argc, char *argv[], int width, int height, int x,int y){
     //TODO: put size as agrument
     cout<<"Initialize window"<<endl;
     // initialize GLUT
     glutInit( &argc, argv );
-    // double buffer, use rgb color, enable depth buffer
-    //glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
+    // double buffer, use rgb color, enable depth buffer and alpha
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA );
     // initialize the window size
-    glutInitWindowSize( g_width, g_height );
+    glutInitWindowSize(width,height );
     // set the window postion
-    glutInitWindowPosition( 100, 100 );
+    glutInitWindowPosition( x, y);
     // create the window
     glutCreateWindow( "OpenGL Window" );
 }
@@ -118,7 +117,7 @@ void slgGL::initUi(){
     // set the idle function - called when idle
     glutIdleFunc(slgGL::idleFunc);
     // set the display function - called when redrawing
-    //glutDisplayFunc( displayFunc );
+    //glutDisplayFunc( slgGL::displayFunc );
     // set the reshape function - called when client area changes
     glutReshapeFunc( slgGL::reshapeFunc);
     // set the keyboard function - called on keyboard events
@@ -128,15 +127,19 @@ void slgGL::initUi(){
     
 }
 
+void slgGL::displayFunc(void (*myDisplayFunc)()){
+    glutDisplayFunc( myDisplayFunc );
+}
+
+void slgGL::glutLoop(){
+    glutMainLoop();
+}
 //-----------------------------------------------------------------------------
 // Name: reshapeFunc( )
 // Desc: called when window size changes
 //-----------------------------------------------------------------------------
 void slgGL::reshapeFunc( int w, int h )
 {
-    //cout<<"reshape"<<endl;
-    // save the new window size
-    g_width = w; g_height = h;
     // map the view port to the client area
     glViewport( 0, 0, w, h );
     // set the matrix mode to project
@@ -144,7 +147,8 @@ void slgGL::reshapeFunc( int w, int h )
     // load the identity matrix
     glLoadIdentity( );
     // create the viewing frustum
-    gluPerspective( 45.0, (GLfloat) w / (GLfloat) h, 1.0, 300.0 );
+    //gluPerspective( 45.0, (GLfloat) w / (GLfloat) h, 1.0, 300.0 );
+    gluPerspective( 45.0, (GLfloat) w / (GLfloat) h, .1, 100.0 );
     // set the matrix mode to modelview
     glMatrixMode( GL_MODELVIEW );
     // load the identity matrix
