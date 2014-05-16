@@ -8,15 +8,17 @@ A repository of cross-platform (only thoroughly tested on OS X for now) C++ clas
 
 * slgAudio
 * slgFx
-* slgSpectrum
+* slgGL
 * slgMidi
+* slgSpectrum
 
 ## Dependencies
 * **Linux:** need to install jack-audio dev
+* **OS X:** developer tools
 
 
 ## Compilation
-In each slgName subdirectory
+In each slg\<Name> subdirectory
 
 make
 
