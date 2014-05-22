@@ -1,81 +1,74 @@
 #include "slgGL.h"
 #include <typeinfo>
 
-// Declare static member variables (so that static member function can use them...)
-GLfloat slgGL::g_eye_y = 0;
-GLsizei slgGL::g_width = 800; 
-GLsizei slgGL::g_height = 600;
-GLboolean slgGL::g_fullscreen = FALSE;
-GLfloat slgGL::g_light0_pos[4];
-GLfloat slgGL::g_light1_pos[4];
-float slgGL::g_z = 0.0f;
-float slgGL::g_space = .15f;
-float slgGL::g_factor = 1.0f;
-int slgGL::g_phase_fix = TRUE;
-float slgGL::g_factor2 = 1.0f;
-int slgGL::g_freeze = 0;
+// window
+int g_requestedWidth = 800;
+int g_requestedHeight = 600;
+float rotX = 0,rotY = 0,rotZ = 0;
+float rotLx = 0,rotLy = 0,rotLz = 0;
+float X = 0, Y = 0, Z = 0;
+
+// light 0 position
+GLfloat g_light0_pos[] = { 2.0f, 1.2f, 4.0f, 1.0f };
+// light 1 parameter
+GLfloat g_light1_ambient[] = { .2f, .2f, .2f, 1.0f };
+GLfloat g_light1_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+GLfloat g_light1_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+GLfloat g_light1_pos[] = { -2.0f, 0.0f, -4.0f, 1.0f };
+
 GLfloat slgGL::g_inc;
+
 
 // eye, center, up vector
 pt3d slgGL::g_look_from( 0.0, 0.0, 10.0);
 pt3d slgGL::g_look_to( 0.0, 0.0, 0.0 );
 pt3d slgGL::g_head_up( 0.0, 1.0, 0.0 );
 //cout<<typid(g_head_up).name()<<endl;
+//void myreshapeFunc( int w, int h );
 
 slgGL::slgGL(){
     cout<<"create openGL object"<<endl;
-	// light 0 position
-	GLfloat g_light0_pos_[] = { 2.0f, 1.2f, 4.0f, 1.0f };
-    //hack to initialize arrays because i'm too lazy to go index by index
-	memcpy(g_light0_pos,g_light0_pos_,4*sizeof(GLfloat));
-	// light 1 parameter
-	GLfloat g_light1_ambient_[] = { .2f, .2f, .2f, 1.0f };
-    memcpy(g_light1_ambient,g_light1_ambient_,4*sizeof(GLfloat));
-	GLfloat g_light1_diffuse_[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    memcpy(g_light1_diffuse,g_light1_diffuse_,4*sizeof(GLfloat));
-	GLfloat g_light1_specular_[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    memcpy(g_light1_specular,g_light1_specular_,4*sizeof(GLfloat));
-	GLfloat g_light1_pos_[] = { -2.0f, 0.0f, -4.0f, 1.0f };
-    memcpy(g_light1_pos,g_light1_pos_,4*sizeof(GLfloat));
-
-	// modelview stuff
-	g_angle_y = 0.0f;
-	g_inc = 0.0f;
-	g_eye_y = 0;
-
-	// WINDOW
-	g_width = 800; 
-	g_height = 600;
-
+    // all global variables are initialized at the top
 	// fullscreen
-	g_fullscreen = FALSE;
-
-	g_z = 0.0f;
-	g_space = .15f;
-
-	g_factor = 1.0f;
-	g_phase_fix = TRUE;
-	g_factor2 = 1.0f;
-	g_freeze = 0;
+	//g_fullscreen = FALSE;
+   
 }
 
 slgGL::~slgGL(){
     cout<<"clean slgGL Object"<<endl;
 }
 
-void slgGL::initWindow(int argc, char *argv[], int width, int height, int x,int y){
+void slgGL::printCoordinates(){
+    cout<<"------------ Coordinates--------------"<<endl;
+    cout<< "X: "<<X<<" Y: "<<Y<<" Z: "<<Z<<endl;
+    cout<< "rotX: "<<rotX<<" rotY: "<<rotY<<" rotZ: "<<rotZ<<endl;
+    cout<< "rotlX: "<<rotLx<<" rotLY: "<<rotLy<<" rotLZ: "<<rotLz<<endl;
+}
+
+//void slgGL::initWindow(int argc, char *argv[], int width, int height, int x,int y){
+void slgGL::initWindow(int width, int height, int x,int y, string title){
     //TODO: put size as agrument
     cout<<"Initialize window"<<endl;
+    int argc = 1;
+    char *argv = "slg";
+    char **vptr = &argv;
     // initialize GLUT
-    glutInit( &argc, argv );
+    glutInit( &argc, vptr);
+
     // double buffer, use rgb color, enable depth buffer and alpha
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA );
     // initialize the window size
-    glutInitWindowSize(width,height );
+    glutInitWindowSize(width,height);
     // set the window postion
-    glutInitWindowPosition( x, y);
+    //glutInitWindowPosition( x, y);
     // create the window
-    glutCreateWindow( "OpenGL Window" );
+    glutCreateWindow( "" );
+    glutSetWindowTitle(title.c_str());
+    g_requestedWidth  = glutGet(GLUT_WINDOW_WIDTH);
+    g_requestedHeight = glutGet(GLUT_WINDOW_HEIGHT);
+    cout<<"------------ init Window--------------"<<endl;
+    printCoordinates();
+
 }
 
 //-----------------------------------------------------------------------------
@@ -85,8 +78,11 @@ void slgGL::initWindow(int argc, char *argv[], int width, int height, int x,int 
 void slgGL::initGraphics()
 {
     cout<<"initialize graphics"<<endl;
-    // set the GL clear color - use when the color buffer is cleared
+    // set the GL clear color - use when the color buffer is cleared (background)
     glClearColor( 0.0f, 0.0f,0.0f, 1.0f );
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    // setColor
+    glColor3f(1,1,1);
     // set the shading model to 'smooth'
     glShadeModel( GL_SMOOTH );
     // enable depth
@@ -115,13 +111,11 @@ void slgGL::initGraphics()
 
 void slgGL::initUi(){
     // set the idle function - called when idle
-    glutIdleFunc(slgGL::idleFunc);
+    //glutIdleFunc(slgGL::idleFunc);
     // set the display function - called when redrawing
-    //glutDisplayFunc( slgGL::displayFunc );
-    // set the reshape function - called when client area changes
-    glutReshapeFunc( slgGL::reshapeFunc);
+    //glutDisplayFunc( myDisplayFunc );
     // set the keyboard function - called on keyboard events
-    glutKeyboardFunc( slgGL::keyboardFunc );
+    //glutKeyboardFunc( slgGL::keyboardFunc );
     // glut special keys
     glutSpecialFunc(slgGL::specialFunc);
     // set the mouse function - called on mouse stuff
@@ -130,18 +124,35 @@ void slgGL::initUi(){
 }
 
 void slgGL::displayFunc(void (*myDisplayFunc)()){
-
     glutDisplayFunc( myDisplayFunc );
+}
+
+void slgGL::idleFunc(void (*myIdleFunc)()){
+    glutIdleFunc( myIdleFunc );
+}
+
+void slgGL::setup(void (*mySetupFunc)()){
+    mySetupFunc();
+}
+
+void slgGL::keyboardFunc(void(*myKeyboardFunc)(unsigned char, int, int)){
+    glutKeyboardFunc(myKeyboardFunc);
 }
 
 void slgGL::glutLoop(){
     glutMainLoop();
 }
+
+void slgGL::reshapeFunc(){
+    // set the reshape function - called when client area changes
+    glutReshapeFunc( myReshapeFunc);
+}
+
 //-----------------------------------------------------------------------------
 // Name: reshapeFunc( )
 // Desc: called when window size changes
 //-----------------------------------------------------------------------------
-void slgGL::reshapeFunc( int w, int h )
+void slgGL::myReshapeFunc( int w, int h )
 {
     // map the view port to be the entire window
     glViewport( 0, 0, w, h );
@@ -150,166 +161,48 @@ void slgGL::reshapeFunc( int w, int h )
     // load the identity matrix
     glLoadIdentity( );
     // create the viewing frustum
-    //gluPerspective( 45.0, (GLfloat) w / (GLfloat) h, 1.0, 300.0 );
     gluPerspective( 45.0, (GLfloat) w / (GLfloat) h, .1, 100.0 );
     // set the matrix mode to modelview
     glMatrixMode( GL_MODELVIEW );
     // load the identity matrix
     glLoadIdentity( );
-
-    changeLookAt(g_look_from,g_look_to, g_head_up );
     // position the view point
-    /*gluLookAt( 0.0f, 3.5f * sin( g_eye_y ), 3.5f * cos( g_eye_y ), 
-               0.0f, 0.0f, 0.0f, 
-               0.0f, ( cos( g_eye_y ) < 0 ? -1.0f : 1.0f ), 0.0f );*/
-
-
+    //slgGL::changeLookAt(g_look_from,g_look_to, g_head_up );
     // set the position of the lights
+    //gluLookAt (rotLx, rotLy, 10.0 + rotLz, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); 
     glLightfv( GL_LIGHT0, GL_POSITION, g_light0_pos );
     glLightfv( GL_LIGHT1, GL_POSITION, g_light1_pos );
+    cout<<"--------REShape------"<<endl;
+    slgGL::printCoordinates();
 }
 
 void slgGL::specialFunc(int key, int x, int y){
+    float fraction = 0.1;
+
     switch(key)
     {
-        case GLUT_KEY_LEFT:
-        cout<<"left"<<endl;
-        break;
-        case GLUT_KEY_RIGHT:
-        cout<<"right"<<endl;
-        break;
-        case GLUT_KEY_UP:
-        cout<<"up"<<endl;
-        break;
-        case GLUT_KEY_DOWN:
-        cout<<"down"<<endl;
-        break;
-    }
-}
-//-----------------------------------------------------------------------------
-// Name: keyboardFunc( )
-// Desc: key event
-//-----------------------------------------------------------------------------
-void slgGL::keyboardFunc( unsigned char key, int x, int y )
-{
-    switch( key )
-    {
-    case 27:
-    exit(0);
+    case GLUT_KEY_LEFT : // Rotate on x axis
+    X -= 0.1f;
     break;
-
-    
-   /* case '[':
-        g_eye_y -= .01f;
+    case GLUT_KEY_RIGHT : // Rotate on x axis (opposite)
+    X += 0.1f;
     break;
-    case ']':
-        g_eye_y += .01f;
+    case GLUT_KEY_UP : // Rotate on y axis 
+    Y += 0.1f;
     break;
-    case 'h':
-        //help();
+    case GLUT_KEY_DOWN : // Rotate on y axis (opposite)
+    Y -= 0.1f;
+    break; 
+    // fn arrow
+    case GLUT_KEY_PAGE_UP: // Rotate on z axis
+    Z -= 0.1f;
     break;
-    case '.':
-        g_z += .1f;
-        break;
-    case ',':
-        g_z -= .1f;
-        break;
-    case 'e':
-        g_space *= 1.02f;
-        break;
-    case 'i':
-        g_space *= .98f;
-        break;
-    case 'w':
-        //g_wutrfall = !g_wutrfall;
-        break;
-    case 'd':
-       // g_usedb = !g_usedb;
-        break;
-    case 'q':
-        exit( 0 );
-        break;
-    case 'L':
-    case 'l':
-        g_look_from = pt3d( -1, 0, 0 );
-        cerr << "Looking from the left" << endl;
-        break;
-    case 'R':
-    case 'r':
-        g_look_from = pt3d( 1, 0, 0 );
-        cerr << "Looking from the right" << endl;
-        break;
-    case 'f':
-        g_look_from = pt3d( 0, 0, 1 );
-        cerr << "Looking from the front" << endl;
-        break;
-    case 'O':
-    case 'o':
-        g_look_from = pt3d( 1, 1, 1 );
-        cerr << "Looking from the somewhere else" << endl;
-        break;
-    case 'p':
-        g_phase_fix = !g_phase_fix;
-        cerr << "phase fix: " << ( g_phase_fix ? "ON" : "OFF" ) << endl;
-        break;
-    case '_':
-        g_factor -= .05f;
-        if( g_factor < .1f )
-            g_factor = .1f;
-        break;
-    case '-':
-        g_factor2 -= .05f;
-        if( g_factor2 < .1f )
-            g_factor2 = .1f;
-        break;
-    case '+':
-        g_factor += .05f;
-        break;
-    case '=':
-        g_factor2 += .05f;
-        break;
-    case '1':
-        g_factor = 1.0f;
-        cerr << "time expansion factor RESET to 1.0" << endl;
-        break;
-    case '(':
-        
-        break;
-    case ')':
-        
-        break;
-    case '<':
-        
-        
-        break;
-    case '>':
-
-    
-        
-        break;*/
-    case 's':
-    {
-        static GLuint w, h;
-
-        if( !g_fullscreen )
-        {
-            w = g_width;
-            h = g_height;
-            glutFullScreen();
-        }
-        else
-            glutReshapeWindow( w, h );
-
-        g_fullscreen = !g_fullscreen;
-    }
-    break;
-    /*case 'g':
-        g_freeze = !g_freeze;*/
+    case GLUT_KEY_PAGE_DOWN:// Rotate on z axis (opposite)
+    Z += 0.1f;
     break;
     }
 
-    // do a reshape since g_eye_y might have changed
-    reshapeFunc( g_width, g_height );
+    glTranslatef(X,Y,Z);
     glutPostRedisplay( );
 }
 
@@ -343,23 +236,23 @@ void slgGL::mouseFunc( int button, int state, int x, int y )
 
 
 //-----------------------------------------------------------------------------
-// Name: idleFunc( )
-// Desc: callback from GLUT
-//-----------------------------------------------------------------------------
-void slgGL::idleFunc( )
-{
-    // render the scene
-    glutPostRedisplay( );
-}
-
-//-----------------------------------------------------------------------------
 // name: changeLookAt()
 // desc: changes the point of view
 //-----------------------------------------------------------------------------
 void slgGL::changeLookAt( pt3d look_from, pt3d look_to, pt3d head_up )
 {
+    
     // eye, center, up vector
-    gluLookAt(  look_from.x, look_from.y, look_from.z, 
+   gluLookAt(  look_from.x, look_from.y, look_from.z, 
                 look_to.x, look_to.y, look_to.z, 
                 head_up.x, head_up.y, head_up.z );
+   
+   // print change of view
+   /*cout<<"---from: "<<endl;
+   look_from.print();
+   cout<<"---to: "<<endl;
+   look_to.print();
+   cout<<"---up: "<<endl;
+   head_up.print();*/
+    
 }

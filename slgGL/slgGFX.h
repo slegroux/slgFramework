@@ -32,6 +32,7 @@ public:
 public:
 	void drawAxis();
 	void drawSnowMan();
+	void drawGround();
 };
 
 #endif

@@ -37,7 +37,7 @@ void slgGFX::drawAxis()
 }
 
 void slgGFX::drawSnowMan() {
-
+    glPushMatrix();
     glColor3f(1.0f, 1.0f, 1.0f);
 
 // Draw Body
@@ -61,4 +61,18 @@ void slgGFX::drawSnowMan() {
     glColor3f(1.0f, 0.5f , 0.5f);
     glRotatef(0.0f,1.0f, 0.0f, 0.0f);
     glutSolidCone(0.08f,0.5f,10,2);
+    glPopMatrix();
+}
+
+// Draw Ground
+void slgGFX::drawGround(){
+    glPushMatrix();
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glBegin(GL_QUADS);
+        glVertex3f(-100.0f, 0.0f, -100.0f);
+        glVertex3f(-100.0f, 0.0f,  100.0f);
+        glVertex3f( 100.0f, 0.0f,  100.0f);
+        glVertex3f( 100.0f, 0.0f, -100.0f);
+    glEnd();
+    glPopMatrix();
 }

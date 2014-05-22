@@ -30,7 +30,7 @@ OBJS= slgGL.o slgGFX.o test.o
 test: $(OBJS)
 	$(CXX) -o test $(OBJS) $(LIB_PATH) $(LIBS)
 
-test.o: test.cpp
+test.o: test.cpp slgGL.h slgGFX.h
 	$(CXX) $(FLAGS) test.cpp
 
 slgGL.o: slgGL.h slgGL.cpp

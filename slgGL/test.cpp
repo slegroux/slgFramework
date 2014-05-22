@@ -8,12 +8,10 @@
 using namespace std;
 
 void displayFunc( );
-void my_func();
+void idleFunc();
+void keyboardFunc(unsigned char, int, int);
+void setup();
 
-float g_angle = 0.0;
-pt3d g_from( 0.0, 0.0, 10.0);
-pt3d g_to( 0.0, 0.0, 0.0 );
-pt3d g_up( 0.0, 1.0, 0.0 );
 
 //-----------------------------------------------
 // name: main
@@ -21,59 +19,125 @@ pt3d g_up( 0.0, 1.0, 0.0 );
 //-----------------------------------------------
 int main ( int argc, char *argv[] )
 {    
-    // INIT //
-
-
+    // declare OpenGL context//
     slgGL myGL;
 
-    // OPENGL //
+    // SETUP OPENGL WINDOW
+    myGL.initWindow(800,600, 100,100," Open GL/GLU boiler plate");
     
-    myGL.initWindow(argc, argv, 800,600, 100,100);
-    myGL.initGraphics( );
-    myGL.initUi();
-    
-    //display
+    // background, draw, light, etc //
+    //myGL.initGraphics( );
+    myGL.setup(*setup);
+
+    // reshape
+    //myGL.reshapeFunc();
+
+    // UPDATE
+    myGL.idleFunc(*idleFunc);
+
+    //DRAW
     myGL.displayFunc(*displayFunc);
+
+    //KEY PRESSED
+    myGL.keyboardFunc(*keyboardFunc);
     
-    // let GLUT handle the current thread from here
+    //KEY RELEASED
+
+    // SEED RANDOM GENERATOR
+    srand(time(NULL));
+
+    // Let GLUT handle the current thread from here
     myGL.glutLoop();
-    
     
     return 0;
 }
 
-void my_func(){
-    cout<<"toto"<<endl;
+// SETUP STUFF
+void setup(){
+    cout<<"sdfasdfasdf "<<endl;
 }
 
+// UPDATE
+void idleFunc( )
+{
+    // render the scene
+    glutPostRedisplay( );
+}
+
+//DRAW
 void displayFunc(){
-    slgGFX myGFX;
+    
 
-    // white background
-    glClearColor(1,1,1,1);
-    // clear the color and depth buffers
+    // SETUP SCREEN
+    int w, h;
+
+    w = glutGet(GLUT_WINDOW_WIDTH);
+    h = glutGet(GLUT_WINDOW_HEIGHT);
+
+    glViewport( 0, 0, w, h);
+
+    // black background
+    glClearColor(0,0,0,1);
+    // clear the color and depth buffers of screen
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+    // define field of vision (http://www.eng.utah.edu/~cs5600/slides/Wk%205%20Lec09%20perspective%20II.pdf)
+    float halfFov, theTan, screenFov, aspect;
+    screenFov       = 60.0f;
+
+    float eyeX      = (float)w / 2.0;
+    float eyeY      = (float)h / 2.0;
+    halfFov         = M_PI * screenFov / 360.0;
+    theTan          = tanf(halfFov);
+    float dist      = eyeY / theTan;
+    float nearDist  = dist / 10.0;  // near / far clip plane
+    float farDist   = dist * 10.0;
+    aspect          = (float)w/(float)h;
+
+    // SET UP PROJECTION
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluLookAt(  0,0, 10,0.0f, 0.0f,  0.0f,0.0f, 1.0f,  0.0f);
+    gluPerspective(screenFov, aspect, nearDist, farDist);
 
-    glRotatef(g_angle, 0.0f, 1.0f, 0.0f);
+    // SETUP CAMERA VIEW
+    gluLookAt(eyeX, eyeY, dist, eyeX, eyeY, 0.0, 0.0, 1.0, 0.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-    glPushMatrix();
+    glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
+    glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
+    
+    slgGFX myGFX;
+    //glPushMatrix();
+    //glColor3f(0,0,0);
+    //myGFX.drawAxis();
+    
+    //myGFX.drawSnowMan();
+    glTranslatef(400,300,0);
+    myGFX.drawGround();
+    glColor3f(1,0,0);
     myGFX.drawAxis();
-    myGFX.drawSnowMan();
-    glColor3f(0,0,0);
+    glPushMatrix();
     glBegin(GL_TRIANGLES);
-    glVertex3f(-2.0f,-2.0f, 0.0f);
-    glVertex3f( 2.0f, 0.0f, 0.0);
-    glVertex3f( 0.0f, 2.0f, 0.0);
+    glVertex3f(-20,0.0f, 0.0f);
+    glVertex3f( 20.0f, 0.0f, 0.0);
+    glVertex3f( 0.0f, 20.0f, 0.0);
     glEnd();
     glPopMatrix();
 
-    g_angle+=0.1f;
+    //slgGL::_angle+=0.05f;
 
     // flush!
     glFlush( );
     // swap the double buffer
     glutSwapBuffers( );
      
+}
+
+void keyboardFunc( unsigned char key, int x, int y )
+{
+    switch( key ){
+        case 27:
+        exit(0);
+    }
 }
