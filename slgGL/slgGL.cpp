@@ -109,6 +109,54 @@ void slgGL::initGraphics()
     glEnable( GL_LIGHT1 );
 }
 
+void slgGL::setupScreen(){
+
+    //SetSystemUIMode(kUIModeAllHidden,NULL);
+    
+    // SETUP SCREEN
+    int w, h;
+
+    w = glutGet(GLUT_WINDOW_WIDTH);
+    h = glutGet(GLUT_WINDOW_HEIGHT);
+
+    //glutReshapeWindow(g_requestedWidth, g_requestedHeight); 
+    glutReshapeWindow(w, h); 
+
+    glViewport( 0, 0, w, h );
+    // grey background
+    glClearColor(0.9,0.9,0.9,1);
+    // clear the color and depth buffers of screen
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+
+    // define field of vision (http://www.eng.utah.edu/~cs5600/slides/Wk%205%20Lec09%20perspective%20II.pdf)
+    float halfFov, theTan, screenFov, aspect;
+    screenFov       = 60.0f;
+
+    float eyeX      = (float)w / 2.0;
+    float eyeY      = (float)h / 2.0;
+    halfFov         = M_PI * screenFov / 360.0;
+    theTan          = tanf(halfFov);
+    float dist      = eyeY / theTan;
+    float nearDist  = dist / 10.0;  // near / far clip plane
+    float farDist   = dist * 10.0;
+    aspect          = (float)w/(float)h;
+
+    // SET UP PROJECTION
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(screenFov, aspect, nearDist, farDist);
+
+    // SETUP CAMERA VIEW
+    gluLookAt(eyeX, eyeY, dist, eyeX, eyeY, 0.0, 0.0, 1.0, 0.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
+    glTranslatef(0, -h, 0);     // shift origin up to upper-left corner.
+
+}
+
 void slgGL::initUi(){
     // set the idle function - called when idle
     //glutIdleFunc(slgGL::idleFunc);
@@ -124,7 +172,22 @@ void slgGL::initUi(){
 }
 
 void slgGL::displayFunc(void (*myDisplayFunc)()){
+    //first setup screen
+    //setupScreen();
+    // then call drawing func
     glutDisplayFunc( myDisplayFunc );
+    /*glTranslatef(400,300,0);
+    //myGFX.drawGround();
+    glColor3f(1,0,0);
+    //myGFX.drawAxis();
+    glPushMatrix();
+    glBegin(GL_TRIANGLES);
+    glVertex3f(-100,0.0f, 0.0f);
+    glVertex3f( 100.0f, 0.0f, 0.0);
+    glVertex3f( 0.0f, 100.0f, 0.0);
+    glEnd();
+    glPopMatrix();
+    glutSwapBuffers();*/
 }
 
 void slgGL::idleFunc(void (*myIdleFunc)()){

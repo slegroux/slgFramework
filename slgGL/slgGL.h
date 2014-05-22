@@ -66,16 +66,18 @@ public:
 	static void specialFunc(int key, int x, int y);
 	static void mouseFunc( int button, int state, int x, int y );
 	static void setup(void(*mySetupFunc)());
-
+	static void setupScreen();
 	void glutLoop();
 	void initGraphics( );
 	void initWindow(int width=800, int height=600, int x=100,int y=100, string title="slg window");
 	void initUi();
+
 	static void printCoordinates();	
 
 private:
 	// core of reshape func callback
 	static void myReshapeFunc( int w, int h );
+	
     
 	// modelview stuff
 	//GLfloat g_angle_y;// = 0.0f;
