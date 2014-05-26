@@ -1,3 +1,12 @@
+/*
+ *  slgGFX.cpp
+ *
+ *  Created by Sylvain Le Groux 
+ *  slegroux@stanford.edu
+ *  Copyright 2013. All rights reserved.
+ *
+ */
+ 
 #include "slgGFX.h"
 
 slgGFX::slgGFX(){
@@ -8,27 +17,27 @@ slgGFX::~slgGFX(){
 
 }
 
-void slgGFX::drawAxis()
+void slgGFX::drawAxis(float size)
 {
     // save the current transformation
     glPushMatrix();
-
+    glLineWidth(2);
         glBegin( GL_LINES );
 
             // x axis - red
             glColor4f( 1, 0, 0, 1 );
             glVertex3f( 0, 0, 0 );
-            glVertex3f( 1, 0, 0 );
+            glVertex3f( size, 0, 0 );
 
             // y axis - green
             glColor4f( 0, 1, 0, 1 );
             glVertex3f( 0, 0, 0 );
-            glVertex3f( 0, 1, 0 );
+            glVertex3f( 0, size, 0 );
 
             // z axis - blue
             glColor4f( 0, 0, 1, 1 );
             glVertex3f( 0, 0, 0 );
-            glVertex3f( 0, 0, 1 );
+            glVertex3f( 0, 0, size );
 
         glEnd();
 
@@ -36,13 +45,14 @@ void slgGFX::drawAxis()
     glPopMatrix();   
 }
 
-void slgGFX::drawSnowMan() {
+void slgGFX::drawSnowMan(float size) {
     glPushMatrix();
     glColor3f(1.0f, 1.0f, 1.0f);
 
 // Draw Body
     glTranslatef(0.0f ,0.75f, 0.0f);
     glutSolidSphere(0.75f,20,20);
+
 
 // Draw Head
     glTranslatef(0.0f, 1.0f, 0.0f);
@@ -65,14 +75,14 @@ void slgGFX::drawSnowMan() {
 }
 
 // Draw Ground
-void slgGFX::drawGround(){
+void slgGFX::drawGround(float size){
     glPushMatrix();
-    glColor3f(1.0f, 1.0f, 1.0f);
+    //glColor3f(1.0f, 1.0f, 1.0f);
     glBegin(GL_QUADS);
-        glVertex3f(-100.0f, 0.0f, -100.0f);
-        glVertex3f(-100.0f, 0.0f,  100.0f);
-        glVertex3f( 100.0f, 0.0f,  100.0f);
-        glVertex3f( 100.0f, 0.0f, -100.0f);
+        glVertex3f(-size, 0.0f, -size);
+        glVertex3f(-size, 0.0f, size);
+        glVertex3f( size, 0.0f,  size);
+        glVertex3f( size, 0.0f, -size);
     glEnd();
     glPopMatrix();
 }

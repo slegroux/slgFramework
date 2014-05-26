@@ -1,3 +1,12 @@
+/*
+ *  slgGFX.h
+ *
+ *  Created by Sylvain Le Groux 
+ *  slegroux@stanford.edu
+ *  Copyright 2013. All rights reserved.
+ *
+ */
+ 
 #ifndef __SLGGFX_H__
 #define __SLGGFX_H__
 
@@ -30,9 +39,9 @@ public:
 	slgGFX();
 	~slgGFX();
 public:
-	void drawAxis();
-	void drawSnowMan();
-	void drawGround();
+	void drawAxis(float size);
+	void drawSnowMan(float size=1);
+	void drawGround(float size = 1000.0);
 };
 
 #endif

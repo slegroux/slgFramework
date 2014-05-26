@@ -1,12 +1,21 @@
+/*
+ *  slgGL.cpp
+ *
+ *  Created by Sylvain Le Groux 
+ *  slegroux@stanford.edu
+ *  Copyright 2013. All rights reserved.
+ *
+ */
+ 
 #include "slgGL.h"
 #include <typeinfo>
 
 // window
 int g_requestedWidth = 800;
 int g_requestedHeight = 600;
-float rotX = 0,rotY = 0,rotZ = 0;
-float rotLx = 0,rotLy = 0,rotLz = 0;
 float X = 0, Y = 0, Z = 0;
+float g_screenFov =0, g_aspect=0, g_nearDist=0, g_farDist=0; 
+
 
 // light 0 position
 GLfloat g_light0_pos[] = { 2.0f, 1.2f, 4.0f, 1.0f };
@@ -39,10 +48,10 @@ slgGL::~slgGL(){
 }
 
 void slgGL::printCoordinates(){
-    cout<<"------------ Coordinates--------------"<<endl;
+    /*cout<<"------------ Coordinates--------------"<<endl;
     cout<< "X: "<<X<<" Y: "<<Y<<" Z: "<<Z<<endl;
     cout<< "rotX: "<<rotX<<" rotY: "<<rotY<<" rotZ: "<<rotZ<<endl;
-    cout<< "rotlX: "<<rotLx<<" rotLY: "<<rotLy<<" rotLZ: "<<rotLz<<endl;
+    cout<< "rotlX: "<<rotLx<<" rotLY: "<<rotLy<<" rotLZ: "<<rotLz<<endl;*/
 }
 
 //void slgGL::initWindow(int argc, char *argv[], int width, int height, int x,int y){
@@ -77,16 +86,17 @@ void slgGL::initWindow(int width, int height, int x,int y, string title){
 //-----------------------------------------------------------------------------
 void slgGL::initGraphics()
 {
-    cout<<"initialize graphics"<<endl;
-    // set the GL clear color - use when the color buffer is cleared (background)
-    glClearColor( 0.0f, 0.0f,0.0f, 1.0f );
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    // setColor
-    glColor3f(1,1,1);
+    cout<<"initialize graphics settings"<<endl;
+
     // set the shading model to 'smooth'
     glShadeModel( GL_SMOOTH );
+    // for texture to be applied well
     // enable depth
     glEnable( GL_DEPTH_TEST );
+    // The Type Of Depth Test To Do
+    glDepthFunc(GL_LESS);                       
+    //glDepthFunc(GL_LEQUAL);
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     // set the front faces of polygons
     glFrontFace( GL_CCW );
     // set fill mode
@@ -101,6 +111,9 @@ void slgGL::initGraphics()
     glEnable( GL_COLOR_MATERIAL );
     // enable light 0
     glEnable( GL_LIGHT0 );
+    // transparency
+    glEnable (GL_BLEND);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // setup and enable light 1
     glLightfv( GL_LIGHT1, GL_AMBIENT, g_light1_ambient );
@@ -110,8 +123,6 @@ void slgGL::initGraphics()
 }
 
 void slgGL::setupScreen(){
-
-    //SetSystemUIMode(kUIModeAllHidden,NULL);
     
     // SETUP SCREEN
     int w, h;
@@ -123,37 +134,40 @@ void slgGL::setupScreen(){
     glutReshapeWindow(w, h); 
 
     glViewport( 0, 0, w, h );
-    // grey background
-    glClearColor(0.9,0.9,0.9,1);
+    // black background
+    glClearColor(0,0,0,1);
     // clear the color and depth buffers of screen
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 
     // define field of vision (http://www.eng.utah.edu/~cs5600/slides/Wk%205%20Lec09%20perspective%20II.pdf)
-    float halfFov, theTan, screenFov, aspect;
-    screenFov       = 60.0f;
+    float halfFov, theTan, g_screenFov, g_aspect;
+    g_screenFov       = 60.0f;
 
     float eyeX      = (float)w / 2.0;
     float eyeY      = (float)h / 2.0;
-    halfFov         = M_PI * screenFov / 360.0;
+    halfFov         = M_PI * g_screenFov / 360.0;
     theTan          = tanf(halfFov);
     float dist      = eyeY / theTan;
-    float nearDist  = dist / 10.0;  // near / far clip plane
-    float farDist   = dist * 10.0;
-    aspect          = (float)w/(float)h;
+    float g_nearDist  = dist / 10.0;  // near / far clip plane
+    float g_farDist   = dist * 10.0;
+    g_aspect          = (float)w/(float)h;
 
-    // SET UP PROJECTION
+    // SET UP PROJECTION (how the camera sees the world)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(screenFov, aspect, nearDist, farDist);
+    gluPerspective(g_screenFov, g_aspect, g_nearDist, g_farDist);
 
     // SETUP CAMERA VIEW
+
     gluLookAt(eyeX, eyeY, dist, eyeX, eyeY, 0.0, 0.0, 1.0, 0.0);
+    
+    // SET UP  POSITION AND ORIENTATION of CAMERA+WORLD
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
-    glTranslatef(0, -h, 0);     // shift origin up to upper-left corner.
+    //glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
+    //glTranslatef(0, -h, 0);     // shift origin up to upper-left corner.
 
 }
 
@@ -165,50 +179,10 @@ void slgGL::initUi(){
     // set the keyboard function - called on keyboard events
     //glutKeyboardFunc( slgGL::keyboardFunc );
     // glut special keys
-    glutSpecialFunc(slgGL::specialFunc);
+    //glutSpecialFunc(slgGL::specialFunc);
     // set the mouse function - called on mouse stuff
-    glutMouseFunc( slgGL::mouseFunc ); 
+    //glutMouseFunc( slgGL::mouseFunc ); 
     
-}
-
-void slgGL::displayFunc(void (*myDisplayFunc)()){
-    //first setup screen
-    //setupScreen();
-    // then call drawing func
-    glutDisplayFunc( myDisplayFunc );
-    /*glTranslatef(400,300,0);
-    //myGFX.drawGround();
-    glColor3f(1,0,0);
-    //myGFX.drawAxis();
-    glPushMatrix();
-    glBegin(GL_TRIANGLES);
-    glVertex3f(-100,0.0f, 0.0f);
-    glVertex3f( 100.0f, 0.0f, 0.0);
-    glVertex3f( 0.0f, 100.0f, 0.0);
-    glEnd();
-    glPopMatrix();
-    glutSwapBuffers();*/
-}
-
-void slgGL::idleFunc(void (*myIdleFunc)()){
-    glutIdleFunc( myIdleFunc );
-}
-
-void slgGL::setup(void (*mySetupFunc)()){
-    mySetupFunc();
-}
-
-void slgGL::keyboardFunc(void(*myKeyboardFunc)(unsigned char, int, int)){
-    glutKeyboardFunc(myKeyboardFunc);
-}
-
-void slgGL::glutLoop(){
-    glutMainLoop();
-}
-
-void slgGL::reshapeFunc(){
-    // set the reshape function - called when client area changes
-    glutReshapeFunc( myReshapeFunc);
 }
 
 //-----------------------------------------------------------------------------
@@ -224,57 +198,28 @@ void slgGL::myReshapeFunc( int w, int h )
     // load the identity matrix
     glLoadIdentity( );
     // create the viewing frustum
-    gluPerspective( 45.0, (GLfloat) w / (GLfloat) h, .1, 100.0 );
+    gluPerspective(g_screenFov, g_aspect, g_nearDist, g_farDist);
     // set the matrix mode to modelview
     glMatrixMode( GL_MODELVIEW );
     // load the identity matrix
     glLoadIdentity( );
-    // position the view point
-    //slgGL::changeLookAt(g_look_from,g_look_to, g_head_up );
+
     // set the position of the lights
-    //gluLookAt (rotLx, rotLy, 10.0 + rotLz, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); 
     glLightfv( GL_LIGHT0, GL_POSITION, g_light0_pos );
     glLightfv( GL_LIGHT1, GL_POSITION, g_light1_pos );
     cout<<"--------REShape------"<<endl;
     slgGL::printCoordinates();
+    glutPostRedisplay();
 }
 
-void slgGL::specialFunc(int key, int x, int y){
-    float fraction = 0.1;
 
-    switch(key)
-    {
-    case GLUT_KEY_LEFT : // Rotate on x axis
-    X -= 0.1f;
-    break;
-    case GLUT_KEY_RIGHT : // Rotate on x axis (opposite)
-    X += 0.1f;
-    break;
-    case GLUT_KEY_UP : // Rotate on y axis 
-    Y += 0.1f;
-    break;
-    case GLUT_KEY_DOWN : // Rotate on y axis (opposite)
-    Y -= 0.1f;
-    break; 
-    // fn arrow
-    case GLUT_KEY_PAGE_UP: // Rotate on z axis
-    Z -= 0.1f;
-    break;
-    case GLUT_KEY_PAGE_DOWN:// Rotate on z axis (opposite)
-    Z += 0.1f;
-    break;
-    }
-
-    glTranslatef(X,Y,Z);
-    glutPostRedisplay( );
-}
 
 
 //-----------------------------------------------------------------------------
 // Name: mouseFunc( )
 // Desc: handles mouse stuff
 //-----------------------------------------------------------------------------
-void slgGL::mouseFunc( int button, int state, int x, int y )
+/*void slgGL::mouseFunc( int button, int state, int x, int y )
 {
     if( button == GLUT_LEFT_BUTTON )
     {
@@ -295,7 +240,7 @@ void slgGL::mouseFunc( int button, int state, int x, int y )
         g_inc = 0.0f;
 
     glutPostRedisplay( );
-}
+}*/
 
 
 //-----------------------------------------------------------------------------
@@ -318,4 +263,41 @@ void slgGL::changeLookAt( pt3d look_from, pt3d look_to, pt3d head_up )
    cout<<"---up: "<<endl;
    head_up.print();*/
     
+}
+
+void slgGL::displayFunc(void (*myDisplayFunc)()){
+    glutDisplayFunc( myDisplayFunc );
+}
+
+void slgGL::idleFunc(void (*myIdleFunc)()){
+    glutIdleFunc( myIdleFunc );
+}
+
+void slgGL::setup(void (*mySetupFunc)()){
+    mySetupFunc();
+}
+
+void slgGL::keyboardFunc(void(*myKeyboardFunc)(unsigned char, int, int)){
+    glutKeyboardFunc(myKeyboardFunc);
+}
+
+void slgGL::specialFunc(void(*mySpecialFunc)(int key, int x, int y)){
+    glutSpecialFunc(mySpecialFunc);
+}
+
+void slgGL::mouseFunc(void (*myMouseFunc)(int button, int state, int x, int y)){
+    glutMouseFunc(myMouseFunc);
+}
+
+void slgGL::motionFunc(void (*myMotionFunc)(int x, int y)){
+    glutMotionFunc(myMotionFunc);
+}
+
+void slgGL::glutLoop(){
+    glutMainLoop();
+}
+
+void slgGL::reshapeFunc(){
+    // set the reshape function - called when client area changes
+    glutReshapeFunc( myReshapeFunc);
 }

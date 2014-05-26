@@ -1,3 +1,12 @@
+/*
+ *  slgGL.h
+ *
+ *  Created by Sylvain Le Groux 
+ *  slegroux@stanford.edu
+ *  Copyright 2013. All rights reserved.
+ *
+ */
+ 
 #ifndef __SLGGL_H__
 #define __SLGGL_H__
 
@@ -34,7 +43,7 @@ extern GLfloat g_light1_diffuse[4];
 extern GLfloat g_light1_specular[4];
 extern GLfloat g_light1_pos[4];
 // rotation and translations
-extern float rotX,rotY,rotZ;
+
 extern float rotLx,rotLy,rotLz;
 extern float X,Y,Z;
 
@@ -63,8 +72,9 @@ public:
 	static void reshapeFunc();
 	//static void keyboardFunc( unsigned char, int, int );
 	static void keyboardFunc(void(*myFunc)(unsigned char, int, int));
-	static void specialFunc(int key, int x, int y);
-	static void mouseFunc( int button, int state, int x, int y );
+	static void specialFunc(void(*myFunc)(int key, int x, int y));
+	static void mouseFunc( void(*myFunc)(int button, int state, int x, int y ));
+	static void motionFunc(void (*myMotionFunc)(int x, int y));
 	static void setup(void(*mySetupFunc)());
 	static void setupScreen();
 	void glutLoop();
@@ -77,7 +87,7 @@ public:
 private:
 	// core of reshape func callback
 	static void myReshapeFunc( int w, int h );
-	
+
     
 	// modelview stuff
 	//GLfloat g_angle_y;// = 0.0f;
