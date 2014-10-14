@@ -14,22 +14,33 @@ LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 	-framework IOKit -framework Carbon -lstdc++ -lm
 endif
 
+# include slg classes
+INC_PATH = -I../slg/
+INC_PATH += -I../RtAudio/
+SLG_DIR = ../slg/
+RTA_DIR += ../RtAudio/
 
-OBJS=   RtAudio.o slgAudio.o test.o
+# LIBS
+#INC_PATH += -I libs
+#INC_PATH += -I/usr/local/include/xtract
+#LIB_PATH = -L libs
 
+# executable
+TARGET = test
 
+OBJS = RtAudio.o slgAudio.o main.o
 
-test: $(OBJS)
-	$(CXX) -o test $(OBJS) $(LIBS)
+$(TARGET): $(OBJS)
+	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
 
-test.o: test.cpp slgAudio.h
-	$(CXX) $(FLAGS) test.cpp
+main.o:
+	$(CXX) $(FLAGS) $(INC_PATH) main.cpp
 
-RtAudio.o: RtAudio/RtAudio.h RtAudio/RtAudio.cpp RtAudio/RtError.h
-		$(CXX) $(FLAGS) RtAudio/RtAudio.cpp
+slgAudio.o:
+		$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgAudio.cpp
 
-slgAudio.o: slgAudio.h slgAudio.cpp
-		$(CXX) $(FLAGS) slgAudio.cpp
+RtAudio.o:
+		$(CXX) $(FLAGS) $(INC_PATH) $(RTA_DIR)RtAudio.cpp
 
 clean:
-	rm -f *~ *# *.o test
+	rm -f *~ *# *.o $(TARGET)
