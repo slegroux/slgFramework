@@ -42,11 +42,6 @@ extern GLfloat g_light1_ambient[4];
 extern GLfloat g_light1_diffuse[4];
 extern GLfloat g_light1_specular[4];
 extern GLfloat g_light1_pos[4];
-// rotation and translations
-
-extern float rotLx,rotLy,rotLz;
-extern float X,Y,Z;
-
 
 struct pt3d
 {
@@ -79,14 +74,14 @@ public:
 	static void setupScreen();
 	void glutLoop();
 	void initGraphics( );
+	void initLight0(GLfloat ligth0_pos[],int size);
 	void initWindow(int width=800, int height=600, int x=100,int y=100, string title="slg window");
-	void initUi();
 
 	static void printCoordinates();	
 
 private:
 	// core of reshape func callback
-	static void myReshapeFunc( int w, int h );
+	static void myReshapeFunc( int w =800, int h=600 );
 
     
 	// modelview stuff

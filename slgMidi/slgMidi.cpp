@@ -1,3 +1,12 @@
+/*
+ *  slgGL.h
+ *
+ *  Created by Sylvain Le Groux 
+ *  slegroux@stanford.edu
+ *  Copyright 2013. All rights reserved.
+ *
+ */
+
 #include "slgMidi.h"
 #include <iostream>
 
@@ -45,8 +54,9 @@ void slgMidi::setup(void *userData){
 
 	// Check available ports.
     unsigned int nPorts = m_midiin->getPortCount();
+
     if ( nPorts == 0 ) {
-        std::cout << "No ports available!\n";
+        std::cout << "No input ports available! plug input midi device.\n";
         //goto cleanup;
     }
     // Don't ignore sysex, timing, or active sensing messages.
@@ -55,22 +65,42 @@ void slgMidi::setup(void *userData){
 
 void slgMidi::start(RtMidiIn::RtMidiCallback callback){
 
+	std::string portName;
+    unsigned int i = 0;
+    unsigned int nPorts = m_midiout->getPortCount();
+
 	if(!callback){
 		std::cerr<<"No callback provided! "<<std::endl;
 		exit(1);
 	}
 
-	m_midiin->openPort( 0 );
+	if ( nPorts == 1 ) 
+    {
+        cout << "\nOpening " << m_midiout->getPortName() << endl;
+    }
+    else 
+    {
+        do 
+        {
+            cout << "\nChoose a port number: ";
+            cin >> i;
+            cin.ignore(256,'\n');
+
+        } while ( i >= nPorts );
+    }
+
+    std::cout << "\n";
+	m_midiout->openPort( i );
+
     // Set callback function.  This should be done immediately after
     // opening the port to avoid having incoming messages written to the
     // queue.
     m_midiin->setCallback( callback );
 
-    m_midiout->openPort(0);
 
 }
 
-void slgMidi::send(std::vector<unsigned char> message){
+void slgMidi::sendMessage(std::vector<unsigned char> message){
 	std::cout<<"send: "<<message[0]<<std::endl;
 	m_midiout->sendMessage(&message);
 }
@@ -78,16 +108,20 @@ void slgMidi::send(std::vector<unsigned char> message){
 void slgMidi::info(){
 	// check input
 	unsigned int nPorts = m_midiin->getPortCount();
-	std::cout<<"-------- Default input --------"<<std::endl;
+	std::cout<<"-------- MIDI Inputs --------"<<std::endl;
 	std::cout << "There are " << nPorts << " MIDI input sources available.\n";
 	std::string portName;
-	portName = m_midiin->getPortName(0);
-	std::cout << "Input Port #" << 0 << ": " << portName << '\n';
+	
+	for (int i=0;i<nPorts;++i){
+		portName = m_midiin->getPortName(i);
+		std::cout << "Input Port #" << i << ": " << portName << '\n';
+	}
     // Check outputs.
 	nPorts = m_midiout->getPortCount();
-	std::cout<<"-------- Default output --------"<<std::endl;
+	std::cout<<"-------- MIDI outputs --------"<<std::endl;
 	std::cout << "There are " << nPorts << " MIDI output ports available.\n";
-	portName = m_midiout->getPortName(0);
-	std::cout << "Output Port #" << 0 << ": " << portName << '\n';
-	std::cout<<"--------"<<std::endl;
+	for (int i=0;i<nPorts;++i){
+		portName = m_midiout->getPortName(i);
+		std::cout << "Output Port #" << i << ": " << portName << '\n';
+	}
 }

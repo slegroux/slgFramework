@@ -42,6 +42,7 @@ public:
 	void drawAxis(float size);
 	void drawSnowMan(float size=1);
 	void drawGround(float size = 1000.0);
+	void drawGrid(int xPointCount, int yPointCount, double xSpacing, double ySpacing);
 };
 
 #endif
