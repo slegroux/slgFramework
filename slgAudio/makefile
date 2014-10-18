@@ -16,9 +16,9 @@ endif
 
 # include slg classes
 INC_PATH = -I../slg/
-INC_PATH += -I../RtAudio/
 SLG_DIR = ../slg/
-RTA_DIR += ../RtAudio/
+INC_PATH += -I../RtAudio/
+RTA_DIR = ../RtAudio/
 
 # LIBS
 #INC_PATH += -I libs
@@ -28,7 +28,7 @@ RTA_DIR += ../RtAudio/
 # executable
 TARGET = test
 
-OBJS = RtAudio.o slgAudio.o main.o
+OBJS = RtAudio.o main.o slgAudio.o #MyRtAudio.o
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
@@ -36,8 +36,15 @@ $(TARGET): $(OBJS)
 main.o:
 	$(CXX) $(FLAGS) $(INC_PATH) main.cpp
 
+#MyRtAudio.o:
+#		$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)MyRtAudio.cpp
+
 slgAudio.o:
 		$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgAudio.cpp
+
+# Thread.o:
+# 		$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)Thread.cpp
+
 
 RtAudio.o:
 		$(CXX) $(FLAGS) $(INC_PATH) $(RTA_DIR)RtAudio.cpp

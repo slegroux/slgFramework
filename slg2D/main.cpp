@@ -8,10 +8,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-
 using namespace std;
  
-#define N 25
+#define N 100
 // global variable
 float g_angle=0.0;
 float g_phase=0.0;
@@ -20,10 +19,7 @@ int g_refreshRateMs = 30; // refresh interval in milliseconds
 
 //float *g_array;
 float g_array[N];
-
 float g_up=0.0;
-
-
 
 
 //void idleFunc();
@@ -38,7 +34,6 @@ void specialFunc(int key, int x, int y);
 void Timer(int value) {
    glutPostRedisplay();      // Post re-paint request to activate display()
    glutTimerFunc(g_refreshRateMs, Timer, 0); // next Timer call milliseconds later
-
    g_angle = 2.0;
    g_phase-=0.05;
    g_frequency+=5;
@@ -50,7 +45,6 @@ void setup(){
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    /*g_array= new float[N];
    memset(g_array,0,sizeof(float)*N);*/
-   g_array[10]=1;
 }
 
 void displayFunc() {
@@ -61,40 +55,17 @@ void displayFunc() {
    glLoadIdentity();
 
    for (int i=0;i<N;i++){
-      g_array[i] = 2*sin(2*M_PI*(float)i/N);
+      g_array[i] = -0.5+sin(2*M_PI*5*(float)i/N);
    }
-   // INPUT
-   double *in;
-   int buffSize = 8000;
-   int fftSize = (buffSize/2)+1;
-   in = new double[buffSize];
-   //memset(in, 0, buffSize*sizeof(float));
    
-   makeSine(in,5,1.0,8000);
-   drawBuffer(in,buffSize,1.0);
-
-   realFFTW myfft(buffSize);
-
-   myfft.setInput(in, buffSize);
-   myfft.forwardTransform();
-
-   //Magnitude
-   double *magnitude;
-   magnitude = new double[fftSize];
-   myfft.getMagnitude(magnitude,fftSize);
-   //buff2txt(magnitude,fftSize,"mag.txt");
-
-   //Phase
-   double *phase;
-   phase = new double[fftSize];
-   myfft.getPhase(phase,fftSize);
-   //buff2txt(phase,fftSize,"phase.txt");
+   int buffSize = 8000;
+   double *in = new double[8000];
+   makeSine(in,5,1.0,g_phase);
+   drawBuffer(in,buffSize,0.0,2.0);
 
    // need to specicy float type to template func
-   //drawBuffer(g_array,N,3.0f,-0.5);
+   //drawBuffer(g_array,N);
    
-   
-
    glutSwapBuffers(); //equivalent to glFlush for double buffering
 
 }
@@ -107,7 +78,8 @@ void reshapeFunc(int w, int h) {
       h = 1;
 
    // aspect ratio
-   float aspect = (float)w/(float)h;
+   //float aspect = (float)w/(float)h;
+   float aspect = 1.0;
 
    // Set the viewport to be the entire window
    glViewport(0, 0, w, h);
@@ -120,7 +92,7 @@ void reshapeFunc(int w, int h) {
 
    // Set clipping area's left, right, bottom, top (default -1,1,-1,1)
    if (w>h)
-      gluOrtho2D(-1.0*aspect, 1.0*aspect, -1.0, 1.0);
+      gluOrtho2D(-1.0*aspect, -1.0*aspect, -1.0, 1.0);
    else
       gluOrtho2D(-1.0, 1.0, -1.0/aspect, 1.0/aspect);
    
@@ -137,13 +109,6 @@ void reshapeFunc(int w, int h) {
 }
 
 void keyboardFunc(unsigned char key, int x, int y) {
-
-   /*if (key == 27)
-      exit(0);
-   if (key=='a')
-      cout<<"left"<<endl;
-   if (key=='d')
-      cout<<"right"<<endl;*/
 
    switch (key) {
    case 'w':
@@ -201,7 +166,7 @@ int main(int argc, char** argv) {
    //glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA ); // double buffer, use rgb color, enable depth buffer and alpha
    //No depth in 2D
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_ALPHA ); // double buffer, use rgb color, enable depth buffer and alpha
-   glutInitWindowSize(320, 320);   // Set the window's initial width & height
+   glutInitWindowSize(640, 480);   // Set the window's initial width & height
    glutInitWindowPosition(50, 50); // Position the window's initial top-left corner   
    glutCreateWindow("OpenGL Setup Test"); // Create a window with the given title
    setup();
@@ -209,8 +174,8 @@ int main(int argc, char** argv) {
    glutReshapeFunc(reshapeFunc); 
    //glutReshapeWindow(320,320);
    //glutIdleFunc(idleFunc); //replaced by timer
+   
    //First timer call immediately
-
    glutTimerFunc(0, Timer, 0);
    glutKeyboardFunc(keyboardFunc);
    //glutSpecialFunc(specialFunc);

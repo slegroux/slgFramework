@@ -1,18 +1,18 @@
 #include "slgGen.h"
 
 template <class TBuffer>
-void makeSine(TBuffer *buffer, float frequency, float duration, int sampleRate){
+void makeSine(TBuffer *buffer, float frequency, float duration, float phase, int sampleRate){
 	
-	int N = sampleRate * duration;
+	int NSample = sampleRate * duration;
 
 	//float buffer[N];
-	for (int i=0;i<N;i++){
-		buffer[i] = sin(2*M_PI*frequency*i/(float)sampleRate);
+	for (int i=0;i<NSample;i++){
+		buffer[i] = sin(2*M_PI*frequency*i/(float)sampleRate+phase);
 	}
 }
 
-template void makeSine(float *buffer, float frequency, float duration, int sampleRate);
-template void makeSine(double *buffer, float frequency, float duration, int sampleRate);
+template void makeSine(float *buffer, float frequency, float duration, float phase, int sampleRate);
+template void makeSine(double *buffer, float frequency, float duration, float phase, int sampleRate);
 
 template <class TBuffer>
 void buff2txt(TBuffer *buffer, int bufferSize, string filename){
