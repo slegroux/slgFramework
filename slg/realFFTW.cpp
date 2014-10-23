@@ -50,7 +50,7 @@ void realFFTW::getOut(int index){
 void realFFTW::getMagnitude(double* buffer, int buffSize){
 	for(int i=0;i<(_N/2)+1;i++){
 		//normalization
-		_mag[i] = (2./_N)*sqrt((_out[i][0]*_out[i][0])+(_out[i][1]*_out[i][1]));
+		_mag[i] = (1./_N)*sqrt((_out[i][0]*_out[i][0])+(_out[i][1]*_out[i][1]));
 	}
 	memcpy(buffer,_mag,buffSize*sizeof(double));
 }
@@ -58,7 +58,7 @@ void realFFTW::getMagnitude(double* buffer, int buffSize){
 void realFFTW::getMagnitudeDB(double* buffer, int buffSize){
 	for(int i=0;i<(_N/2)+1;i++){
 		//normalization
-		_mag[i] = 20*log10((2./_N)*sqrt((_out[i][0]*_out[i][0])+(_out[i][1]*_out[i][1])));
+		_mag[i] = 20*log10((1./_N)*sqrt((_out[i][0]*_out[i][0])+(_out[i][1]*_out[i][1])));
 	}
 	memcpy(buffer,_mag,buffSize*sizeof(double));
 }
@@ -108,3 +108,81 @@ int realFFTW::inverseTransform(){
 		return 0;
 	}
 }
+
+//-----------------------------------------------------------------------------
+// name: hanning()
+// desc: make window
+//-----------------------------------------------------------------------------
+void hanning( SAMPLE * window, unsigned long length )
+{
+    unsigned long i;
+    double pi, phase = 0, delta;
+
+    pi = 4.*atan(1.0);
+    delta = 2 * pi / (double) length;
+
+    for( i = 0; i < length; i++ )
+    {
+        window[i] = (SAMPLE)(0.5 * (1.0 - cos(phase)));
+        phase += delta;
+    }
+}
+
+
+
+
+//-----------------------------------------------------------------------------
+// name: hamming()
+// desc: make window
+//-----------------------------------------------------------------------------
+void hamming( SAMPLE * window, unsigned long length )
+{
+    unsigned long i;
+    double pi, phase = 0, delta;
+
+    pi = 4.*atan(1.0);
+    delta = 2 * pi / (double) length;
+
+    for( i = 0; i < length; i++ )
+    {
+        window[i] = (SAMPLE)(0.54 - .46*cos(phase));
+        phase += delta;
+    }
+}
+
+
+
+//-----------------------------------------------------------------------------
+// name: blackman()
+// desc: make window
+//-----------------------------------------------------------------------------
+void blackman( SAMPLE * window, unsigned long length )
+{
+    unsigned long i;
+    double pi, phase = 0, delta;
+
+    pi = 4.*atan(1.0);
+    delta = 2 * pi / (double) length;
+
+    for( i = 0; i < length; i++ )
+    {
+        window[i] = (SAMPLE)(0.42 - .5*cos(phase) + .08*cos(2*phase));
+        phase += delta;
+    }
+}
+
+
+
+
+//-----------------------------------------------------------------------------
+// name: apply_window()
+// desc: apply a window to data
+//-----------------------------------------------------------------------------
+void applyWindow( SAMPLE * data, SAMPLE * window, unsigned long length )
+{
+    unsigned long i;
+
+    for( i = 0; i < length; i++ )
+        data[i] *= window[i];
+}
+

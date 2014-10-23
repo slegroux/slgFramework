@@ -8,12 +8,17 @@
 #include <fftw3.h>
 #include <math.h>
 #include <cstring>
+#include "Definitions.h"
 
 #ifndef __REALFFTW_H__
 #define __REALFFTW_H__
 
 using namespace std;
 
+void hanning( SAMPLE * window, unsigned long length );
+void hamming( SAMPLE * window, unsigned long length );
+void blackman( SAMPLE * window, unsigned long length );
+void applyWindow( SAMPLE * data, SAMPLE * window, unsigned long length);
 
 class realFFTW{
 

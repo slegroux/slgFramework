@@ -49,19 +49,37 @@ void setup(){
 
 void displayFunc() {
 
-   //glClear(GL_COLOR_BUFFER_BIT  | GL_DEPTH_BUFFER_BIT);         // Clear the color buffer
+   // 2D
    //no depth in 2D!
    glClear(GL_COLOR_BUFFER_BIT);
    glLoadIdentity();
+   glMatrixMode(GL_MODELVIEW); 
+
+
+   //glClear(GL_COLOR_BUFFER_BIT  | GL_DEPTH_BUFFER_BIT);         // Clear the color buffer
+   glColor3f(255,255,255);
 
    for (int i=0;i<N;i++){
-      g_array[i] = -0.5+sin(2*M_PI*5*(float)i/N);
-   }
-   
-   int buffSize = 8000;
-   double *in = new double[8000];
-   makeSine(in,5,1.0,g_phase);
-   drawBuffer(in,buffSize,0.0,2.0);
+      g_array[i] = (float) -0.5+sin(2*M_PI*5*(float)i/N);
+   }   
+
+   //drawBuffer(g_array,N);
+   line(0,0,1,1);
+   glPushMatrix();
+      glTranslatef(0.5,0.5,0);
+      void drawSnowMan();
+   glPopMatrix();
+
+   drawString(0.5,0.5,0,"toto", 1);
+   g_drawMode = kOutline;
+
+   circle(0,0,1);
+   glColor3f(255,0,0);
+   renderPulse();
+   glColor3f(0,200,0);
+   rect(-0.5,0.5,0.25,0.25);
+   g_drawMode = kFilled;
+   drawGrid(20,10,0.1,0.1);
 
    // need to specicy float type to template func
    //drawBuffer(g_array,N);
@@ -77,9 +95,9 @@ void reshapeFunc(int w, int h) {
    if(h == 0)
       h = 1;
 
-   // aspect ratio
-   //float aspect = (float)w/(float)h;
-   float aspect = 1.0;
+   // aspect ratio (keep proportions when resize)
+   float aspect = (float)w/(float)h;
+   //float aspect = 1.0;
 
    // Set the viewport to be the entire window
    glViewport(0, 0, w, h);
@@ -92,7 +110,7 @@ void reshapeFunc(int w, int h) {
 
    // Set clipping area's left, right, bottom, top (default -1,1,-1,1)
    if (w>h)
-      gluOrtho2D(-1.0*aspect, -1.0*aspect, -1.0, 1.0);
+      gluOrtho2D(-1.0*aspect, 1.0*aspect, -1.0, 1.0);
    else
       gluOrtho2D(-1.0, 1.0, -1.0/aspect, 1.0/aspect);
    
