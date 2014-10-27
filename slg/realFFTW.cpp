@@ -17,10 +17,30 @@ realFFTW::realFFTW(int N){
 realFFTW::~realFFTW(){
 	fftw_destroy_plan(_forward);
 	fftw_destroy_plan(_inverse);
-	fftw_free(_in);
-	fftw_free(_out);
-	free(_mag);
-	free(_phase);
+	
+	if (_in!=NULL)
+		fftw_free(_in);
+		_in = NULL;
+
+	if (_out!=NULL)
+		fftw_free(_out);
+		_out = NULL;
+
+	if (_fftCoef!=NULL)
+		fftw_free(_fftCoef);
+		_fftCoef = NULL;
+
+	if (_mag!=NULL)
+		free(_mag);
+		_mag = NULL;
+
+	if (_phase!=NULL)
+		free(_phase);
+		_phase = NULL;
+
+	if (_inverse != NULL)
+		free(_inversed);
+		_inversed = NULL;
 }
 
 void realFFTW::setInput(double* buffer, int buffSize){
@@ -50,7 +70,7 @@ void realFFTW::getOut(int index){
 void realFFTW::getMagnitude(double* buffer, int buffSize){
 	for(int i=0;i<(_N/2)+1;i++){
 		//normalization
-		_mag[i] = (1./_N)*sqrt((_out[i][0]*_out[i][0])+(_out[i][1]*_out[i][1]));
+		_mag[i] = (2./_N)*sqrt((_out[i][0]*_out[i][0])+(_out[i][1]*_out[i][1]));
 	}
 	memcpy(buffer,_mag,buffSize*sizeof(double));
 }
@@ -58,7 +78,7 @@ void realFFTW::getMagnitude(double* buffer, int buffSize){
 void realFFTW::getMagnitudeDB(double* buffer, int buffSize){
 	for(int i=0;i<(_N/2)+1;i++){
 		//normalization
-		_mag[i] = 20*log10((1./_N)*sqrt((_out[i][0]*_out[i][0])+(_out[i][1]*_out[i][1])));
+		_mag[i] = 20*log10((2./_N)*sqrt((_out[i][0]*_out[i][0])+(_out[i][1]*_out[i][1])));
 	}
 	memcpy(buffer,_mag,buffSize*sizeof(double));
 }

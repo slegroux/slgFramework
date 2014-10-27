@@ -1,4 +1,4 @@
-#include "slg2D.h"
+#include "slgGraphics.h"
 #include "slgGen.h"
 #include "slgAudio.h"
 #include "realFFTW.h"
@@ -13,9 +13,9 @@
 using namespace std;
 
 // size of AUDIO BUFFER (including n channels)
-#define BUFFER_SIZE 512
+#define BUFFER_SIZE 1024
 // global variables
-int g_refreshRateMs = 50; // refresh interval in milliseconds
+int g_refreshRateMs = 30; // refresh interval in milliseconds
 float g_phase = 0.0;
 int g_freq = 11025;
 SAMPLE g_t = 0;
@@ -34,10 +34,12 @@ int g_bufferSize = (int)BUFFER_SIZE/NUM_CHANNS; //n samples for 1 channel of aud
 // fft of one channel
 SAMPLE *g_fftBuff = NULL;
 int g_fftSize = (g_bufferSize/2)+1; //n fft bins
+// window (e.g. hanning)
+SAMPLE *g_window = NULL;
 
 //Global classes 
 slgAudio *audio = NULL;
-realFFTW *myfft = NULL;
+realFFTW *g_Myfft = NULL;
 
 Mutex g_mutex;
 
@@ -45,6 +47,7 @@ Mutex g_mutex;
 //void idleFunc();
 void help();
 void setup();
+void cleanup();
 void displayFunc();
 void reshapeFunc(int w, int h);
 void Timer(int value);
@@ -54,12 +57,12 @@ void menu(int item);
 
 void setup(){
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
+   glEnable (GL_BLEND);
+   glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
    //bufferBytes = bufferFrames * MY_CHANNELS * sizeof(SAMPLE);
    // allocate global buffer
-   g_buffer = new SAMPLE[g_bufferSize];
-   memset( g_buffer, 0, sizeof(SAMPLE)*g_bufferSize);
-   g_fftBuff = new SAMPLE[g_fftSize];
-   memset(g_fftBuff,0,sizeof(SAMPLE)*g_fftSize);
+   
 }
 
 /* Called back when timer expired */
@@ -69,7 +72,16 @@ void Timer(int value) {
    //g_phase-=0.05;
    g_freq += 10;
    //g_freq = (int)g_freq % 30;
+   
+
 }
+
+struct AudioCallbackData{
+   int n_channels = 2;
+   SAMPLE *audio_buffer;
+   unsigned int audio_buffer_size;
+   realFFTW *fft_class;
+};
 
 int audioCallback( void * outputBuffer, void * inputBuffer, 
                    unsigned int nFrames, double streamTime,
@@ -77,14 +89,34 @@ int audioCallback( void * outputBuffer, void * inputBuffer,
 {
    SAMPLE * out = (SAMPLE *)outputBuffer;
    SAMPLE * in = (SAMPLE *)inputBuffer;
-   //memset(in,0,nFrames*sizeof(SAMPLE));
+   memset(g_buffer,0,g_bufferSize*sizeof(SAMPLE));
    memset(out,0,nFrames*sizeof(SAMPLE));
-   
+
    g_mutex.lock();
+   
+   switch (g_inputSignal){
+      case kSine:
+         for (int i=0;i<g_bufferSize;i++){
+            g_buffer[i] = ::sin( 2 * M_PI * g_freq * g_t / SAMPLE_RATE);
+         }
+         g_t += 1.0;
+         break;
+
+      case kInput:
+         for (int i=0;i<g_bufferSize;i++){
+            g_buffer[i] = in[i*NUM_CHANNS];
+         }
+         break;
+   }
+   
+   g_Myfft->setInput(g_buffer, g_bufferSize);
+   g_Myfft->forwardTransform();
+         
+   g_mutex.unlock();
    
    //memcpy(out,in, nFrames*sizeof(SAMPLE));
    // fill
-   for( int i = 0; i < nFrames; i++ )
+   /*for( int i = 0; i < nFrames; i++ )
    {
       switch (g_inputSignal){
          
@@ -104,8 +136,8 @@ int audioCallback( void * outputBuffer, void * inputBuffer,
       for( int j = 1; j < NUM_CHANNS; j++ )
          out[i*NUM_CHANNS+j] = out[i*NUM_CHANNS];
       g_t += 1.0;
-   }
-   g_mutex.unlock();
+   }*/
+  
    return 0;
 }
 
@@ -115,40 +147,41 @@ void displayFunc() {
    //but no depth in 2D so:
    glClear(GL_COLOR_BUFFER_BIT);
    glLoadIdentity();
-   
-   g_mutex.lock();
 
-   /*SAMPLE *window = NULL;
-   window = new SAMPLE[g_bufferSize];*/
-   SAMPLE window[g_bufferSize];
+   // draw background dashed grid
+   glPushAttrib(GL_ENABLE_BIT|GL_CURRENT_BIT);
+      glLineWidth(1);
+      glLineStipple(4, 0xAAAA);
+      glEnable(GL_LINE_STIPPLE);
+      glColor4f(1,1,1,0.3);
+      Grid(-1,-1.0,2,2,10,10);
+   glPopAttrib();
 
-   hanning( window, g_bufferSize);
-   //applyWindow(g_buffer,window, g_bufferSize);
-
-   myfft = new realFFTW(g_bufferSize);
-   myfft->setInput(g_buffer, g_bufferSize);
-   myfft->forwardTransform();
+   //g_mutex.lock();
    
    switch (g_key){
       case kAmplitude:
-         drawBuffer(g_buffer,g_bufferSize,-1.0,1.0);
+         g_mutex.lock();
+         Buffer(g_buffer,g_bufferSize,-1.0,1.0,kLine);
+         g_mutex.unlock();
          break;
       
       case kSpectrum:
-         myfft->getMagnitude(g_fftBuff,g_fftSize);
-         drawBuffer(g_fftBuff,g_fftSize);
+         g_mutex.lock();
+         g_Myfft->getMagnitude(g_fftBuff,g_fftSize);
+         Buffer(g_fftBuff,g_fftSize, 0.0,1.0,kStem);
+         g_mutex.unlock();
          break;
       
       case kSpectrumDB:
-         myfft->getMagnitudeDB(g_fftBuff,g_fftSize);
-         drawBuffer(g_fftBuff,g_fftSize);
+         g_mutex.lock();
+         g_Myfft->getMagnitudeDB(g_fftBuff,g_fftSize);
+         Buffer(g_fftBuff,g_fftSize, -120.0, 0.0,kLine);
+         g_mutex.unlock();
          break;
    }
-   glColor3f(20,20,200);
-   drawGrid(5,5,0.1,0.1);
-   
-   g_mutex.unlock();
-   
+
+   glFlush();
    glutSwapBuffers(); //equivalent to glFlush for double buffering
 
 }
@@ -186,10 +219,24 @@ int main(int argc, char** argv) {
    glutAddMenuEntry("Exit", 0);
    glutAttachMenu(GLUT_RIGHT_BUTTON);
 
+   g_buffer = new SAMPLE[g_bufferSize];
+   memset( g_buffer, 0, sizeof(SAMPLE)*g_bufferSize);
+   
+   g_fftBuff = new SAMPLE[g_fftSize];
+   memset(g_fftBuff,0,sizeof(SAMPLE)*g_fftSize);
+   
+   /*g_window = new SAMPLE[g_bufferSize];
+   memset(g_window,0,sizeof(SAMPLE)*g_bufferSize);
+   hanning(g_window, g_bufferSize);*/
+
+   g_Myfft = new realFFTW(g_bufferSize);
+   //applyWindow(g_buffer,window, g_bufferSize);
+
    audio = new slgAudio( NUM_CHANNS, SAMPLE_RATE, BUFFER_SIZE );
-   //slgAudio audio( NUM_CHANNS, SAMPLE_RATE, BUFFER_SIZE );
+   cout<<"create audio class"<<endl;
    // open audio stream
    audio->openStream( &audioCallback);
+   cout<<"open audio stream"<<endl;
     
    // info about default input/output devices
    audio->info();
@@ -198,22 +245,44 @@ int main(int argc, char** argv) {
    help();
 
    audio->startStream();
+   cout<<"start audio stream"<<endl;
    //Start the glut loop! 
    glutMainLoop();
+   
    audio->stopStream();
-   //clean up
+   cout<<"stop audio stream"<<endl;
+   
    audio->closeStream();
+   cout<<"close audio stream"<<endl;
    
-   delete audio;
-   delete myfft;
-
-   delete [] g_buffer;
-   g_buffer = NULL;
-
-   delete [] g_fftBuff;
-   g_fftBuff = NULL;
+   cleanup();
+   cout<<"cleanup"<<endl;
    
+
    return 0;
+}
+
+void cleanup(){
+   if (g_buffer != NULL){
+      delete [] g_buffer;
+      g_buffer = NULL;
+   }
+   
+   if (g_fftBuff != NULL){
+      delete [] g_fftBuff;
+      g_fftBuff = NULL;
+   }
+
+   if (g_window != NULL){
+      delete [] g_window;
+      g_window = NULL;
+   }
+
+   if (g_Myfft != NULL)
+      delete g_Myfft;
+
+   if (audio != NULL)
+      delete audio;
 }
 
 void reshapeFunc(int w, int h) {
@@ -316,8 +385,7 @@ void keyboardFunc(unsigned char key, int x, int y) {
 
    case 'q':
       //clean up
-      delete [] g_buffer;
-      g_buffer = NULL;
+      cleanup();
       exit(0);
       break;
 
@@ -338,8 +406,7 @@ void keyboardFunc(unsigned char key, int x, int y) {
 
    case 27:
       //clean up
-      delete [] g_buffer;
-      g_buffer = NULL;
+      cleanup();
       exit(0);
       break;
    }

@@ -8,7 +8,7 @@ FLAGS=-D__LINUX_ALSASEQ__ -D__UNIX_JACK__ -c -g
 LIBS=-lasound -lpthread -ljack -lstdc++ -lm -lstk
 endif
 ifeq ($(UNAME), Darwin)
-FLAGS=-D__MACOSX_CORE__ -c -w
+FLAGS=-D__MACOSX_CORE__ -c -w -g -Wall -Wextra -Werror -pedantic
 LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 	-framework OpenGL -framework GLUT \
 	-framework IOKit -framework Carbon \
@@ -31,7 +31,7 @@ LIB_PATH = -L/usr/local/lib/
 # executable
 TARGET = test
 
-OBJS = Stk.o Thread.o RtAudio.o slgAudio.o slgGen.o realFFTW.o slg2D.o main.o
+OBJS = Stk.o Thread.o RtAudio.o slgAudio.o slgGen.o realFFTW.o slgGraphics.o main.o
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
@@ -39,8 +39,8 @@ $(TARGET): $(OBJS)
 main.o:
 	$(CXX) $(FLAGS) $(INC_PATH) main.cpp
 
-slg2D.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slg2D.cpp
+slgGraphics.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgGraphics.cpp
 
 realFFTW.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)realFFTW.cpp

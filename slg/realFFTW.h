@@ -42,8 +42,8 @@ public:
 	void getOut(int index);
 
 private:
-	double *_in, *_mag, *_phase, *_inversed;
-	fftw_complex* _out, *_fftCoef;
+	double *_in = NULL, *_mag = NULL, *_phase = NULL, *_inversed =NULL;
+	fftw_complex* _out = NULL, *_fftCoef = NULL;
 	fftw_plan _forward,_inverse;
 	int _N;	
 };

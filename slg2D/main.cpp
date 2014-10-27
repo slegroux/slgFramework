@@ -1,4 +1,4 @@
-#include "slg2D.h"
+#include "slgGraphics.h"
 #include "slgGen.h"
 #include "realFFTW.h"
 #include <math.h>
@@ -43,8 +43,11 @@ void Timer(int value) {
 
 void setup(){
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
-   /*g_array= new float[N];
-   memset(g_array,0,sizeof(float)*N);*/
+   // transparency
+    glEnable (GL_BLEND);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
 }
 
 void displayFunc() {
@@ -60,30 +63,41 @@ void displayFunc() {
    glColor3f(255,255,255);
 
    for (int i=0;i<N;i++){
-      g_array[i] = (float) -0.5+sin(2*M_PI*5*(float)i/N);
+      g_array[i] = sin(2*M_PI*5*(float)i/N);
    }   
 
-   //drawBuffer(g_array,N);
-   line(0,0,1,1);
-   glPushMatrix();
-      glTranslatef(0.5,0.5,0);
-      void drawSnowMan();
-   glPopMatrix();
-
-   drawString(0.5,0.5,0,"toto", 1);
-   g_drawMode = kOutline;
-
-   circle(0,0,1);
-   glColor3f(255,0,0);
-   renderPulse();
-   glColor3f(0,200,0);
-   rect(-0.5,0.5,0.25,0.25);
+   
+   /*g_drawMode = kOutline;
+   Axis();
+   Line(0,0,0.5,0.5);
+   glColor3f(1.0,0.0,0.0);
+   BitmapString(0.5,0.5,0,"toto", 1);
+   glColor3f(1.0,1.0,1.0);
+   Circle(0,0,1);
+   //g_rectMode = kCenter; check the centered/bottom difference for rectangles
+   glColor3f(0,0,1.0);
+   Triangle(-0.0, -1.0, -1,1,1,1);
+   glColor3f(0.0,1.0,0.0);
    g_drawMode = kFilled;
-   drawGrid(20,10,0.1,0.1);
+   Rectangle(-0.5,0.5,0.5,0.25);
+   g_drawMode = kOutline;
+   //GridPoints(0,5,0.1,0.1);
+   glColor3f(1.0,1.0,1.0);
+   glLineWidth(1);
+   Grid(0, 0, 1,1,5,5);
+   Ellipse(0,0,0.5,0.25);*/
 
    // need to specicy float type to template func
-   //drawBuffer(g_array,N);
-   
+
+   glPushAttrib(GL_ENABLE_BIT|GL_CURRENT_BIT);
+      glLineWidth(1);
+      glLineStipple(4, 0xAAAA);
+      glEnable(GL_LINE_STIPPLE);
+      glColor4f(1,1,1,0.3);
+      Grid(-1,-1.0,2,2,10,10);
+   glPopAttrib();
+   glLineWidth(5);
+   Buffer(g_array,N, -1.0f,1.0f);
    glutSwapBuffers(); //equivalent to glFlush for double buffering
 
 }
@@ -96,8 +110,8 @@ void reshapeFunc(int w, int h) {
       h = 1;
 
    // aspect ratio (keep proportions when resize)
-   float aspect = (float)w/(float)h;
-   //float aspect = 1.0;
+   //float aspect = (float)w/(float)h;
+   float aspect = 1.0;
 
    // Set the viewport to be the entire window
    glViewport(0, 0, w, h);
