@@ -13,7 +13,7 @@ LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 	-framework OpenGL -framework GLUT \
 	-framework IOKit -framework Carbon \
 	-framework Foundation -framework AppKit \
-	-lstdc++ -lm -lfftw3 #-lgsl
+	-lstdc++ -lm -lfftw3 #-lglui#-lgsl
 endif
 
 # include slg classes
@@ -31,7 +31,7 @@ LIB_PATH = -L/usr/local/lib/
 # executable
 TARGET = test
 
-OBJS = Stk.o Thread.o RtAudio.o slgAudio.o slgGen.o realFFTW.o slgGraphics.o main.o
+OBJS = Stk.o Thread.o RtAudio.o slgAudio.o slgCircularBuffer.o ScrollingWaveform.o slgGen.o realFFTW.o slgGraphics.o main.o
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
@@ -47,6 +47,12 @@ realFFTW.o:
 
 slgGen.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgGen.cpp
+
+slgCircularBuffer.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgCircularBuffer.cpp
+
+ScrollingWaveform.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)ScrollingWaveform.cpp
 
 slgAudio.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgAudio.cpp

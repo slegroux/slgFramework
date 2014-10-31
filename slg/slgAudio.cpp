@@ -88,7 +88,7 @@ void slgAudio::openStream( RtAudioCallback callback, void * userData )
     oParams.firstChannel = 0;
     
     //open stream
-    m_audio->openStream( &oParams, &iParams, RTAUDIO_FLOAT64, m_sampleRate, &m_bufferSize, callback, NULL, &options); 
+    m_audio->openStream( &oParams, &iParams, RTAUDIO_FLOAT64, m_sampleRate, &m_bufferSize, callback, userData, &options); 
 
 }
 
