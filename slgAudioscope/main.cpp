@@ -1,8 +1,17 @@
+/**
+ *  @file       main.cpp
+ *
+ *  @author     Sylvain Le Groux <slegroux [at] stanford.edu>
+ *  
+ *              Copyright (c) 2013 Sylvain Le Groux
+ *
+ **/
 #include "slgGraphics.h"
 #include "slgGen.h"
 #include "slgAudio.h"
 #include "realFFTW.h"
 #include "slgCircularBuffer.h"
+#include "slgCircularBuffer2D.h"
 #include "Thread.h"
 #include <math.h>
 #include <iostream>
@@ -10,30 +19,30 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <boost/circular_buffer.hpp>
 
 
 using namespace std;
 
-// size of AUDIO BUFFER (including n channels)
-#define BUFFER_SIZE 1024
-const unsigned int g_ring_size = BUFFER_SIZE*100;
+// global constants
+#define BUFFER_SIZE 8
+const unsigned int g_ring_size = BUFFER_SIZE*2;
+const int g_refreshRateMs = 100; // refresh interval in milliseconds
 
 // global variables
-int g_refreshRateMs = 30; // refresh interval in milliseconds
 float g_phase = 0.0;
 int g_freq = 11025;
 SAMPLE g_t = 0;
 
 // UI
 int g_key = 1;
-enum displayMode {kAmplitude = 1, kSpectrum, kSpectrumDB, kScrollingWaveform};
+enum displayMode {kAmplitude = 1, kSpectrum, kSpectrumDB, kScrollingWaveform,kSpectrogram};
 enum InputMode {kSine,kInput};
 InputMode g_inputSignal = kInput;
 enum DisplayDim {k2d,k3d};
 DisplayDim g_dimension = k2d;
 
 Mutex g_mutex;
-
 
 // data that is passed around audio and gfx
 struct AudioCallbackData{
@@ -45,8 +54,11 @@ struct AudioCallbackData{
    SAMPLE *fft_buffer;
    unsigned int fft_buffer_size;
    SAMPLE *analysis_window;
-   slgCircularBuffer ring_buffer;
+   slgCircularBuffer <SAMPLE> ring_buffer;
    unsigned int ring_buffer_size;
+   slgCircularBuffer<SAMPLE*> ring_spectrum;
+   boost::circular_buffer<SAMPLE*> boost_ring;
+
 
    //constructor
    AudioCallbackData(){
@@ -59,7 +71,7 @@ struct AudioCallbackData{
       
       // fft of one channel
       fft_buffer = NULL;
-      fft_buffer_size = (audio_buffer_size/2)+1; //n fft bins
+      fft_buffer_size = (audio_buffer_size/2); //n fft bins
       fft_buffer = new SAMPLE[fft_buffer_size];
       memset(fft_buffer,0,sizeof(SAMPLE)*fft_buffer_size);
       
@@ -72,8 +84,10 @@ struct AudioCallbackData{
       fft_class = NULL;
       fft_class = new realFFTW(audio_buffer_size);
       //applyWindow(g_buffer,window, g_bufferSize);
-
-      ring_buffer.set_size(g_ring_size);
+      ring_buffer_size = g_ring_size;
+      ring_buffer.set_size(ring_buffer_size);
+      ring_spectrum.set_size(ring_buffer_size);
+      boost_ring.set_capacity(ring_buffer_size);
    }
 
    //destructor
@@ -103,7 +117,6 @@ struct AudioCallbackData{
 AudioCallbackData g_callback_data;
 
 
-
 //function definitions
 //void idleFunc();
 static void Help();
@@ -119,7 +132,6 @@ static void specialFunc(int key, int x, int y);
 static void menu(int item);
 
 
-
 /* Called back when timer expired */
 static void Timer(int value) {
 
@@ -128,8 +140,6 @@ static void Timer(int value) {
    //g_phase-=0.05;
    g_freq += 10;
    //g_freq = (int)g_freq % 30;
-   
-
 }
 
 
@@ -151,7 +161,7 @@ int AudioCallback( void * outputBuffer, void * inputBuffer,
       case kSine:
          g_t = streamTime;
          for (int i=0;i<data->audio_buffer_size;i++){
-            data->audio_buffer[i] = ::sin( 2 * M_PI * g_freq * g_t / SAMPLE_RATE);
+            data->audio_buffer[i] = 0.7*::sin( 2 * M_PI * g_freq * g_t / SAMPLE_RATE);
             g_t += 1.0;   
          }
          break;
@@ -165,17 +175,35 @@ int AudioCallback( void * outputBuffer, void * inputBuffer,
    
    data->fft_class->setInput(data->audio_buffer, data->audio_buffer_size);
    data->fft_class->forwardTransform();
-
-   data->ring_buffer.Write(data->audio_buffer, data->audio_buffer_size);
-   //cout<<g_callback_data.ring_buffer.get_num_elements()<<endl;
-   cout<<g_callback_data.ring_buffer.get_size()<<endl;
-   cout<<g_callback_data.ring_buffer.get_write_idx()<<endl;     
-   cout<<g_callback_data.ring_buffer.isFull()<<endl;
-   if (g_callback_data.ring_buffer.isFull())
-      g_callback_data.ring_buffer.Empty();
+   g_callback_data.fft_class->getMagnitude(g_callback_data.fft_buffer,g_callback_data.fft_buffer_size);
    
+   // push data in ring buffer spectrum by spectrum
+   g_callback_data.boost_ring.push_back(g_callback_data.fft_buffer);
+
+
+   //fft is over all audio buffer write the whole buffer at once
+   //g_callback_data.ring_spectrum.Write(g_callback_data.fft_buffer);
+
+   /*cout<<"data.fftbuff"<<endl;
+   for (int i =0;i<g_callback_data.fft_buffer_size;++i){
+      cout<<g_callback_data.fft_buffer[i]<<endl;
+   }
+   cout<<"-----------"<<endl;
+   cout<<"num elements: "<<g_callback_data.ring_spectrum.get_num_elements()<<endl;
+
+   SAMPLE* spectrum = new SAMPLE[g_callback_data.fft_buffer_size];
+   //spectrum = g_callback_data.ring_spectrum.Read();
+   cout<<"spectrum"<<endl;
+   for (int i=0;i<g_callback_data.fft_buffer_size;++i){
+      cout<<spectrum[i]<<endl;
+   }
+
+   //write sample by sample
+   for (int i=0;i<nFrames;i++){
+      g_callback_data.ring_buffer.Write(in[i*NUM_CHANNS]);
+   }*/
+
    g_mutex.unlock();
-   //cout<<"Stream Time: "<<streamTime<<endl;
    
    //memcpy(out,in, nFrames*sizeof(SAMPLE));
    // fill
@@ -223,39 +251,85 @@ static void displayFunc() {
    switch (g_key){
       case kAmplitude:
          g_mutex.lock();
-         Buffer(g_callback_data.audio_buffer,g_callback_data.audio_buffer_size,-1.0,1.0,kPoints);
+         Buffer1D(g_callback_data.audio_buffer,g_callback_data.audio_buffer_size,-1.0,1.0,kLine);
          g_mutex.unlock();
          break;
       
       case kSpectrum:
          g_mutex.lock();
          g_callback_data.fft_class->getMagnitude(g_callback_data.fft_buffer,g_callback_data.fft_buffer_size);
-         Buffer(g_callback_data.fft_buffer,g_callback_data.fft_buffer_size, 0,1, kStem);
+         //cout<<g_callback_data.fft_buffer[0]<<endl;
+         Buffer1D(g_callback_data.fft_buffer,g_callback_data.fft_buffer_size, 0,1, kStem);
          g_mutex.unlock();
          break;
       
       case kSpectrumDB:
          g_mutex.lock();
          g_callback_data.fft_class->getMagnitudeDB(g_callback_data.fft_buffer,g_callback_data.fft_buffer_size);
-         Buffer(g_callback_data.fft_buffer,g_callback_data.fft_buffer_size, -120.0, 0.0,kLine);
+         Buffer1D(g_callback_data.fft_buffer,g_callback_data.fft_buffer_size, -120.0, 0.0,kLine);
          g_mutex.unlock();
          break;
 
       case kScrollingWaveform:
+      {
          g_mutex.lock();
-         SAMPLE *data = new SAMPLE [g_ring_size];
-         //memset(data,0,g_ring_size*sizeof(SAMPLE));
-         g_callback_data.ring_buffer.Read(data,g_ring_size);
-         Buffer(data,g_ring_size, -1.0,1.0,kLine);
+         SAMPLE *data = new SAMPLE[g_ring_size];
+         memset(data,0,g_ring_size*sizeof(SAMPLE));
+         glColor4f(1,0,0,0.4);
+         for (int i=0;i<g_ring_size;++i){
+            data[i]=g_callback_data.ring_buffer.Read();
+            //cout<<data[i]<<endl;
+         }
+         Buffer1D(data,g_ring_size, -1.0,1.0,kLine);
          g_mutex.unlock();
          break;
+      }
+
+      case kSpectrogram:
+      {
+
+         g_mutex.lock();
+
+       
+
+         cout<<"fft buffer size: "<<g_callback_data.fft_buffer_size<<endl;
+         boost::circular_buffer<SAMPLE*>::iterator ring_iterator;
+         for(ring_iterator = g_callback_data.boost_ring.begin(); ring_iterator != g_callback_data.boost_ring.end();ring_iterator++){
+            cout<<"it: "<<ring_iterator- g_callback_data.boost_ring.begin()<<endl;
+
+            cout<<(*ring_iterator)<<endl;
+         }
+
+         // 1 spectral frame
+         SAMPLE *spectrum= new SAMPLE[g_callback_data.fft_buffer_size];
+         memset(spectrum,0,(g_callback_data.fft_buffer_size)*sizeof(SAMPLE));
+         spectrum = g_callback_data.ring_spectrum.Read();
+         for (int i=0;i<g_callback_data.fft_buffer_size;i++){
+            cout<<spectrum[i]<<endl;
+         }
+
+         //spectrum = g_callback_data.ring_spectrum.Read();
+         //spectrum = g_callback_data.boost_ring.pop_front();
+
+         //2D spectrogram
+         SAMPLE **spectrogram = new SAMPLE*[g_callback_data.ring_buffer_size];
+         
+         for (int i =0;i<g_callback_data.ring_buffer_size;i++){
+           
+            spectrogram[i] = spectrum;
+         }
+         //Buffer2D(g_callback_data.boost_ring,g_callback_data.fft_buffer_size-1,g_callback_data.ring_buffer_size,0,g_callback_data.fft_buffer_size);
+         
+         
+         g_mutex.unlock();
+         break;
+      }
    }
 
    glFlush();
    glutSwapBuffers(); //equivalent to glFlush for double buffering
 
 }
-
 
 
 /* Main function: GLUT runs as a console application starting at main()  */
@@ -265,7 +339,6 @@ int main(int argc, char** argv) {
    SetupGLUT(argc, argv);
    SetupGL();
    //SetupLight();
-
    
    // Audio
    slgAudio *audio = NULL;
@@ -283,7 +356,7 @@ int main(int argc, char** argv) {
 
    audio->startStream();
    cout<<"start audio stream"<<endl;
-   
+
    //Start the glut loop! 
    glutMainLoop();
    
@@ -492,6 +565,10 @@ static void keyboardFunc(unsigned char key, int x, int y) {
       g_key = kScrollingWaveform;
       break;
 
+   case '5':
+      g_key = kSpectrogram;
+      break;
+
    case 27:
       //clean up
       Cleanup();
@@ -556,9 +633,10 @@ static void Help()
     fprintf( stderr, "'h' - print this help message\n" );
     fprintf( stderr, "'i' - mic audio input \n" );
     fprintf( stderr, "'s' - sine audio input\n" );
-    fprintf( stderr, "'1' - toggle waveform\n" );
+    fprintf( stderr, "'1' - toggle audio buffer\n" );
     fprintf( stderr, "'2' - toggle spectrum\n" );
-    fprintf( stderr, "'3' - toggle spectrum DB display\n" );
+    fprintf( stderr, "'3' - toggle spectrum in Decibels\n" );
+    fprintf( stderr, "'4' - toggle scrolling waveform\n" );
     fprintf( stderr, "'esc' - quit\n" );
     fprintf( stderr, "----------------------------------------------------\n" );
     fprintf( stderr, "\n" );

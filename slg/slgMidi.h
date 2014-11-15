@@ -10,7 +10,7 @@
 #ifndef __SLGMIDI_H__
 #define __SLGMIDI_H__
 
-#include "RtMidi/RtMidi.h"
+#include "RtMidi.h"
 using namespace std;
 
 class slgMidi{
@@ -20,10 +20,14 @@ public:
 	~slgMidi();
 
 public:
-	void setup(void * userData=NULL);
-	void start(RtMidiIn::RtMidiCallback callback);
-	void info();
-	void sendMessage(std::vector<unsigned char> message);
+	void Setup();
+	void Info();
+	void set_input_port(unsigned int input);
+	void set_output_port(unsigned int output);
+	void Start(RtMidiIn::RtMidiCallback callback);
+	void set_message(std::vector<unsigned char> message);
+	void SendMessage(std::vector<unsigned char> message);
+	
 
 private:
 	RtMidiIn * m_midiin;

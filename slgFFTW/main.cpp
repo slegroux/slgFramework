@@ -1,4 +1,4 @@
-#include "slg2D.h"
+#include "slgGraphics.h"
 #include "slgGen.h"
 #include "realFFTW.h"
 #include <math.h>

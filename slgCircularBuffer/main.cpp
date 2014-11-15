@@ -1,53 +1,69 @@
 #include "slgCircularBuffer.h"
+#include "slgCircularBuffer2D.h"
+#include <queue>
+#include <vector>
 
 using namespace std;
 
 int main(int argc, char** argv)
 {
-	// max size buffer = 8
-	slgCircularBuffer ring_buffer(8);
-	//ring_buffer= new slgCircularBuffer[8];
-	// input buffer size = 10
-	std::cout<<"read_idx before: "<<ring_buffer.get_read_idx()<<std::endl;
-	SAMPLE out[4];
-	SAMPLE in10[10] = {1,2,3,4,5,6,7,8,9,10};
-	for (int i=0;i<10;i++){
-		ring_buffer.Write(in10,1);
-		std::cout<<"write"<<std::endl;
-		std::cout<<"num elements:"<<ring_buffer.get_num_elements()<<std::endl;
-		ring_buffer.Read(out,2);
-		std::cout<<"read"<<std::endl;
-		std::cout<<"num elements:"<<ring_buffer.get_num_elements()<<std::endl;
-		std::cout<<"read idx:"<<ring_buffer.get_read_idx()<<std::endl;
-		std::cout<<"write idx:"<<ring_buffer.get_write_idx()<<std::endl;
-		ring_buffer.Print();
-		for (int i=0;i<3;i++)
-			std::cout<<out[i]<<std::endl;
+	// play with STL queues
+
+	queue <vector<int> > my_queue;
+	vector<int> first(3,0);
+	vector<int> second(5,1);
+	int thedata[] = {45, 34, 56, 27, 71, 50, 62};
+	my_queue.push(first);
+	my_queue.push(second);
+
+	vector<int> temp;
+	temp = my_queue.front();
+	my_queue.pop();
+	cout<<"first elem of first vect "<<temp[0]<<endl;
+	temp=my_queue.front();
+	cout<<"first elem of second vect "<<temp[0]<<endl;
+
+	// play with my ring buffer
+	SAMPLE* array;
+	array = new SAMPLE[3];
+	SAMPLE* array2 = new SAMPLE[3];
+
+	SAMPLE* buf = new SAMPLE[3];
+	
+	for (int i =0;i<3;++i){
+		array[i] = i;
+		array2[i] = 2*i;
 	}
 
+	// 5 rows of sample*
+	slgCircularBuffer<SAMPLE *> ring_buffer(5);
 
-	/*ring_buffer.Write(in10, 6);
+	ring_buffer.Write(array);
+	ring_buffer.Write(array2);
+
+	ring_buffer.Write(array);
+	ring_buffer.Write(array2);
+	buf = ring_buffer.Read();
+	for (int i =0;i<3;++i)
+		cout<<buf[i]<<endl;
+	buf = ring_buffer.Read();
+	buf = ring_buffer.Read();
+
+	/*ring_buffer.Write(6.0);
+	ring_buffer.Write(7.0);
+
 	ring_buffer.Print();
-	std::cout<<"n_elements: "<<ring_buffer.get_num_elements()<<std::endl;
-	std::cout<<"write idx: "<<ring_buffer.get_write_idx()<<std::endl;
-	std::cout<<"read idx: "<<ring_buffer.get_read_idx()<<std::endl;
-	SAMPLE out[4];
-	ring_buffer.Read(out,4);
-	for (int i=0;i<4;i++){
-		std::cout<<out[i]<<endl;
-	}
-	std::cout<<"write idx: "<<ring_buffer.get_write_idx()<<std::endl;
-	std::cout<<"read idx: "<<ring_buffer.get_read_idx()<<std::endl;
-	
-	ring_buffer.Read(out,4);
-	for (int i=0;i<4;i++){
-		std::cout<<out[i]<<endl;
-	}
 
-	std::cout<<"write idx: "<<ring_buffer.get_write_idx()<<std::endl;
-	std::cout<<"read idx: "<<ring_buffer.get_read_idx()<<std::endl;*/
-	
+	cout<<ring_buffer.Read()<<endl;
+	ring_buffer.Print();
 
+	cout<<"----------------"<<endl;
+	ring_buffer.Empty();
+	ring_buffer.Print();*/
+
+	slgCircularBuffer2D<SAMPLE> ring_buffer_2d(3,2);
+	//ring_buffer_2d.Write();
+	
 	return 0;
 }
 

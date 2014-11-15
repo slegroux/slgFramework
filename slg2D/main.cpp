@@ -5,8 +5,8 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+//#include <glm/glm.hpp>
+//#include <glm/gtc/matrix_transform.hpp>
 
 using namespace std;
  
@@ -18,8 +18,12 @@ float g_frequency=2000.0;
 int g_refreshRateMs = 30; // refresh interval in milliseconds
 
 //float *g_array;
-float g_array[N];
+SAMPLE g_array[N];
 float g_up=0.0;
+
+
+
+const int g_size_buffer=5,g_size_spectrum=2;
 
 
 //void idleFunc();
@@ -29,6 +33,7 @@ void reshapeFunc(int w, int h);
 void Timer(int value);
 void keyboardFunc(unsigned char key, int x, int y);
 void specialFunc(int key, int x, int y);
+void cleanup();
 
 /* Called back when timer expired */
 void Timer(int value) {
@@ -38,16 +43,20 @@ void Timer(int value) {
    g_phase-=0.05;
    g_frequency+=5;
    g_up=0;
-
 }
 
 void setup(){
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    // transparency
-    glEnable (GL_BLEND);
-    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   glEnable (GL_BLEND);
+   glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
 
-
+void cleanup(){
+   //free deallocate double pointer
+   /*for(int i=0;i<g_size_buffer;i++)
+      delete[] g_array2D[i];
+   delete[] g_array2D;*/
 }
 
 void displayFunc() {
@@ -55,9 +64,6 @@ void displayFunc() {
    // 2D
    //no depth in 2D!
    glClear(GL_COLOR_BUFFER_BIT);
-   glLoadIdentity();
-   glMatrixMode(GL_MODELVIEW); 
-
 
    //glClear(GL_COLOR_BUFFER_BIT  | GL_DEPTH_BUFFER_BIT);         // Clear the color buffer
    glColor3f(255,255,255);
@@ -65,7 +71,6 @@ void displayFunc() {
    for (int i=0;i<N;i++){
       g_array[i] = sin(2*M_PI*5*(float)i/N);
    }   
-
    
    /*g_drawMode = kOutline;
    Axis();
@@ -87,8 +92,9 @@ void displayFunc() {
    Grid(0, 0, 1,1,5,5);
    Ellipse(0,0,0.5,0.25);*/
 
-   // need to specicy float type to template func
-
+   //glPushAttrib(GL_ALL_ATTRIB_BITS); save all current rendering attributes
+   //glPushAttrib(GL_CURRENT_BIT);   /* Save current drawing color, etc */
+   // draw gridaf
    glPushAttrib(GL_ENABLE_BIT|GL_CURRENT_BIT);
       glLineWidth(1);
       glLineStipple(4, 0xAAAA);
@@ -97,9 +103,76 @@ void displayFunc() {
       Grid(-1,-1.0,2,2,10,10);
    glPopAttrib();
    glLineWidth(5);
-   Buffer(g_array,N, -1.0f,1.0f);
-   glutSwapBuffers(); //equivalent to glFlush for double buffering
+   
+   // struct of spectrum
+   struct Spectrum{
+      SAMPLE pts[2];
+   };
+   // succession of those create spectrogram
+   Spectrum *buf = new Spectrum[5];
+   // assign values to specific points of spectrogram
+   buf[0].pts[1] = 10;
+   buf[3].pts[0] = 0;
+   //delete[] buff
 
+
+   SAMPLE **g_array2D;
+
+   g_array2D = new SAMPLE*[g_size_buffer];
+
+   for (int i = 0;i<g_size_buffer;i++){
+      g_array2D[i] = new SAMPLE[g_size_spectrum];
+      //memset(g_array2D[i],0,sizeof(SAMPLE)*g_size_spectrum);
+   }
+   
+   cout<<g_array2D[0][0]<<' '<<g_array2D[0][1]<<endl;
+   cout<<g_array2D[1][0]<<' '<<g_array2D[1][1]<<endl;
+   cout<<g_array2D[2][0]<<' '<<g_array2D[2][1]<<endl;
+   cout<<g_array2D[3][0]<<' '<<g_array2D[3][1]<<endl;
+   cout<<g_array2D[4][0]<<' '<<g_array2D[4][1]<<endl;
+   cout<<"-----"<<endl;
+
+   SAMPLE my_array[g_size_buffer][g_size_spectrum];
+   for (int i=0;i<g_size_buffer;i++){
+      for (int j=0;j<g_size_spectrum;j++){
+         my_array[i][j] = 0;
+      }
+   }
+
+   /*my_array[0][0] = 1;
+   my_array[0][1] = 0;
+   my_array[1][0] = 1;
+   my_array[1][1] = 0;
+   my_array[2][0] = 1;
+   my_array[2][1] = 0;
+   my_array[3][0] = 1;
+   my_array[3][1] = 0;
+   my_array[4][0] = 1;
+   my_array[4][1] = 0;*/
+
+   g_array2D[0][0] = 1;
+   g_array2D[0][1] = 1;
+   g_array2D[1][0] = 0;
+   g_array2D[1][1] = 1;
+   g_array2D[2][0] = 0;
+   g_array2D[2][1] = 1;
+   g_array2D[3][0] = 1;
+   g_array2D[3][1] = 0;
+   g_array2D[4][0] = 0;
+   g_array2D[4][1] = 0;
+
+
+   // first index is time second index is frequency
+   SAMPLE **rows= new SAMPLE*[g_size_buffer];
+   for (int i=0;i<g_size_buffer;i++){
+      rows[i] = g_array2D[i];
+   }
+
+   // nrow,ncols,height min, height max
+   Buffer2D(rows,2,5,-2,2);
+   //Buffer1D(g_array,N, -1.0f,1.0f);
+   
+   glutSwapBuffers(); //equivalent to glFlush for double buffering
 }
 
 void reshapeFunc(int w, int h) {
@@ -110,8 +183,8 @@ void reshapeFunc(int w, int h) {
       h = 1;
 
    // aspect ratio (keep proportions when resize)
-   //float aspect = (float)w/(float)h;
-   float aspect = 1.0;
+   float aspect = (float)w/(float)h;
+   //float aspect = 1.0;
 
    // Set the viewport to be the entire window
    glViewport(0, 0, w, h);
@@ -143,27 +216,12 @@ void reshapeFunc(int w, int h) {
 void keyboardFunc(unsigned char key, int x, int y) {
 
    switch (key) {
-   case 'w':
-
-      break;
-   case 'a':
-
-      break;
-   case 's':
-
-      break;
-   case 'd':
-
-      break;
-   case 'q':
-
-      break;
-   case 'e':
-
-      break;
-   case 27:
-      exit(0);
-      break;
+      case 'q':
+         exit(0);
+         break;
+      case 27:
+         exit(0);
+         break;
    }
 }
 
@@ -214,5 +272,6 @@ int main(int argc, char** argv) {
   
    //Start the glut loop! 
    glutMainLoop();           // Enter the infinitely event-processing loop
+   cleanup();
    return 0;
 }

@@ -6,42 +6,17 @@
 #include <string>
 #include <math.h>
 #include <cstdlib>
-
 #include "Definitions.h"
-//#include "MyRtAudio.h"
 #include "slgAudio.h"
+
 using namespace std;
+// defines and consts
+const unsigned int g_buffSize = 1024;
 
-// our datetype
-#define SAMPLE double
-// sample rate
-#define MY_SRATE 44100
-// number of channels
-#define MY_CHANNELS 2
-// for convenience
-#define MY_PIE 3.14159265358979
-#define MY_BUFF_FRAMES = 512;
-// corresponding format for RtAudio
-#define MY_FORMAT RTAUDIO_FLOAT64
-
-
-// global for frequency
+// global
 SAMPLE g_freq = 440.0;
-// sample number variable
 SAMPLE g_t = 0.0;
 
-unsigned int g_buffSize = 1024;
-
-slgAudio *audio = NULL;
-
-int audioCallback( void * outputBuffer, void * inputBuffer, 
-                   unsigned int nFrames, double streamTime,
-                   RtAudioStreamStatus status, void * userData );
-
-//-----------------------------------------------
-// name: audioCallback
-// desc: read audio in and output to audio out
-//-----------------------------------------------
 int audioCallback( void * outputBuffer, void * inputBuffer, 
                    unsigned int nFrames, double streamTime,
                    RtAudioStreamStatus status, void * userData )
@@ -50,7 +25,7 @@ int audioCallback( void * outputBuffer, void * inputBuffer,
     SAMPLE * out = (SAMPLE *)outputBuffer;
     SAMPLE * in = (SAMPLE *)inputBuffer;
     
-    memset(out, 0, sizeof(SAMPLE)*nFrames*MY_CHANNELS );
+    memset(out, 0, sizeof(SAMPLE)*nFrames*kNumChannels );
     //memset(in, 0, sizeof(SAMPLE)*nFrames*MY_CHANNELS );
     
     /*for(size_t i = 0; i < nFrames; ++i)
@@ -70,11 +45,11 @@ int audioCallback( void * outputBuffer, void * inputBuffer,
     for( int i = 0; i < nFrames; ++i )
     {
         // generate signal
-        out[i*MY_CHANNELS] = ::sin( 2 * MY_PIE * g_freq * g_t / MY_SRATE );
+        out[i*kNumChannels] = ::sin( 2 * M_PI * g_freq * g_t / kSampleRate );
         
         // copy into other channels
-        for( int j = 1; j < MY_CHANNELS; ++j )
-            out[i*MY_CHANNELS+j] = out[i*MY_CHANNELS];
+        for( int j = 1; j < kNumChannels; ++j )
+            out[i*kNumChannels+j] = out[i*kNumChannels];
             
         // increment sample number
         g_t += 1.0;
@@ -83,47 +58,31 @@ int audioCallback( void * outputBuffer, void * inputBuffer,
 }
 
 
+int main ( int argc, char *argv[] ){   
 
-//-----------------------------------------------
-// name: initialize
-// desc: initialize miscellaneous stuff
-//-----------------------------------------------
-void initialize()
-{    
-    //cout<<"Initialize"<<endl;
-    //srand( time(NULL) );
-}
-
-//-----------------------------------------------
-// name: main
-// desc: entry point
-//-----------------------------------------------
-int main ( int argc, char *argv[] )
-{   
-    initialize();
-    //slgAudio audio(2,44100,1024);
-    try {
-        
-        audio = new slgAudio(2, 44100, 1024);
-
+    //slgAudio *audio = NULL;
+    slgAudio audio(kNumChannels,kSampleRate,kFrameSize);
+    try{
+        //audio = new slgAudio(2, 44100, 1024);
+        //slgAudio audio(kNumChannels,kSampleRate,kNumFrames);
     }
     catch (RtError & err) {
         err.printMessage();
         exit(1);
     }
 
-    audio->info();
+    //audio->info();
+    audio.info();
     
-
-    try {
-        audio->openStream(&audioCallback);
-        cout<<"Buffer Size: "<<audio->getBufferSize()<<endl;
-        audio->startStream();
-        
-        
+    try{
+        //audio->openStream(&audioCallback);
+        audio.openStream(&audioCallback);
+        //cout<<"Buffer Size: "<<audio->getBufferSize()<<endl;
+        audio.getBufferSize();
+        //audio->startStream(); 
+        audio.startStream();
     }
-    catch (RtError & err )
-    {
+    catch (RtError & err ){
         err.printMessage();
     }
 
@@ -133,12 +92,13 @@ int main ( int argc, char *argv[] )
     std::cin.get(input);
     
     try{
-        audio->stopStream();
-        audio->closeStream();
+        //audio->stopStream();
+        audio.stopStream();
+        //audio->closeStream();
+        audio.closeStream();
     } catch (RtError &err) {
         err.printMessage();
     }
 
-    
     return 0;
 }

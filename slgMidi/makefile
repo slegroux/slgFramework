@@ -13,19 +13,25 @@ LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 	-framework IOKit -framework Carbon -lstdc++ -lm
 endif
 
+SLG_DIR = ../slg/
+INC_PATH = -I../slg/ -I../RtAudio/ -I../RtMidi/ 
+RTA_DIR = ../RtAudio/
+RTM_DIR = ../RtMidi/
+
+
 OBJS=   RtMidi.o slgMidi.o test.o
 
 test: $(OBJS)
 	$(CXX) -o test $(OBJS) $(LIBS)
 
-test.o: test.cpp slgMidi.h
-	$(CXX) $(FLAGS) test.cpp
+test.o: 
+	$(CXX) $(FLAGS) $(INC_PATH) test.cpp
 
-RtMidi.o: RtMidi/RtMidi.h RtMidi/RtMidi.cpp
-	$(CXX) $(FLAGS) RtMidi/RtMidi.cpp
+RtMidi.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(RTM_DIR)RtMidi.cpp
 
-slgMidi.o: slgMidi.h slgMidi.cpp
-	$(CXX) $(FLAGS) slgMidi.cpp
+slgMidi.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgMidi.cpp
 
 clean:
 	rm -f *~ *# *.o test

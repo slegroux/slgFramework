@@ -1,5 +1,5 @@
 /*
- *  slgGL.h
+ * slgMidi.cpp
  *
  *  Created by Sylvain Le Groux 
  *  slegroux@stanford.edu
@@ -13,13 +13,13 @@
 slgMidi::slgMidi(){
 	m_midiin = NULL;
 	m_midiout = NULL;
+	Setup();
 	//unsigned char at least 0-255 range
 	// unsigned char mess[] = {0,0,0};
 	// m_message(mess,mess+sizeof(mess)/sizeof(unsigned char))
 	m_message.push_back(0);
 	m_message.push_back(0);
 	m_message.push_back(0);
-
 }
 
 slgMidi::~slgMidi(){
@@ -31,10 +31,10 @@ slgMidi::~slgMidi(){
 	{
 		delete m_midiout;
 	}
-
+	printf("cleanup slgMidi");
 }
 
-void slgMidi::setup(void *userData){
+void slgMidi::Setup(){
 
 	try{
 		m_midiin = new RtMidiIn();
@@ -53,26 +53,37 @@ void slgMidi::setup(void *userData){
 	}
 
 	// Check available ports.
-    unsigned int nPorts = m_midiin->getPortCount();
+    /*unsigned int nPorts = m_midiin->getPortCount();
 
     if ( nPorts == 0 ) {
         std::cout << "No input ports available! plug input midi device.\n";
         //goto cleanup;
-    }
+    }*/
     // Don't ignore sysex, timing, or active sensing messages.
     m_midiin->ignoreTypes( false, false, false );
 }
 
-void slgMidi::start(RtMidiIn::RtMidiCallback callback){
+void slgMidi::set_input_port(unsigned int input_port){
+	m_midiin->openPort(input_port);
+	cout << "\nOpening Midi Input Port: " << m_midiin->getPortName() << endl;
+}
 
-	std::string portName;
-    unsigned int i = 0;
-    unsigned int nPorts = m_midiout->getPortCount();
+void slgMidi::set_output_port(unsigned int output_port){
+	m_midiout->openPort(output_port);
+	cout << "\nOpening Midi Output Port: " << m_midiout->getPortName() << endl;
+}
+
+void slgMidi::Start(RtMidiIn::RtMidiCallback callback){
 
 	if(!callback){
 		std::cerr<<"No callback provided! "<<std::endl;
 		exit(1);
 	}
+
+	/*
+	std::string portName;
+    unsigned int i = 0;
+    unsigned int nPorts = m_midiout->getPortCount();
 
 	if ( nPorts == 1 ) 
     {
@@ -90,22 +101,24 @@ void slgMidi::start(RtMidiIn::RtMidiCallback callback){
     }
 
     std::cout << "\n";
-	m_midiout->openPort( i );
+	m_midiout->openPort( i );*/
 
     // Set callback function.  This should be done immediately after
     // opening the port to avoid having incoming messages written to the
     // queue.
     m_midiin->setCallback( callback );
-
-
 }
 
-void slgMidi::sendMessage(std::vector<unsigned char> message){
-	std::cout<<"send: "<<message[0]<<std::endl;
+void slgMidi::set_message(std::vector<unsigned char> message){
+	m_message = message;
+}
+
+void slgMidi::SendMessage(std::vector<unsigned char> message){
+	std::cout<<"send: "<<(int)message[0]<<' '<<(int)message[1]<<' '<<(int)message[2]<<std::endl;
 	m_midiout->sendMessage(&message);
 }
 
-void slgMidi::info(){
+void slgMidi::Info(){
 	// check input
 	unsigned int nPorts = m_midiin->getPortCount();
 	std::cout<<"-------- MIDI Inputs --------"<<std::endl;

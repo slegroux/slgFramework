@@ -76,10 +76,9 @@ void slgAudio::openStream( RtAudioCallback callback, void * userData )
     options.priority = 1;
 
     // set input and output parameters to default
-    // !!!TO DO give other options than default
     RtAudio::StreamParameters iParams, oParams;
 
-    //i/o params
+    //TODO: propose a choice of device not just default
     iParams.deviceId = m_audio->getDefaultInputDevice();
     iParams.nChannels = 2;
     iParams.firstChannel = 0;
@@ -88,7 +87,8 @@ void slgAudio::openStream( RtAudioCallback callback, void * userData )
     oParams.firstChannel = 0;
     
     //open stream
-    m_audio->openStream( &oParams, &iParams, RTAUDIO_FLOAT64, m_sampleRate, &m_bufferSize, callback, userData, &options); 
+    //!!! RTAUDIO_FLOAT32 and not 64...
+    m_audio->openStream( &oParams, &iParams, RTAUDIO_FLOAT32, m_sampleRate, &m_bufferSize, callback, userData, &options); 
 
 }
 
@@ -103,13 +103,13 @@ void slgAudio::info(){
         // std::cout<<"default input: "<<m_audio->getDefaultInputDevice()<<std::endl;
         // std::cout<<"default output: "<<m_audio->getDefaultOutputDevice()<<std::endl;
         if (info.probed ==true){
-            std::cout<<"-------- Device "<<i<<" ------"<<std::endl;
-            std::cout << "Name = " << info.name << '\n';
+            std::cout<<"----------------------------- Device "<<i<<" ---------------------------"<<std::endl;
             if (info.isDefaultInput)
-                std::cout << "DEFAULT INPUT"<<std::endl;
-            std::cout << "Max Input Channels = " << info.inputChannels << '\n';
+                std::cout << "--Default Input"<<std::endl;
             if (info.isDefaultOutput)
-                std::cout << "DEFAULT OUTPUT"<<std::endl;      
+                std::cout << "--Default Output"<<std::endl;      
+            std::cout << "Name = " << info.name << '\n';
+            std::cout << "Max Input Channels = " << info.inputChannels << '\n';
             std::cout << "Max Output Channels = " << info.outputChannels << '\n';
             std::cout << "Max Duplex Channels = " << info.duplexChannels << '\n';
         }

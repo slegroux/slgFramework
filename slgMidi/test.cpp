@@ -6,12 +6,15 @@
 
 #include <stdlib.h>
 #include <iostream>
-using namespace std;
-#include "RtMidi/RtMidi.h"
-#include "slgMidi.h"
 
+#include "RtMidi.h"
+#include "slgMidi.h"
 #include <unistd.h>
+
+using namespace std;
 #define SLEEP( milliseconds ) usleep( (unsigned long) (milliseconds * 1000.0) )
+
+slgMidi midi;
 
 // midi callback
 void midiCallback( double deltatime, std::vector< unsigned char > *message, void *userData ){
@@ -40,38 +43,42 @@ void midiCallback( double deltatime, std::vector< unsigned char > *message, void
                 break;
         }
     }
+
+    // send incoming midi messages to output
+    midi.SendMessage(*message);
 }
 
 
 // entry point
 int main(){
 
-    slgMidi midi;
-    midi.setup(NULL);
+    
     // check # of inputs and outputs
-    midi.info();
+    midi.Info();
+    midi.set_input_port(0);
+    midi.set_output_port(0);
     // choose midi ports when several options and start CB
-    midi.start(&midiCallback);
+    midi.Start(&midiCallback);
 
     //unsigned char at least 0-255 range
     unsigned char mess[] = {144,64,90};
     std::vector<unsigned char> message(mess,mess+sizeof(mess)/sizeof(unsigned char));    
-    midi.sendMessage(message);
+    midi.SendMessage(message);
     SLEEP(2000);
     message[0] = 144;
     message[1] = 64;
     message[2] = 100;
-    midi.sendMessage(message);
+    midi.SendMessage(message);
     SLEEP(1000);
     message[0] = 144;
     message[1] = 64;
     message[2] = 100;
-    midi.sendMessage(message);
+    midi.SendMessage(message);
     SLEEP(1000);
     message[0] = 144;
     message[1] = 65;
     message[2] = 100;
-    midi.sendMessage(message);
+    midi.SendMessage(message);
     
     std::cout << "reading MIDI input/ sending MIDI output... press <enter> to quit.\n";
     char input;
