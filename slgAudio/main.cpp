@@ -25,7 +25,7 @@ int audioCallback( void * outputBuffer, void * inputBuffer,
     SAMPLE * out = (SAMPLE *)outputBuffer;
     SAMPLE * in = (SAMPLE *)inputBuffer;
     
-    memset(out, 0, sizeof(SAMPLE)*nFrames*kNumChannels );
+    //memset(out, 0, sizeof(SAMPLE)*nFrames*kNumChannels );
     //memset(in, 0, sizeof(SAMPLE)*nFrames*MY_CHANNELS );
     
     /*for(size_t i = 0; i < nFrames; ++i)
@@ -60,45 +60,19 @@ int audioCallback( void * outputBuffer, void * inputBuffer,
 
 int main ( int argc, char *argv[] ){   
 
-    //slgAudio *audio = NULL;
-    slgAudio audio(kNumChannels,kSampleRate,kFrameSize);
-    try{
-        //audio = new slgAudio(2, 44100, 1024);
-        //slgAudio audio(kNumChannels,kSampleRate,kNumFrames);
-    }
-    catch (RtError & err) {
-        err.printMessage();
-        exit(1);
-    }
-
-    //audio->info();
+    slgAudio audio(kNumChannels,kSampleRate,kFrameSize);    
     audio.info();
+    audio.openStream(&audioCallback);
+    audio.getBufferSize();
+    audio.startStream();
     
-    try{
-        //audio->openStream(&audioCallback);
-        audio.openStream(&audioCallback);
-        //cout<<"Buffer Size: "<<audio->getBufferSize()<<endl;
-        audio.getBufferSize();
-        //audio->startStream(); 
-        audio.startStream();
-    }
-    catch (RtError & err ){
-        err.printMessage();
-    }
-
     // get input
     char input;
     std::cout << "running... press <enter> to quit"<<endl;
     std::cin.get(input);
     
-    try{
-        //audio->stopStream();
-        audio.stopStream();
-        //audio->closeStream();
-        audio.closeStream();
-    } catch (RtError &err) {
-        err.printMessage();
-    }
+    audio.stopStream();
+    audio.closeStream();
 
     return 0;
 }

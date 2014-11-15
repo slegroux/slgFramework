@@ -12,8 +12,7 @@
 #include <cstdlib>
 
 // constructor
-slgAudio::slgAudio( unsigned int nChann, unsigned int sr, unsigned int buffSize )
-{
+slgAudio::slgAudio( unsigned int nChann, unsigned int sr, unsigned int buffSize ){
     m_audio = NULL;
     m_numChannels = nChann;
     m_sampleRate = sr;
@@ -24,8 +23,7 @@ slgAudio::slgAudio( unsigned int nChann, unsigned int sr, unsigned int buffSize 
     std::cout<<"sr: "<<m_sampleRate<<std::endl;
     std::cout<<"m_bufferSize: "<<m_bufferSize<<std::endl;
 
-    try
-    {
+    try{
         m_audio = new RtAudio();
     }
     catch( RtError & err ) {
@@ -45,21 +43,19 @@ slgAudio::slgAudio( unsigned int nChann, unsigned int sr, unsigned int buffSize 
 }
 
 // destructor
-slgAudio::~slgAudio()
-{
-    /*if( m_audio )
+slgAudio::~slgAudio(){
+    if( m_audio )
     {
-        stop();
-        close();
-    }*/
+        stopStream();
+        closeStream();
+    }
     delete m_audio;
     m_audio = NULL;
 }
 
 
 // RtAudio configuration
-void slgAudio::openStream( RtAudioCallback callback, void * userData )
-{
+void slgAudio::openStream( RtAudioCallback callback, void * userData ){
     if( !callback )
     {
         std::cerr << "No callback provided!" << std::endl;
@@ -86,10 +82,31 @@ void slgAudio::openStream( RtAudioCallback callback, void * userData )
     oParams.nChannels = 2;
     oParams.firstChannel = 0;
     
+    RtAudioFormat sample_format = ( sizeof(SAMPLE) == 8 ) ? RTAUDIO_FLOAT64 : RTAUDIO_FLOAT32;
     //open stream
     //!!! RTAUDIO_FLOAT32 and not 64...
-    m_audio->openStream( &oParams, &iParams, RTAUDIO_FLOAT32, m_sampleRate, &m_bufferSize, callback, userData, &options); 
-
+    try {
+    m_audio->openStream( &oParams, &iParams, sample_format, m_sampleRate, &m_bufferSize, callback, userData, &options);
+    } 
+    catch ( RtError& e ) {
+        try { // again
+            std::cout<<"hack!"<<std::endl;
+            // HACK: bump the oparams device id (on some systems, default in/out devices differ)
+            oParams.deviceId++;
+            // try to open stream
+            m_audio->openStream( &oParams, &iParams, sample_format,
+                                m_sampleRate, &m_bufferSize, callback, userData );
+        } 
+        catch( RtError & e ) {
+            // error message
+            std::cerr << "[slgAudio]: cannot initialize real-time audio I/O..." << std::endl;
+            std::cerr << "[slgAudio]: | - " << e.getMessage() << std::endl;
+            // clean up
+            delete m_audio;
+            m_audio = NULL;
+            // done
+        }
+    }
 }
 
 void slgAudio::info(){
@@ -119,30 +136,28 @@ void slgAudio::info(){
 }
 
 // start audio stream
-void slgAudio::startStream()
-{
-    try
-    {
-         m_audio->startStream();        
+void slgAudio::startStream(){
+    try{
+        m_audio->startStream();        
         // RtAudio functionality for reporting latency.
         std::cout<< "-------- Real-time latency --------"<<std::endl;
         std::cout << "stream latency: " << m_audio->getStreamLatency() << " frames" << std::endl;
     }
-    catch( RtError & err )
-    {
-        err.printMessage();
+    catch( RtError & err ){
+        // error message
+        std::cerr << "[slgAudio]: cannot start real-time audio I/O..." << std::endl;
+        std::cerr << "[slgAudio]: | - " << err.getMessage() << std::endl;
+        //err.printMessage();
     }
 }
 
 // stop audio stream
-void slgAudio::stopStream()
-{
+void slgAudio::stopStream(){
     if( m_audio )
     {
         if ( m_audio->isStreamRunning() ) 
             m_audio->stopStream();
     }
-
 }
 
 void slgAudio::closeStream(){

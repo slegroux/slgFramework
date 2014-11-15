@@ -1,9 +1,3 @@
-/**
- * printout MIDI messages received via default midi port
- * send MIDI control messages to default midi output
- * requires midi input and output devices to be connected
- */
-
 #include <stdlib.h>
 #include <iostream>
 #include "RtMidi.h"
@@ -12,6 +6,9 @@
 #include "slgAudio.h"
 #include "slgFluidSynth.h"
 #include <unistd.h>
+
+//!! fluidsynth returns float so will only work if SAMPLE type is defined as float 
+// in the Definitions.h file: #define SAMPLE float
 
 #define SLEEP( milliseconds ) usleep( (unsigned long) (milliseconds * 1000.0) )
 
