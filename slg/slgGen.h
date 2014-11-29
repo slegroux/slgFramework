@@ -1,6 +1,6 @@
 //
 // Programmer: Sylvain Le Groux <slegroux@stanford.edu>
-// Description: C++ Wrapper for fftw3 library
+// Description: generators
 //
 
 #ifndef __SLGGEN_H__
@@ -11,6 +11,7 @@
 #include <fstream>
 #include <math.h>
 #include <cstring>
+#include "Definitions.h"
 
 
 

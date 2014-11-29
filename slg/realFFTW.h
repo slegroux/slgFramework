@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <sstream>
-#include <fftw3.h>
+#include "fftw3.h"
 #include <math.h>
 #include <cstring>
 #include "Definitions.h"

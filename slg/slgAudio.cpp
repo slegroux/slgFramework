@@ -26,7 +26,7 @@ slgAudio::slgAudio( unsigned int nChann, unsigned int sr, unsigned int buffSize 
     try{
         m_audio = new RtAudio();
     }
-    catch( RtError & err ) {
+    catch( RtAudioError & err ) {
         err.printMessage();
         exit(1);
     }
@@ -88,7 +88,7 @@ void slgAudio::openStream( RtAudioCallback callback, void * userData ){
     try {
     m_audio->openStream( &oParams, &iParams, sample_format, m_sampleRate, &m_bufferSize, callback, userData, &options);
     } 
-    catch ( RtError& e ) {
+    catch ( RtAudioError& e ) {
         try { // again
             std::cout<<"hack!"<<std::endl;
             // HACK: bump the oparams device id (on some systems, default in/out devices differ)
@@ -97,7 +97,7 @@ void slgAudio::openStream( RtAudioCallback callback, void * userData ){
             m_audio->openStream( &oParams, &iParams, sample_format,
                                 m_sampleRate, &m_bufferSize, callback, userData );
         } 
-        catch( RtError & e ) {
+        catch( RtAudioError & e ) {
             // error message
             std::cerr << "[slgAudio]: cannot initialize real-time audio I/O..." << std::endl;
             std::cerr << "[slgAudio]: | - " << e.getMessage() << std::endl;
@@ -143,7 +143,7 @@ void slgAudio::startStream(){
         std::cout<< "-------- Real-time latency --------"<<std::endl;
         std::cout << "stream latency: " << m_audio->getStreamLatency() << " frames" << std::endl;
     }
-    catch( RtError & err ){
+    catch( RtAudioError & err ){
         // error message
         std::cerr << "[slgAudio]: cannot start real-time audio I/O..." << std::endl;
         std::cerr << "[slgAudio]: | - " << err.getMessage() << std::endl;

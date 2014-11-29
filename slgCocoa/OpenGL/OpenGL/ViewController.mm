@@ -8,12 +8,16 @@
 
 #import "ViewController.h"
 
+
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     // Do any additional setup after loading the view.
+    [_text setStringValue:@"toto"];
+    [self.sound startSound];
+    //std::cout<<my_string<<std::endl;
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -22,4 +26,10 @@
     // Update the view, if already loaded.
 }
 
+
+- (IBAction)pushed:(id)sender {
+    NSLog(@"%@",[_text stringValue]);
+    [_text setStringValue:@"pushed"];
+
+}
 @end

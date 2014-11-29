@@ -7,8 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "slgSound.h"
+
+
 
 @interface ViewController : NSViewController
+
+@property (weak) IBOutlet NSTextField *text;
+@property slgSound *sound;
+
+- (IBAction)pushed:(id)sender;
 
 
 @end

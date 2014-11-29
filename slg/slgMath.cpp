@@ -7,10 +7,11 @@ int NextPow2(int a){
 	return rval;
 }
 
-float Normalize(float value, float min, float max){
-	return Clamp( (value - min) / (max - min), 0, 1);
-}
 
 float Clamp(float value, float min, float max) {
 	return value < min ? min : value > max ? max : value;
+}
+
+float Normalize(float value, float min, float max){
+    return Clamp( (value - min) / (max - min), 0, 1);
 }

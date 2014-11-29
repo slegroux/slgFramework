@@ -14,7 +14,8 @@
 #include <algorithm>
 #include <string>
 #include "Definitions.h"
-#include "glm/vec3.hpp"// glm::vec3
+//#include "vec3.hpp"// glm::vec3
+#include "glm.hpp"
 
 enum drawMode{
     kOutline= 0,

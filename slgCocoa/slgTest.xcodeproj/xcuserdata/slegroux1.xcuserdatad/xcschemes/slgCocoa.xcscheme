@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CB3285321A19981D0099E0E6"
-               BuildableName = "slgCocoa"
-               BlueprintName = "slgCocoa"
-               ReferencedContainer = "container:slgCocoa.xcodeproj">
+               BuildableName = "slgTest"
+               BlueprintName = "slgTest"
+               ReferencedContainer = "container:slgTest.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CB3285321A19981D0099E0E6"
-            BuildableName = "slgCocoa"
-            BlueprintName = "slgCocoa"
-            ReferencedContainer = "container:slgCocoa.xcodeproj">
+            BuildableName = "slgTest"
+            BlueprintName = "slgTest"
+            ReferencedContainer = "container:slgTest.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CB3285321A19981D0099E0E6"
-            BuildableName = "slgCocoa"
-            BlueprintName = "slgCocoa"
-            ReferencedContainer = "container:slgCocoa.xcodeproj">
+            BuildableName = "slgTest"
+            BlueprintName = "slgTest"
+            ReferencedContainer = "container:slgTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CB3285321A19981D0099E0E6"
-            BuildableName = "slgCocoa"
-            BlueprintName = "slgCocoa"
-            ReferencedContainer = "container:slgCocoa.xcodeproj">
+            BuildableName = "slgTest"
+            BlueprintName = "slgTest"
+            ReferencedContainer = "container:slgTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

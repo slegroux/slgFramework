@@ -12,7 +12,7 @@
 
 #include "Definitions.h"
 #include "RtAudio.h"
-#include "RtError.h"
+//#include "RtError.h"
 
 
 class slgAudio {

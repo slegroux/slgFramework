@@ -79,7 +79,6 @@ int main ( int argc, char *argv[] ){
     // choose midi ports when several options and start CB
     g_midi.Start(&midiCallback);
 
-
     // STK "globals"
     stk::Stk::setSampleRate(kSampleRate);
     // some Stk classes read data from files (included in the Stk source). 

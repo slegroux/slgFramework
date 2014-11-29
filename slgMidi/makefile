@@ -19,13 +19,13 @@ RTA_DIR = ../RtAudio/
 RTM_DIR = ../RtMidi/
 
 
-OBJS=   RtMidi.o slgMidi.o test.o
+OBJS=   RtMidi.o slgMidi.o main.o
 
 test: $(OBJS)
 	$(CXX) -o test $(OBJS) $(LIBS)
 
-test.o: 
-	$(CXX) $(FLAGS) $(INC_PATH) test.cpp
+main.o: 
+	$(CXX) $(FLAGS) $(INC_PATH) main.cpp
 
 RtMidi.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(RTM_DIR)RtMidi.cpp

@@ -7,7 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#include "slgAudio.h"
+#include <string>
+using namespace std;
 
-@interface Sound : NSObject
+//extern enum InputMode {kSine,kInput};
+//extern InputMode g_inputSignal = kInput;
+//SAMPLE* g_audio_frames;
+//extern std::string my_string;
+
+@interface slgSound : NSObject
+
+@property slgAudio *g_audio;
+@property SAMPLE* g_audio_frames;
+
+-(void)startSound;
+-(void)stopSound;
+//-(id)init
 
 @end

@@ -75,7 +75,7 @@ void midiCallback( double deltatime, std::vector< unsigned char > *message, void
         {
             case 144:{
                 //NOTE ON
-                //cerr << "NOTEON: " << (int)message->at(0) << ":" << (int)message->at(1) << " v: " << (int)message->at(2) << endl;
+                cerr << "NOTEON: "<<endl; //<< (int)message->at(0) << ":" << (int)message->at(1) << " v: " << (int)message->at(2) << endl;
                 g_synth->NoteOn(0, pitch, vol);
                 std::cout << "Pitch:" << pitch << " Volume:" << vol << std::endl;
                 break;
@@ -83,7 +83,7 @@ void midiCallback( double deltatime, std::vector< unsigned char > *message, void
                 
             case 128:{
                 //NOTE OFF
-                //cout << "NOTEOFF: " << (int)message->at(0) << ":" << (int)message->at(1) << " v: " << (int)message->at(2) << endl;
+                cout << "NOTEOFF: " << endl;//(int)message->at(0) << ":" << (int)message->at(1) << " v: " << (int)message->at(2) << endl;
                 g_synth->NoteOff(0, pitch);
                 break;
             }

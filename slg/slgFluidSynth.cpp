@@ -1,7 +1,7 @@
 #include "slgFluidSynth.h"
 //#include <iostream.h>
 #include <stdio.h>
-#include "defs.h"
+#include "Definitions.h"
 
 // initialization
 slgFluidSynth::slgFluidSynth( int srate){  

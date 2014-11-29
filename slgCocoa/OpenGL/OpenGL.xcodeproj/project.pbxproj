@@ -9,10 +9,19 @@
 /* Begin PBXBuildFile section */
 		CB06DBC71A1C6072007914D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB06DBC61A1C6072007914D4 /* AppDelegate.m */; };
 		CB06DBC91A1C6072007914D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CB06DBC81A1C6072007914D4 /* main.m */; };
-		CB06DBCC1A1C6072007914D4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB06DBCB1A1C6072007914D4 /* ViewController.m */; };
+		CB06DBCC1A1C6072007914D4 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB06DBCB1A1C6072007914D4 /* ViewController.mm */; };
 		CB06DBCE1A1C6072007914D4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB06DBCD1A1C6072007914D4 /* Images.xcassets */; };
 		CB06DBD11A1C6072007914D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB06DBCF1A1C6072007914D4 /* Main.storyboard */; };
 		CB06DBDD1A1C6072007914D4 /* OpenGLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB06DBDC1A1C6072007914D4 /* OpenGLTests.m */; };
+		CBE174A91A1D19F400FCBBC7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE174A81A1D19F400FCBBC7 /* OpenGL.framework */; };
+		CBE174AF1A1D1BB200FCBBC7 /* MyGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBE174AE1A1D1BB200FCBBC7 /* MyGLView.mm */; };
+		CBE174B31A1D1EE800FCBBC7 /* slgGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBE174B11A1D1EE800FCBBC7 /* slgGraphics.cpp */; };
+		CBE174B61A1D1F6000FCBBC7 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE174B51A1D1F6000FCBBC7 /* GLUT.framework */; };
+		CBE174B81A1D21BC00FCBBC7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE174B71A1D21BC00FCBBC7 /* CoreFoundation.framework */; };
+		CBE174BB1A1D2B7800FCBBC7 /* slgAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBE174B91A1D2B7800FCBBC7 /* slgAudio.cpp */; };
+		CBE174C61A1D2EC800FCBBC7 /* RtAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBE174C41A1D2EC800FCBBC7 /* RtAudio.cpp */; };
+		CBE174C81A1D2EFA00FCBBC7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE174C71A1D2EFA00FCBBC7 /* CoreAudio.framework */; };
+		CBE174CC1A1D4D6E00FCBBC7 /* slgSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBE174CB1A1D4D6E00FCBBC7 /* slgSound.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,12 +41,27 @@
 		CB06DBC61A1C6072007914D4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CB06DBC81A1C6072007914D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CB06DBCA1A1C6072007914D4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		CB06DBCB1A1C6072007914D4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		CB06DBCB1A1C6072007914D4 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		CB06DBCD1A1C6072007914D4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CB06DBD01A1C6072007914D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CB06DBD61A1C6072007914D4 /* OpenGLTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenGLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB06DBDB1A1C6072007914D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB06DBDC1A1C6072007914D4 /* OpenGLTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGLTests.m; sourceTree = "<group>"; };
+		CBE174A81A1D19F400FCBBC7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		CBE174AD1A1D1BB200FCBBC7 /* MyGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGLView.h; sourceTree = "<group>"; };
+		CBE174AE1A1D1BB200FCBBC7 /* MyGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyGLView.mm; sourceTree = "<group>"; };
+		CBE174B01A1D1EE800FCBBC7 /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Definitions.h; path = ../../slg/Definitions.h; sourceTree = "<group>"; };
+		CBE174B11A1D1EE800FCBBC7 /* slgGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slgGraphics.cpp; path = ../../slg/slgGraphics.cpp; sourceTree = "<group>"; };
+		CBE174B21A1D1EE800FCBBC7 /* slgGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slgGraphics.h; path = ../../slg/slgGraphics.h; sourceTree = "<group>"; };
+		CBE174B51A1D1F6000FCBBC7 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		CBE174B71A1D21BC00FCBBC7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		CBE174B91A1D2B7800FCBBC7 /* slgAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slgAudio.cpp; path = ../../slg/slgAudio.cpp; sourceTree = "<group>"; };
+		CBE174BA1A1D2B7800FCBBC7 /* slgAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slgAudio.h; path = ../../slg/slgAudio.h; sourceTree = "<group>"; };
+		CBE174C41A1D2EC800FCBBC7 /* RtAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RtAudio.cpp; path = ../../RtAudio/RtAudio.cpp; sourceTree = "<group>"; };
+		CBE174C51A1D2EC800FCBBC7 /* RtAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtAudio.h; path = ../../RtAudio/RtAudio.h; sourceTree = "<group>"; };
+		CBE174C71A1D2EFA00FCBBC7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		CBE174CA1A1D4D6E00FCBBC7 /* slgSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slgSound.h; sourceTree = "<group>"; };
+		CBE174CB1A1D4D6E00FCBBC7 /* slgSound.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = slgSound.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +69,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBE174C81A1D2EFA00FCBBC7 /* CoreAudio.framework in Frameworks */,
+				CBE174B81A1D21BC00FCBBC7 /* CoreFoundation.framework in Frameworks */,
+				CBE174B61A1D1F6000FCBBC7 /* GLUT.framework in Frameworks */,
+				CBE174A91A1D19F400FCBBC7 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +89,8 @@
 		CB06DBB71A1C6072007914D4 = {
 			isa = PBXGroup;
 			children = (
+				CBE174C91A1D2F1200FCBBC7 /* Frameworks */,
+				CBE174B41A1D1EF000FCBBC7 /* Libraries */,
 				CB06DBC21A1C6072007914D4 /* OpenGL */,
 				CB06DBD91A1C6072007914D4 /* OpenGLTests */,
 				CB06DBC11A1C6072007914D4 /* Products */,
@@ -79,10 +109,14 @@
 		CB06DBC21A1C6072007914D4 /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				CBE174AD1A1D1BB200FCBBC7 /* MyGLView.h */,
+				CBE174AE1A1D1BB200FCBBC7 /* MyGLView.mm */,
 				CB06DBC51A1C6072007914D4 /* AppDelegate.h */,
 				CB06DBC61A1C6072007914D4 /* AppDelegate.m */,
 				CB06DBCA1A1C6072007914D4 /* ViewController.h */,
-				CB06DBCB1A1C6072007914D4 /* ViewController.m */,
+				CB06DBCB1A1C6072007914D4 /* ViewController.mm */,
+				CBE174CA1A1D4D6E00FCBBC7 /* slgSound.h */,
+				CBE174CB1A1D4D6E00FCBBC7 /* slgSound.mm */,
 				CB06DBCD1A1C6072007914D4 /* Images.xcassets */,
 				CB06DBCF1A1C6072007914D4 /* Main.storyboard */,
 				CB06DBC31A1C6072007914D4 /* Supporting Files */,
@@ -114,6 +148,47 @@
 				CB06DBDB1A1C6072007914D4 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CBE174B41A1D1EF000FCBBC7 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				CBE174C01A1D2D0D00FCBBC7 /* rtaudio */,
+				CBE174BC1A1D2CD900FCBBC7 /* slg */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		CBE174BC1A1D2CD900FCBBC7 /* slg */ = {
+			isa = PBXGroup;
+			children = (
+				CBE174B01A1D1EE800FCBBC7 /* Definitions.h */,
+				CBE174B91A1D2B7800FCBBC7 /* slgAudio.cpp */,
+				CBE174BA1A1D2B7800FCBBC7 /* slgAudio.h */,
+				CBE174B11A1D1EE800FCBBC7 /* slgGraphics.cpp */,
+				CBE174B21A1D1EE800FCBBC7 /* slgGraphics.h */,
+			);
+			name = slg;
+			sourceTree = "<group>";
+		};
+		CBE174C01A1D2D0D00FCBBC7 /* rtaudio */ = {
+			isa = PBXGroup;
+			children = (
+				CBE174C41A1D2EC800FCBBC7 /* RtAudio.cpp */,
+				CBE174C51A1D2EC800FCBBC7 /* RtAudio.h */,
+			);
+			name = rtaudio;
+			sourceTree = "<group>";
+		};
+		CBE174C91A1D2F1200FCBBC7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CBE174C71A1D2EFA00FCBBC7 /* CoreAudio.framework */,
+				CBE174A81A1D19F400FCBBC7 /* OpenGL.framework */,
+				CBE174B71A1D21BC00FCBBC7 /* CoreFoundation.framework */,
+				CBE174B51A1D1F6000FCBBC7 /* GLUT.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,9 +290,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB06DBCC1A1C6072007914D4 /* ViewController.m in Sources */,
+				CBE174C61A1D2EC800FCBBC7 /* RtAudio.cpp in Sources */,
+				CB06DBCC1A1C6072007914D4 /* ViewController.mm in Sources */,
 				CB06DBC91A1C6072007914D4 /* main.m in Sources */,
+				CBE174CC1A1D4D6E00FCBBC7 /* slgSound.mm in Sources */,
 				CB06DBC71A1C6072007914D4 /* AppDelegate.m in Sources */,
+				CBE174B31A1D1EE800FCBBC7 /* slgGraphics.cpp in Sources */,
+				CBE174AF1A1D1BB200FCBBC7 /* MyGLView.mm in Sources */,
+				CBE174BB1A1D2B7800FCBBC7 /* slgAudio.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,8 +412,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = __MACOSX_CORE__;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"/usr/local/include/**",
+				);
 				INFOPLIST_FILE = OpenGL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib/;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -343,8 +430,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = __MACOSX_CORE__;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"/usr/local/include/**",
+				);
 				INFOPLIST_FILE = OpenGL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib/;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -404,6 +498,7 @@
 				CB06DBE21A1C6072007914D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CB06DBE31A1C6072007914D4 /* Build configuration list for PBXNativeTarget "OpenGLTests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +507,7 @@
 				CB06DBE51A1C6072007914D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

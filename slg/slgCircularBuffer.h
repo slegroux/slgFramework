@@ -121,9 +121,9 @@ void slgCircularBuffer<TElement>::Print(){
 template <typename TElement>
 bool slgCircularBuffer<TElement>::isFull(){
 	if ((_write_idx + 1)%_size_ring_buffer == _read_idx)
-		return(TRUE);
+		return(true);
 	else
-		return(FALSE);
+		return(false);
 }
 
 template <typename TElement>

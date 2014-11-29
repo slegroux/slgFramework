@@ -1,7 +1,7 @@
 #ifndef __MYFLUIDSYNTH_H__
 #define __MYFLUIDSYNTH_H__
 
-#include <fluidsynth.h>
+#include "fluidsynth.h"
 #include "Definitions.h"
 
 
