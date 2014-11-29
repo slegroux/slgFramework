@@ -46,8 +46,14 @@ void midiCallback( double deltatime, std::vector< unsigned char > *message, void
         switch( (int)message->at(0) )
         {
             case 144: // note on
-                cerr << "NOTEON: " << (int)message->at(0) << ":" << (int)message->at(1) << " v: " << (int)message->at(2) << endl;
-                g_instrument.NoteOn( 440*pow(2.0, pitch/12.0f) );
+                if (message->at(2)!=0){
+                    cerr << "NOTEON: " << (int)message->at(0) << ":" << (int)message->at(1) << " v: " << (int)message->at(2) << endl;
+                    g_instrument.NoteOn( 440*pow(2.0, (pitch-69)/12.0f) );
+                }
+                if (message->at(2)==0){
+                    cout << "NOTEOFF: " << (int)message->at(0) << ":" << (int)message->at(1) << " v: " << (int)message->at(2) << endl;
+                    g_instrument.NoteOff();
+                }
                 break;
                 
             case 128:
