@@ -1,5 +1,5 @@
-#ifndef __MYFLUIDSYNTH_H__
-#define __MYFLUIDSYNTH_H__
+#ifndef __SLGFLUIDSYNTH_H__
+#define __SLGFLUIDSYNTH_H__
 
 #include "fluidsynth.h"
 #include "Definitions.h"

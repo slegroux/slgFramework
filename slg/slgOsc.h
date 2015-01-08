@@ -1,3 +1,6 @@
+#ifndef __SLGOSC_H__
+#define __SLGOSC_H__
+
 #include "Definitions.h"
 
 enum oscillator_mode{
@@ -26,3 +29,5 @@ private:
 	unsigned int _index;
 	unsigned int _sampling_rate;
 };
+
+#endif

@@ -111,6 +111,7 @@ template void Buffer(float *buffer, int size);
 template void Buffer(double *buffer, int size);*/
 
 void Buffer1D(SAMPLE *buffer, const int size, const float min, const float max, const LineMode line_mode){
+  
   glPushMatrix();
     float range;
     //min = *std::min_element(buffer,buffer+size);
@@ -129,6 +130,7 @@ void Buffer1D(SAMPLE *buffer, const int size, const float min, const float max, 
     glTranslatef(-1.0,0,0);
     glScalef(2.,1,1);
 
+    
     // draw axes
     glLineWidth(1.0);
     glBegin(GL_LINES);
@@ -203,8 +205,9 @@ void Buffer1D(SAMPLE *buffer, const int size, const float min, const float max, 
       glVertex2f(0.5,0);
       glVertex2f(1,0);
     glEnd();
-    
-  glPopMatrix(); 
+  
+  glPopMatrix();
+  
 }
 
 void Buffer2D(SAMPLE **buffer, const int n_rows, const int n_cols, const float min, const float max){
@@ -265,7 +268,10 @@ void Buffer2D(SAMPLE **buffer, const int n_rows, const int n_cols, const float m
 void Axis(float size)
 {
     // save the current transformation
+    
     glPushMatrix();
+    // colors|line width
+    glPushAttrib(GL_CURRENT_BIT|GL_LINE_BIT);
     glLineWidth(2);
       glBegin( GL_LINES );
       // x axis - red
@@ -284,12 +290,13 @@ void Axis(float size)
       glVertex3f( 0, 0, size );   
 
     glEnd();
-
+    glPopAttrib();
     // restore state
     glPopMatrix();
 
+
     //back to white color
-    glColor4f(1.0f,1.0f,1.0f,1.0f);
+    //glColor4f(1.0f,1.0f,1.0f,1.0f);
 }
 
 //--------------------------

@@ -9,11 +9,20 @@
 #define BUFFER_SIZE 512
 #define CIRC_RESOLUTION 60              // 60 pts for a circle
 
+// Audio
 const int kSampleRate = 44100;
 const int kNumChannels = 2;
 const int kAudioBufferSize = 512;
 const int kFrameSize = 512;
-const int kCircleResolution = 60;
+
+// Midi
 const int kMidiChannel = 0;
+
+// Graphics
+const int kCircleResolution = 60;
+const int kWindowWidth = 400;
+const int kWindowHeight = 300;
+const int kInitWindowPosX = 100;
+const int kInitWindowPosY = 100;
 
 #endif

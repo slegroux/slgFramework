@@ -17,7 +17,7 @@ LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 endif
 
 # include slg classes
-INC_PATH = -I../slg/ -I/usr/local/include
+INC_PATH = -I../slg/ -I/usr/local/include -I/usr/local/include/glm
 SLG_DIR = ../slg/
 
 # LIBS
