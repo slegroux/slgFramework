@@ -22,3 +22,7 @@ float Random(float min, float max){
 	float r = (max-min)*rand()/(RAND_MAX+1.0) + min;
 	return(r);
 }
+
+float Map(float value, float inputMin, float inputMax, float outputMin, float outputMax) {
+   return ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
+}
