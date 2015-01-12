@@ -46,7 +46,7 @@ int main ( int argc, char *argv[] ){
     slgAudio audio(kNumChannels,kSampleRate,kFrameSize);  
     //audio.info();
     my_callback_data.oscillator.set_frequency(520.0);
-    my_callback_data.oscillator.set_mode(kNoise);
+    my_callback_data.oscillator.set_mode(kSin);
     
     audio.openStream(&audioCallback,&my_callback_data);
 //    audio.getBufferSize();

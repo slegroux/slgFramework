@@ -26,7 +26,7 @@ public:
    void cleanup();
 
    // frame rate and timing
-   int g_frame_rate = 50; // refresh in Hz
+   int g_frame_rate = 20; // refresh in Hz
    int g_previous_time = 0;
 
    //screen
@@ -42,7 +42,7 @@ public:
    glm::vec2 g_helium;
 
    //Entities
-   static const int num_movers = 5;
+   static const int num_movers = 10;
    slgMover mover[num_movers];
 
 };

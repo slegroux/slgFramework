@@ -15,15 +15,17 @@ void slgApp::setup(){
    glEnable (GL_BLEND); // transparency
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+   // AUDIO //
+   //slgAudio audio(kNumChannels,kSampleRate,kFrameSize);  
    //seed randomizer
    srand(time(NULL));
 
-   // init forces
+   // PHYSICS //
    g_wind = glm::vec2(0.0,0);
    g_gravity = glm::vec2(0.0,-0.2);
    g_helium = glm::vec2(0);//glm::vec2(0.0,+0.07);
 
-   // construct entities
+   // ENTITIES //
    for (int i=0;i<num_movers;i++){
       mover[i] = slgMover(g_width,g_height);
       //mover[i].printState();
@@ -46,7 +48,7 @@ void slgApp::idleFunc(){
    // BODY of the FUNCTION
    /*------------------*/
    for (int i=0;i<num_movers;i++){
-      mover[i].applyForce(g_wind);
+      //mover[i].applyForce(g_wind);
       mover[i].applyForce(g_gravity);
       mover[i].applyForce(g_helium);
       //mover[i].bounce(g_width,g_height);

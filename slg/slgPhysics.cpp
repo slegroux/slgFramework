@@ -10,13 +10,16 @@ slgMover::slgMover(){
 }
 
 slgMover::slgMover(int width, int height){
-	_location = glm::vec2(200,200);//glm::vec2(Random(0,width),Random(0,height));
+	//_location = glm::vec2(200,200);//glm::vec2(Random(0,width),Random(0,height));
+	_location = glm::vec2(Random(0,width),Random(0,height));
 	_velocity = glm::vec2(0,0);//glm::vec2(Random(-1.0,1.0),Random(-1.0,1.0));
+	//_velocity = glm::vec2(Random(-1.0,1.0),Random(-1.0,1.0));
 	//don't forget the f at the end of the float
 	_acceleration = glm::vec2(0,0);//0.0001f*glm::vec2(Random(-0.01,0.01),Random(-0.01,0.01));
+	//_acceleration = 0.0001f*glm::vec2(Random(-0.01,0.01),Random(-0.01,0.01));
 	//_acceleration = 0.01f*_acceleration;
-	_color = glm::vec4(Random(0,1.0),Random(0,1.0),Random(0,1.0),Random(0.0,1));
-	_size = Random(0,50);
+	_color = glm::vec4(Random(0,1.0),Random(0,1.0),Random(0,1.0),Random(0.0,1.0));
+	_size = Random(0,10);
 	_mass = _size;
 	//std::cout<<glm::to_string(_color)<<std::endl;
 }
@@ -87,17 +90,17 @@ void slgMover::update(glm::vec2 g_mouse){
 	_acceleration.y = Random(-0.1,0.1);*/
 
 	// acceleration proportional to the distance from mouse
-	/*glm::vec2 direction = g_mouse - _location;
+	glm::vec2 direction = g_mouse - _location;
 	direction = glm::normalize(direction);
 	//std::cout<<"Normalized direction: "<<glm::to_string(direction)<<std::endl;
-	_acceleration = 0.1f*direction;*/
+	_acceleration = 0.8f*direction;
 
 	_velocity += _acceleration;
 	_velocity.x = Clamp(_velocity.x,-10,10);
 	_velocity.y = Clamp(_velocity.y,-10,10);
 	_location += _velocity;
 	// reinitialize acceleration as setup by external forces
-	_acceleration = glm::vec2(0.0f);
+	//_acceleration = glm::vec2(0.0f);
 }
 
 void slgMover::draw(){
