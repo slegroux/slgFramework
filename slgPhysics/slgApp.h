@@ -43,7 +43,7 @@ public:
 
    //Entities
    static const int num_movers = 10;
-   slgMover mover[num_movers];
+   slgMover *mover;// = new slgMover[num_movers];
 
 };
 

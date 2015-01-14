@@ -4,6 +4,10 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include "slgGraphics.h"
+#include "slgOsc.h"
+//#include "Thread.h"
+//class slgOsc;
+
 
 class slgMover{
 public:
@@ -17,6 +21,7 @@ public:
 	void bounce(int width, int height);
 	void update(glm::vec2 g_mouse);
 	void draw();
+	SAMPLE tick();
 	void applyForce(glm::vec2 force);
 	void printState();
 	void increaseAcceleration();
@@ -27,6 +32,10 @@ private:
 	glm::vec4 _color;
 	float _size;
 	float _mass;
+	float *_test;
+	slgOsc _oscillator;
+	float _amplitude;
+	//Mutex g_mutex;
 
 };
 

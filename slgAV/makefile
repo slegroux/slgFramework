@@ -13,11 +13,11 @@ LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 	-framework OpenGL -framework GLUT \
 	-framework IOKit -framework Carbon \
 	-framework Foundation -framework AppKit \
-	-lstdc++ -lm -lfftw3 #-lgsl
+	-lstdc++ -lm -lfftw3 -lstk#-lgsl
 endif
 
 # include slg classes
-INC_PATH = -I../slg/ -I/usr/local/include -I/usr/local/include/glm -I../RtAudio
+INC_PATH = -I../slg/ -I/usr/local/include -I/usr/local/include/stk -I/usr/local/include/glm -I../RtAudio
 SLG_DIR = ../slg/
 RTA_DIR = ../RtAudio/
 

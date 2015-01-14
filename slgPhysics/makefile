@@ -28,7 +28,7 @@ LIB_PATH = -L/usr/local/lib
 # executable
 TARGET = test
 
-OBJS = slgApp.o slgMath.o slgPhysics.o slgGraphics.o main.o
+OBJS = slgApp.o Stk.o Thread.o slgMath.o slgOsc.o slgPhysics.o slgGraphics.o main.o
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
@@ -39,6 +39,9 @@ main.o:
 slgApp.o:
 	$(CXX) $(FLAGS) $(INC_PATH) slgApp.cpp
 
+slgOsc.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgOsc.cpp
+
 slgGraphics.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgGraphics.cpp
 
@@ -47,6 +50,12 @@ slgPhysics.o:
 
 slgMath.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgMath.cpp
+
+Thread.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)Thread.cpp
+
+Stk.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)Stk.cpp
 
 #slgGen.o:
 #	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgGen.cpp

@@ -1,19 +1,21 @@
 #include "slgOsc.h"
-#include "math.h"
+#include <math.h>
 #include <stdlib.h> /* same as <cstdlib> included for rand() function */
 #include <time.h> /* same as <ctime> to seed rand*/
+#include <iostream>
 
 
 slgOsc::slgOsc(){
 	_sampling_rate = kSampleRate;
 	_index = 0;
 	_mode = kSin;
-	srand (time(NULL));
+	_phase =0;
 }
 
 slgOsc::slgOsc(float frequency){
 	_sampling_rate = kSampleRate;
 	_index = 0;
+	_phase = 0;
 	_frequency = frequency;
 }
 
@@ -23,6 +25,9 @@ slgOsc::~slgOsc(){
 
 void slgOsc::set_frequency(float frequency){
 	_frequency = frequency;
+}
+float slgOsc::get_frequency(){
+	return(_frequency);
 }
 
 void slgOsc::set_mode(oscillator_mode mode){
@@ -41,8 +46,16 @@ SAMPLE slgOsc::render(){
 	SAMPLE result;
 	switch(_mode){
 		case kSin:
-			result = sin(2*M_PI*_frequency*_index/(float)_sampling_rate);
+			result = sin(_phase);
+			_phase += 2*M_PI*_frequency/(float)_sampling_rate;
+			//result = sin(2*M_PI*_frequency*_index/(float)_sampling_rate);
+			/*if (_phase > (2 * M_PI)){
+				_phase = _phase - (2 * M_PI);
+				std::cout<<"toto"<<std::endl;
+			}*/
+
 			break;
+
 		case kNoise:
 			//normalized 
 			float r = rand()/(float)RAND_MAX;

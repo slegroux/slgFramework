@@ -15,16 +15,19 @@ int slgApp::audioCallback( void * outputBuffer, void * inputBuffer, unsigned int
    SAMPLE * out = (SAMPLE *)outputBuffer;
    SAMPLE * in = (SAMPLE *)inputBuffer;
    //slgOsc* data = (slgOsc*) userData;
-   
+   SAMPLE sumSample;
    // fill
    for( int i = 0; i < nFrames; ++i ){
-       
-       // generate signal
-       out[i*kNumChannels] = oscillator.render();
+      // generate signal
+      for (int j =0;j<num_movers;j++)
+         sumSample += mover[j].tick();
+      sumSample = (1.0/num_movers)*sumSample;
+      
+      out[i*kNumChannels] = _reverb.tick(sumSample); 
        
        // copy into other channels
-       for( int j = 1; j < kNumChannels; ++j )
-           out[i*kNumChannels+j] = out[i*kNumChannels];
+      for( int j = 1; j < kNumChannels; ++j )
+         out[i*kNumChannels+j] = out[i*kNumChannels];
    }
 
    return 0;
@@ -54,6 +57,7 @@ void slgApp::setup(){
    // Audio objects
    oscillator.set_frequency(440.0);
    oscillator.set_mode(kSin);
+   _reverb = stk::JCRev( 10 );
    
    //seed randomizer
    srand(time(NULL));

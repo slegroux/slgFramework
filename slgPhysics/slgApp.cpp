@@ -25,10 +25,11 @@ void slgApp::setup(){
    g_gravity = glm::vec2(0.0,-0.2);
    g_helium = glm::vec2(0);//glm::vec2(0.0,+0.07);
 
+   mover = new slgMover[num_movers];
    // ENTITIES //
    for (int i=0;i<num_movers;i++){
       mover[i] = slgMover(g_width,g_height);
-      //mover[i].printState();
+      mover[i].printState();
    }
 }
 

@@ -11,13 +11,13 @@
 #include "slgGLUT.h"
 #include "slgAudio.h"
 #include "slgOsc.h"
+#include "JCRev.h"
 
 
 class slgApp{
 
 public:
    void setup();
-
    void displayFunc(); //draw
    void reshapeFunc(int w, int h);
    void idleFunc(); //update
@@ -33,6 +33,7 @@ public:
    //Audio
    slgAudio audio;
    slgOsc oscillator;
+   stk::JCRev _reverb;
    // frame rate and timing
    int g_frame_rate = 20; // refresh in Hz
    int g_previous_time = 0;
@@ -50,7 +51,7 @@ public:
    glm::vec2 g_helium;
 
    //Entities
-   static const int num_movers = 10;
+   static const int num_movers = 50;
    slgMover mover[num_movers];
 
 };
