@@ -8,6 +8,8 @@ A repository of cross-platform (only thoroughly tested on OS X for now) C++ clas
 
 A set of examples illustrate the use of each class with simple applications for audio, midi, graphics, GUI, etc.
 
+Those classes are not optimized and mostly meant for teaching purposes.
+
 
 ######GRAPHICS
 * slg2D (2D graphics)
@@ -21,7 +23,7 @@ A set of examples illustrate the use of each class with simple applications for 
 
 ######AUDIO
 * slgAudio (Audio input/output)
-* slgOsc (audio oscillator)
+* slgOscillator (audio oscillator)
 * slgFFTW (Fast Fourier Transform)
 
 ######MIDI
