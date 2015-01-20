@@ -13,13 +13,13 @@ LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 	-framework OpenGL -framework GLUT \
 	-framework IOKit -framework Carbon \
 	-framework Foundation -framework AppKit \
-	-lstdc++ -lm -lfftw3 -lstk#-lgsl
+	-lstdc++ -lm #-lstk #-lfftw3 #-lstk#-lgsl
 endif
 
-# include slg classes
-INC_PATH = -I../slg/ -I/usr/local/include -I/usr/local/include/stk -I/usr/local/include/glm -I../RtAudio
 SLG_DIR = ../slg/
 RTA_DIR = ../RtAudio/
+STK_DIR = ../stk/
+INC_PATH = -I$(SLG_DIR) -I/usr/local/include -I/usr/local/include/glm -I$(RTA_DIR) -I$(STK_DIR)
 
 # LIBS
 LIB_PATH = -L/usr/local/lib
@@ -27,7 +27,7 @@ LIB_PATH = -L/usr/local/lib
 # executable
 TARGET = test
 
-OBJS = RtAudio.o slgAudio.o slgOsc.o slgApp.o slgMath.o slgPhysics.o slgGraphics.o main.o
+OBJS = RtAudio.o slgAudio.o slgOsc.o slgApp.o slgMath.o slgPhysics.o slgGraphics.o main.o Stk.o JCRev.o Delay.o OnePole.o
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
@@ -54,7 +54,19 @@ slgAudio.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgAudio.cpp
 
 RtAudio.o:
-		$(CXX) $(FLAGS) $(INC_PATH) $(RTA_DIR)RtAudio.cpp
+	$(CXX) $(FLAGS) $(INC_PATH) $(RTA_DIR)RtAudio.cpp
+
+JCRev.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(STK_DIR)JCRev.cpp
+
+Stk.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(STK_DIR)Stk.cpp
+
+Delay.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(STK_DIR)Delay.cpp
+
+OnePole.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(STK_DIR)OnePole.cpp
 
 clean:
 	rm -f *~ *# *.o test

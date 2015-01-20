@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include "slgGraphics.h"
-#include "slgOsc.h"
+#include "slgOscillator.h"
 //#include "Thread.h"
 //class slgOsc;
 
@@ -32,8 +32,7 @@ private:
 	glm::vec4 _color;
 	float _size;
 	float _mass;
-	float *_test;
-	slgOsc _oscillator;
+	slgOscillator _oscillator;
 	float _amplitude;
 	//Mutex g_mutex;
 

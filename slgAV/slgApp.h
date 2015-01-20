@@ -35,7 +35,7 @@ public:
    slgOsc oscillator;
    stk::JCRev _reverb;
    // frame rate and timing
-   int g_frame_rate = 20; // refresh in Hz
+   int g_frame_rate;// = 20; // refresh in Hz
    int g_previous_time = 0;
 
    //screen
@@ -51,7 +51,7 @@ public:
    glm::vec2 g_helium;
 
    //Entities
-   static const int num_movers = 50;
+   static const int num_movers = 100;
    slgMover mover[num_movers];
 
 };

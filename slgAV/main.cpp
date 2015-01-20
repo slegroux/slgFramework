@@ -28,7 +28,7 @@ int main(int argc, char** argv){
    //glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA ); // double buffer, use rgb color, enable depth buffer and alpha
    //No depth in 2D
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_ALPHA ); // double buffer, use rgb color, enable depth buffer and alpha
-   glutInitWindowSize(kWindowWidth,kWindowHeight);   // Set the window's initial width & height
+   glutInitWindowSize(3*kWindowWidth,3*kWindowHeight);   // Set the window's initial width & height
    glutInitWindowPosition(kInitWindowPosX, kInitWindowPosY); // Position the window's initial top-left corner   
    glutCreateWindow(argv[0]); // Create a window with the given title
    g_App.setup();

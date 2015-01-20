@@ -28,7 +28,7 @@ RTA_DIR = ../RtAudio/
 # executable
 TARGET = test
 
-OBJS = RtAudio.o main.o slgAudio.o slgOsc.o
+OBJS = RtAudio.o main.o slgAudio.o slgOscillator.o
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
@@ -36,8 +36,8 @@ $(TARGET): $(OBJS)
 main.o:
 	$(CXX) $(FLAGS) $(INC_PATH) main.cpp
 
-slgOsc.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgOsc.cpp
+slgOscillator.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgOscillator.cpp
 
 slgAudio.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgAudio.cpp

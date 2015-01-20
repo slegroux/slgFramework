@@ -17,8 +17,9 @@ LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 endif
 
 # include slg classes
-INC_PATH = -I../slg/ -I/usr/local/include -I/usr/local/include/glm
 SLG_DIR = ../slg/
+STK_DIR = ../stk/
+INC_PATH = -I$(SLG_DIR) -I$(STK_DIR) -I/usr/local/include/glm
 
 # LIBS
 #INC_PATH += -I libs
@@ -28,7 +29,7 @@ LIB_PATH = -L/usr/local/lib
 # executable
 TARGET = test
 
-OBJS = slgApp.o Stk.o Thread.o slgMath.o slgOsc.o slgPhysics.o slgGraphics.o main.o
+OBJS = slgApp.o Stk.o Thread.o slgMath.o slgOscillator.o slgPhysics.o slgGraphics.o main.o
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
@@ -39,8 +40,8 @@ main.o:
 slgApp.o:
 	$(CXX) $(FLAGS) $(INC_PATH) slgApp.cpp
 
-slgOsc.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgOsc.cpp
+slgOscillator.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgOscillator.cpp
 
 slgGraphics.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgGraphics.cpp
@@ -52,16 +53,10 @@ slgMath.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgMath.cpp
 
 Thread.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)Thread.cpp
+	$(CXX) $(FLAGS) $(INC_PATH) $(STK_DIR)Thread.cpp
 
 Stk.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)Stk.cpp
-
-#slgGen.o:
-#	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgGen.cpp
-
-#slgGFX.o: slgGFX.h slgGFX.cpp
-#	$(CXX) $(FLAGS) slgGFX.cpp
+	$(CXX) $(FLAGS) $(INC_PATH) $(STK_DIR)Stk.cpp
 
 clean:
 	rm -f *~ *# *.o test

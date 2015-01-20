@@ -303,6 +303,14 @@ public:
     checking is performed unless _STK_DEBUG_ is defined.
   */
   StkFloat operator[] ( size_t n ) const;
+    
+  //! Sum operator
+  /*!
+    The dimensions of the argument are expected to be the same as
+    self.  No range checking is performed unless _STK_DEBUG_ is
+    defined.
+  */
+  StkFrames operator+(const StkFrames &frames) const;
 
   //! Assignment by sum operator into self.
   /*!
@@ -372,6 +380,22 @@ public:
     smaller or equal to a previously allocated size.
   */
   void resize( size_t nFrames, unsigned int nChannels, StkFloat value );
+
+  //! Retrieves a single channel
+  /*!
+    Copies the specified \c channel into \c destinationFrames's \c destinationChannel. \c destinationChannel must be between 0 and destination.channels() - 1 and
+    \c channel must be between 0 and channels() - 1. destination.frames() must be >= frames().
+    No range checking is performed unless _STK_DEBUG_ is defined.
+  */
+  StkFrames& getChannel(unsigned int channel,StkFrames& destinationFrames, unsigned int destinationChannel) const;
+
+  //! Sets a single channel
+  /*!
+    Copies the \c sourceChannel of \c sourceFrames into the \c channel of self.
+    SourceFrames.frames() must be equal to frames().
+    No range checking is performed unless _STK_DEBUG_ is defined.
+  */
+  void setChannel(unsigned int channel,const StkFrames &sourceFrames,unsigned int sourceChannel);
 
   //! Return the number of channels represented by the data.
   unsigned int channels( void ) const { return nChannels_; };
@@ -460,6 +484,25 @@ inline StkFloat StkFrames :: operator() ( size_t frame, unsigned int channel ) c
 #endif
 
   return data_[ frame * nChannels_ + channel ];
+}
+    
+inline StkFrames StkFrames::operator+(const StkFrames &f) const
+{
+#if defined(_STK_DEBUG_)
+  if ( f.frames() != nFrames_ || f.channels() != nChannels_ ) {
+    std::ostringstream error;
+    error << "StkFrames::operator+: frames argument must be of equal dimensions!";
+    Stk::handleError( error.str(), StkError::MEMORY_ACCESS );
+  }
+#endif
+  StkFrames sum(nFrames_,nChannels_);
+  StkFloat *sumPtr = &sum[0];
+  const StkFloat *fptr = f.data_;
+  const StkFloat *dPtr = data_;
+  for (unsigned int i = 0; i < size_; i++) {
+    *sumPtr++ = *fptr++ + *dPtr++;
+  }
+  return sum;
 }
 
 inline void StkFrames :: operator+= ( StkFrames& f )

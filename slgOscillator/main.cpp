@@ -8,13 +8,13 @@
 #include <cstdlib>
 #include "Definitions.h"
 #include "slgAudio.h"
-#include "slgOsc.h"
+#include "slgOscillator.h"
 
 using namespace std;
 // defines and consts
 
 struct callback_data{
-    slgOsc oscillator;
+    slgOscillator oscillator;
 } my_callback_data;
 
 int audioCallback( void * outputBuffer, void * inputBuffer, 

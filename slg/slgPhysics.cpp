@@ -22,10 +22,9 @@ slgMover::slgMover(int width, int height){
 	//_acceleration = 0.0001f*glm::vec2(Random(-0.01,0.01),Random(-0.01,0.01));
 	//_acceleration = 0.01f*_acceleration;
 	_color = glm::vec4(Random(0,1.0),Random(0,1.0),Random(0,1.0),Random(0.5,1.0));
-	_size = Random(0,25);
+	_size = Random(0,40);
 	_amplitude = _size/25.0;
 	_mass = _size;
-	//_oscillator = new slgOsc;
 	
 	_oscillator.set_mode(kSin);
 	_oscillator.set_frequency(Random(220,660));
@@ -101,7 +100,7 @@ void slgMover::update(glm::vec2 g_mouse){
 	glm::vec2 direction = g_mouse - _location;
 	direction = glm::normalize(direction);
 	//std::cout<<"Normalized direction: "<<glm::to_string(direction)<<std::endl;
-	_acceleration = 0.7f*direction;
+	_acceleration = 0.6f*direction;
 
 	_velocity += _acceleration;
 	_velocity.x = Clamp(_velocity.x,-10,10);
@@ -109,7 +108,7 @@ void slgMover::update(glm::vec2 g_mouse){
 	_location += _velocity;
 	// reinitialize acceleration as setup by external forces
 	//_acceleration = glm::vec2(0.0f);
-	_oscillator.set_frequency(2*_location.y);
+	_oscillator.set_frequency(1.2*_location.y);
 }
 
 void slgMover::draw(){

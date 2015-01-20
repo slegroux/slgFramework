@@ -9,31 +9,6 @@ int slgApp::cb_audioWrapper(void * outputBuffer, void * inputBuffer, unsigned in
       return self->audioCallback(outputBuffer, inputBuffer, nFrames, streamTime,status);
 }
 
-int slgApp::audioCallback( void * outputBuffer, void * inputBuffer, unsigned int nFrames, double streamTime, RtAudioStreamStatus status){
-
-   if ( status ) std::cout << "Stream over/underflow detected." << std::endl;
-   SAMPLE * out = (SAMPLE *)outputBuffer;
-   SAMPLE * in = (SAMPLE *)inputBuffer;
-   //slgOsc* data = (slgOsc*) userData;
-   SAMPLE sumSample;
-   // fill
-   for( int i = 0; i < nFrames; ++i ){
-      // generate signal
-      for (int j =0;j<num_movers;j++)
-         sumSample += mover[j].tick();
-      sumSample = (1.0/num_movers)*sumSample;
-      
-      out[i*kNumChannels] = _reverb.tick(sumSample); 
-       
-       // copy into other channels
-      for( int j = 1; j < kNumChannels; ++j )
-         out[i*kNumChannels+j] = out[i*kNumChannels];
-   }
-
-   return 0;
-
-}
-
 void slgApp::setup(){
 
    std::cout<<"--- setup"<<std::endl;
@@ -43,6 +18,7 @@ void slgApp::setup(){
    std::cout<<"Window Height: "<<g_height<<std::endl;
    
    // OPEN GL //
+   g_frame_rate = 20; // refresh in Hz
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    glEnable (GL_BLEND); // transparency
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -57,7 +33,7 @@ void slgApp::setup(){
    // Audio objects
    oscillator.set_frequency(440.0);
    oscillator.set_mode(kSin);
-   _reverb = stk::JCRev( 10 );
+   _reverb = stk::JCRev( 5.0 );
    
    //seed randomizer
    srand(time(NULL));
@@ -72,6 +48,30 @@ void slgApp::setup(){
       mover[i] = slgMover(g_width,g_height);
       //mover[i].printState();
    }
+}
+
+int slgApp::audioCallback( void * outputBuffer, void * inputBuffer, unsigned int nFrames, double streamTime, RtAudioStreamStatus status){
+
+   if ( status ) std::cout << "Stream over/underflow detected." << std::endl;
+   SAMPLE * out = (SAMPLE *)outputBuffer;
+   SAMPLE * in = (SAMPLE *)inputBuffer;
+   //slgOsc* data = (slgOsc*) userData;
+   SAMPLE sumSample;
+   // fill
+   for( int i = 0; i < nFrames; ++i ){
+      // generate signal
+      for (int j =0;j<num_movers;j++)
+         sumSample += mover[j].tick();
+      sumSample = (1.0/(num_movers+1))*sumSample;
+      
+      out[i*kNumChannels] = _reverb.tick(sumSample); 
+       
+       // copy into other channels
+      for( int j = 1; j < kNumChannels; ++j )
+         out[i*kNumChannels+j] = out[i*kNumChannels];
+   }
+
+   return 0;
 }
 
 void slgApp::idleFunc(){
@@ -127,7 +127,6 @@ void slgApp::displayFunc(){
    //glFlush();
    glutSwapBuffers(); //equivalent to glFlush for double buffering
 }
-
 
 void slgApp::cleanup(){
    audio.stopStream();
