@@ -17,7 +17,7 @@ LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 endif
 
 # include slg classes
-INC_PATH = -I../slg/ -I/usr/local/include
+INC_PATH = -I../slg/ -I/usr/local/include -I/usr/local/include/glm
 SLG_DIR = ../slg/
 
 # LIBS
@@ -28,7 +28,7 @@ LIB_PATH = -L/usr/local/lib
 # executable
 TARGET = test
 
-OBJS = slgGen.o realFFTW.o slg2D.o main.o
+OBJS = slgApp.o slgGraphics.o main.o
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
@@ -36,17 +36,11 @@ $(TARGET): $(OBJS)
 main.o:
 	$(CXX) $(FLAGS) $(INC_PATH) main.cpp
 
-slg2D.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slg2D.cpp
+slgApp.o:
+	$(CXX) $(FLAGS) $(INC_PATH) slgApp.cpp
 
-realFFTW.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)realFFTW.cpp
-
-slgGen.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgGen.cpp
-
-#slgGFX.o: slgGFX.h slgGFX.cpp
-#	$(CXX) $(FLAGS) slgGFX.cpp
+slgGraphics.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgGraphics.cpp
 
 clean:
-	rm -f *~ *# *.o test
+	rm -f *~ *.o test

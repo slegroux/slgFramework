@@ -1,5 +1,5 @@
-#ifndef __SLGOSC_H__
-#define __SLGOSC_H__
+#ifndef __SLGOSCILLATOR_H__
+#define __SLGOSCILLATOR_H__
 
 #include "Definitions.h"
 

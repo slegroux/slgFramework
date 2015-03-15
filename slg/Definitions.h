@@ -1,13 +1,16 @@
-#ifndef __DEFINITIONS_H__
-#define __DEFINITIONS_H__
+#ifndef _SLG_DEFINITIONS_H_
+#define _SLG_DEFINITIONS_H_
 
-// think about typedef maybe?
 #define SAMPLE double
-//replace by const
+//typedef double SAMPLE;
+
+// define is a preprocessor directive replacing any text SAMPLE with double e.g.
 #define SAMPLE_RATE 44100
 #define NUM_CHANNS 2
 #define BUFFER_SIZE 512
 #define CIRC_RESOLUTION 60              // 60 pts for a circle
+
+// define is untyped, while const is typed
 
 // Audio
 const int kSampleRate = 44100;
@@ -24,5 +27,7 @@ const int kWindowWidth = 400;
 const int kWindowHeight = 300;
 const int kInitWindowPosX = 100;
 const int kInitWindowPosY = 100;
+const float kFarDistance = 100;
+const float kNearDistance = 1;
 
 #endif

@@ -32,9 +32,6 @@ public:
    void ProcessMessage( const osc::ReceivedMessage & m, const IpEndpointName & remoteEndpoint );
    //void * cb_osc_listener( void * );
    //void ProcessMessage( const osc::ReceivedMessage & m, const IpEndpointName & remoteEndpoint );
-    
- 
-
    // static wrapper to be able to use a member function callback
    static int cb_audioWrapper(void * outputBuffer, void * inputBuffer, unsigned int nFrames, double streamTime,RtAudioStreamStatus status, void * userData);
 

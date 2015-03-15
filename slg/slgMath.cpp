@@ -2,6 +2,7 @@
 #include <time.h>//time
 #include <stdlib.h>//srand
 
+//namespace slg{
 
 int NextPow2(int a){
 	int rval=1;
@@ -26,3 +27,4 @@ float Random(float min, float max){
 float Map(float value, float inputMin, float inputMax, float outputMin, float outputMax) {
    return ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
 }
+//}

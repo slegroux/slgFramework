@@ -28,7 +28,7 @@ LIB_PATH = -L/usr/local/lib
 # executable
 TARGET = test
 
-OBJS = slgGen.o realFFTW.o slgGraphics.o main.o
+OBJS = slgApp.o slgGraphics.o main.o
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
@@ -36,17 +36,11 @@ $(TARGET): $(OBJS)
 main.o:
 	$(CXX) $(FLAGS) $(INC_PATH) main.cpp
 
+slgApp.o:
+	$(CXX) $(FLAGS) $(INC_PATH) slgApp.cpp
+
 slgGraphics.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgGraphics.cpp
 
-realFFTW.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)realFFTW.cpp
-
-slgGen.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)slgGen.cpp
-
-#slgGFX.o: slgGFX.h slgGFX.cpp
-#	$(CXX) $(FLAGS) slgGFX.cpp
-
 clean:
-	rm -f *~ *# *.o test
+	rm -f *~ *.o test

@@ -442,6 +442,23 @@ void Ellipse(float x,float y, float width, float height){
     // back to normal, if smoothness is on
 }
 
+void Point(float x,float y){
+  glPushMatrix();
+  glBegin(GL_POINTS);
+  glVertex2f(x,y);
+  glEnd();
+  glPopMatrix();
+}
+
+void Point(float x,float y, float z){
+  glPushMatrix();
+  glBegin(GL_POINTS);
+  glVertex3f(x,y,z);
+  glEnd();
+  glPopMatrix();
+}
+
+
 void Line(float x1,float y1,float x2,float y2){
 // draw:
     glPushMatrix();
@@ -502,6 +519,20 @@ void Pulse(){
     
 }
 
+void DrawString( GLfloat x, GLfloat y, GLfloat z, const char * str, GLfloat scale = 1.0f )
+{
+    GLint len = strlen( str ), i;
+
+    glPushMatrix();
+    glTranslatef( x, y, z );
+    glScalef( .001f * scale, .001f * scale, .001f * scale );
+
+    for( i = 0; i < len; i++ )
+        glutStrokeCharacter( GLUT_STROKE_ROMAN, str[i] );
+    
+    glPopMatrix();
+}
+
 void go2D(){
   /*
    *  Disable depth test and lighting for 2D elements
@@ -534,13 +565,14 @@ void go3D(){
    *  Enable lighting and the z-buffer
    */
   glEnable(GL_DEPTH_TEST);
-  glEnable(GL_LIGHTING);
+  //glEnable(GL_LIGHTING);
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   int w = glutGet(GLUT_WINDOW_WIDTH);
   int h = glutGet(GLUT_WINDOW_HEIGHT);
-  gluPerspective(45.0f,(GLfloat)w/(GLfloat)h,1.0f,1000.0f); 
+  gluPerspective(45.0f,(GLfloat)w/(GLfloat)h,1.0f,1000.0f);
+  gluLookAt(0, 0, 400, 0, 0, 0, 0.0, 1.0, 0.0);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 }

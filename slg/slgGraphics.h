@@ -47,6 +47,8 @@ void BitmapString( GLfloat x, GLfloat y, GLfloat z, const char * str, GLfloat sc
 void Circle(float x,float y, float radius);
 void Ellipse(float x,float y, float width, float height);
 void Line(float x1,float y1,float x2,float y2);
+void Point(float x,float y);
+void Point(float x,float y, float z);
 void Rectangle(float x,float y,float w,float h);
 void Triangle(float x1, float y1, float x2, float y2, float x3, float y3);
 void Pulse();
@@ -64,6 +66,8 @@ void Axis(float size=1.0);
 void SnowMan(float size=1);
 void Ground(float size = 1000.0);
 
+//Font
+void DrawString( GLfloat x, GLfloat y, GLfloat z, const char * str, GLfloat scale);
 
 
 

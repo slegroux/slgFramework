@@ -2,7 +2,6 @@
 #include <unistd.h>
 using namespace std;
 
-
 // need a wrapper to call non-static member function
 int slgApp::cb_audioWrapper(void * outputBuffer, void * inputBuffer, unsigned int nFrames, double streamTime,RtAudioStreamStatus status, void * userData){
       slgApp *self = static_cast<slgApp*>(userData);
