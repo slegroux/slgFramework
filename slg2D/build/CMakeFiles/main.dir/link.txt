@@ -1,0 +1,1 @@
+/usr/bin/c++   -g -Wall -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/main.dir/main.cpp.o  -o main  -framework GLUT -framework Cocoa -framework AGL -framework OpenGL -lm 

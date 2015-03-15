@@ -1,0 +1,704 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CB3285401A1998AF0099E0E6 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB32853F1A1998AF0099E0E6 /* CoreAudio.framework */; };
+		CB3285561A19A4460099E0E6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3285551A19A4460099E0E6 /* CoreFoundation.framework */; };
+		CB32855C1A19A6660099E0E6 /* slgAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB32855B1A19A6660099E0E6 /* slgAudio.cpp */; };
+		CB3285631A1A64C50099E0E6 /* RtAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3285621A1A64C50099E0E6 /* RtAudio.cpp */; };
+		CB3285691A1A66460099E0E6 /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3285671A1A66460099E0E6 /* RtMidi.cpp */; };
+		CB32856C1A1A66AC0099E0E6 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB32856B1A1A66AC0099E0E6 /* CoreMIDI.framework */; };
+		CB32857F1A1A66FE0099E0E6 /* realFFTW.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB32856E1A1A66FE0099E0E6 /* realFFTW.cpp */; };
+		CB3285801A1A66FE0099E0E6 /* slgCircularBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3285701A1A66FE0099E0E6 /* slgCircularBuffer.cpp */; };
+		CB3285811A1A66FE0099E0E6 /* slgFluidSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3285721A1A66FE0099E0E6 /* slgFluidSynth.cpp */; };
+		CB3285821A1A66FE0099E0E6 /* slgGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3285741A1A66FE0099E0E6 /* slgGen.cpp */; };
+		CB3285831A1A66FE0099E0E6 /* slgGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3285761A1A66FE0099E0E6 /* slgGraphics.cpp */; };
+		CB3285851A1A66FE0099E0E6 /* slgMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB32857A1A1A66FE0099E0E6 /* slgMath.cpp */; };
+		CB3285861A1A66FE0099E0E6 /* slgMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB32857C1A1A66FE0099E0E6 /* slgMidi.cpp */; };
+		CB3285891A1A67A40099E0E6 /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3285881A1A67A40099E0E6 /* libstk.a */; };
+		CB32858B1A1A67E30099E0E6 /* libfftw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB32858A1A1A67E30099E0E6 /* libfftw3.a */; };
+		CB32858D1A1A69FB0099E0E6 /* libfluidsynth.1.5.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CB32858C1A1A69FB0099E0E6 /* libfluidsynth.1.5.2.dylib */; };
+		CB32861B1A1A6E680099E0E6 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB32861A1A1A6E680099E0E6 /* GLUT.framework */; };
+		CB32861D1A1A6E700099E0E6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB32861C1A1A6E700099E0E6 /* OpenGL.framework */; };
+		CB32861F1A1A9B440099E0E6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB32861E1A1A9B440099E0E6 /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CB3285311A19981D0099E0E6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CB3285331A19981D0099E0E6 /* slgTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = slgTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB32853F1A1998AF0099E0E6 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		CB3285551A19A4460099E0E6 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		CB32855B1A19A6660099E0E6 /* slgAudio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = slgAudio.cpp; path = ../slg/slgAudio.cpp; sourceTree = "<group>"; };
+		CB3285601A1A63E70099E0E6 /* slgAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = slgAudio.h; path = ../slg/slgAudio.h; sourceTree = "<group>"; };
+		CB3285621A1A64C50099E0E6 /* RtAudio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RtAudio.cpp; path = ../RtAudio/RtAudio.cpp; sourceTree = "<group>"; };
+		CB3285641A1A657C0099E0E6 /* RtError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RtError.h; path = ../RtAudio/RtError.h; sourceTree = "<group>"; };
+		CB3285651A1A65BD0099E0E6 /* RtAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RtAudio.h; path = ../RtAudio/RtAudio.h; sourceTree = "<group>"; };
+		CB3285671A1A66460099E0E6 /* RtMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RtMidi.cpp; path = ../RtMidi/RtMidi.cpp; sourceTree = "<group>"; };
+		CB3285681A1A66460099E0E6 /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtMidi.h; path = ../RtMidi/RtMidi.h; sourceTree = "<group>"; };
+		CB32856B1A1A66AC0099E0E6 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		CB32856D1A1A66FE0099E0E6 /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Definitions.h; path = ../slg/Definitions.h; sourceTree = "<group>"; };
+		CB32856E1A1A66FE0099E0E6 /* realFFTW.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = realFFTW.cpp; path = ../slg/realFFTW.cpp; sourceTree = "<group>"; };
+		CB32856F1A1A66FE0099E0E6 /* realFFTW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = realFFTW.h; path = ../slg/realFFTW.h; sourceTree = "<group>"; };
+		CB3285701A1A66FE0099E0E6 /* slgCircularBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slgCircularBuffer.cpp; path = ../slg/slgCircularBuffer.cpp; sourceTree = "<group>"; };
+		CB3285711A1A66FE0099E0E6 /* slgCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slgCircularBuffer.h; path = ../slg/slgCircularBuffer.h; sourceTree = "<group>"; };
+		CB3285721A1A66FE0099E0E6 /* slgFluidSynth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slgFluidSynth.cpp; path = ../slg/slgFluidSynth.cpp; sourceTree = "<group>"; };
+		CB3285731A1A66FE0099E0E6 /* slgFluidSynth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slgFluidSynth.h; path = ../slg/slgFluidSynth.h; sourceTree = "<group>"; };
+		CB3285741A1A66FE0099E0E6 /* slgGen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slgGen.cpp; path = ../slg/slgGen.cpp; sourceTree = "<group>"; };
+		CB3285751A1A66FE0099E0E6 /* slgGen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slgGen.h; path = ../slg/slgGen.h; sourceTree = "<group>"; };
+		CB3285761A1A66FE0099E0E6 /* slgGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slgGraphics.cpp; path = ../slg/slgGraphics.cpp; sourceTree = "<group>"; };
+		CB3285771A1A66FE0099E0E6 /* slgGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slgGraphics.h; path = ../slg/slgGraphics.h; sourceTree = "<group>"; };
+		CB32857A1A1A66FE0099E0E6 /* slgMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slgMath.cpp; path = ../slg/slgMath.cpp; sourceTree = "<group>"; };
+		CB32857B1A1A66FE0099E0E6 /* slgMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slgMath.h; path = ../slg/slgMath.h; sourceTree = "<group>"; };
+		CB32857C1A1A66FE0099E0E6 /* slgMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slgMidi.cpp; path = ../slg/slgMidi.cpp; sourceTree = "<group>"; };
+		CB32857D1A1A66FE0099E0E6 /* slgMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slgMidi.h; path = ../slg/slgMidi.h; sourceTree = "<group>"; };
+		CB32857E1A1A66FE0099E0E6 /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utils.h; path = ../slg/utils.h; sourceTree = "<group>"; };
+		CB3285881A1A67A40099E0E6 /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstk.a; path = /usr/local/Cellar/stk/4.5.0/lib/libstk.a; sourceTree = "<absolute>"; };
+		CB32858A1A1A67E30099E0E6 /* libfftw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfftw3.a; path = /usr/local/Cellar/fftw/3.3.3/lib/libfftw3.a; sourceTree = "<absolute>"; };
+		CB32858C1A1A69FB0099E0E6 /* libfluidsynth.1.5.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfluidsynth.1.5.2.dylib; path = "/usr/local/Cellar/fluid-synth/1.1.6/lib/libfluidsynth.1.5.2.dylib"; sourceTree = "<absolute>"; };
+		CB32858F1A1A6BF70099E0E6 /* fluidsynth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = fluidsynth.h; path = /usr/local/include/fluidsynth.h; sourceTree = "<absolute>"; };
+		CB3285901A1A6C7C0099E0E6 /* fftw3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = fftw3.h; path = /usr/local/include/fftw3.h; sourceTree = "<absolute>"; };
+		CB3285911A1A6CAD0099E0E6 /* ADSR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ADSR.h; path = /usr/local/include/stk/ADSR.h; sourceTree = "<absolute>"; };
+		CB3285921A1A6CAD0099E0E6 /* Asymp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Asymp.h; path = /usr/local/include/stk/Asymp.h; sourceTree = "<absolute>"; };
+		CB3285931A1A6CAD0099E0E6 /* BandedWG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BandedWG.h; path = /usr/local/include/stk/BandedWG.h; sourceTree = "<absolute>"; };
+		CB3285941A1A6CAD0099E0E6 /* BeeThree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BeeThree.h; path = /usr/local/include/stk/BeeThree.h; sourceTree = "<absolute>"; };
+		CB3285951A1A6CAD0099E0E6 /* BiQuad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BiQuad.h; path = /usr/local/include/stk/BiQuad.h; sourceTree = "<absolute>"; };
+		CB3285961A1A6CAD0099E0E6 /* Blit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Blit.h; path = /usr/local/include/stk/Blit.h; sourceTree = "<absolute>"; };
+		CB3285971A1A6CAD0099E0E6 /* BlitSaw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BlitSaw.h; path = /usr/local/include/stk/BlitSaw.h; sourceTree = "<absolute>"; };
+		CB3285981A1A6CAD0099E0E6 /* BlitSquare.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BlitSquare.h; path = /usr/local/include/stk/BlitSquare.h; sourceTree = "<absolute>"; };
+		CB3285991A1A6CAD0099E0E6 /* BlowBotl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BlowBotl.h; path = /usr/local/include/stk/BlowBotl.h; sourceTree = "<absolute>"; };
+		CB32859A1A1A6CAD0099E0E6 /* BlowHole.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BlowHole.h; path = /usr/local/include/stk/BlowHole.h; sourceTree = "<absolute>"; };
+		CB32859B1A1A6CAD0099E0E6 /* Bowed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Bowed.h; path = /usr/local/include/stk/Bowed.h; sourceTree = "<absolute>"; };
+		CB32859C1A1A6CAD0099E0E6 /* BowTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BowTable.h; path = /usr/local/include/stk/BowTable.h; sourceTree = "<absolute>"; };
+		CB32859D1A1A6CAD0099E0E6 /* Brass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Brass.h; path = /usr/local/include/stk/Brass.h; sourceTree = "<absolute>"; };
+		CB32859E1A1A6CAD0099E0E6 /* Chorus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Chorus.h; path = /usr/local/include/stk/Chorus.h; sourceTree = "<absolute>"; };
+		CB32859F1A1A6CAD0099E0E6 /* Clarinet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Clarinet.h; path = /usr/local/include/stk/Clarinet.h; sourceTree = "<absolute>"; };
+		CB3285A01A1A6CAD0099E0E6 /* Cubic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Cubic.h; path = /usr/local/include/stk/Cubic.h; sourceTree = "<absolute>"; };
+		CB3285A11A1A6CAD0099E0E6 /* Delay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Delay.h; path = /usr/local/include/stk/Delay.h; sourceTree = "<absolute>"; };
+		CB3285A21A1A6CAD0099E0E6 /* DelayA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DelayA.h; path = /usr/local/include/stk/DelayA.h; sourceTree = "<absolute>"; };
+		CB3285A31A1A6CAD0099E0E6 /* DelayL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DelayL.h; path = /usr/local/include/stk/DelayL.h; sourceTree = "<absolute>"; };
+		CB3285A41A1A6CAD0099E0E6 /* Drummer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Drummer.h; path = /usr/local/include/stk/Drummer.h; sourceTree = "<absolute>"; };
+		CB3285A51A1A6CAD0099E0E6 /* Echo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Echo.h; path = /usr/local/include/stk/Echo.h; sourceTree = "<absolute>"; };
+		CB3285A61A1A6CAD0099E0E6 /* Effect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Effect.h; path = /usr/local/include/stk/Effect.h; sourceTree = "<absolute>"; };
+		CB3285A71A1A6CAD0099E0E6 /* Envelope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Envelope.h; path = /usr/local/include/stk/Envelope.h; sourceTree = "<absolute>"; };
+		CB3285A81A1A6CAD0099E0E6 /* FileLoop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FileLoop.h; path = /usr/local/include/stk/FileLoop.h; sourceTree = "<absolute>"; };
+		CB3285A91A1A6CAD0099E0E6 /* FileRead.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FileRead.h; path = /usr/local/include/stk/FileRead.h; sourceTree = "<absolute>"; };
+		CB3285AA1A1A6CAD0099E0E6 /* FileWrite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FileWrite.h; path = /usr/local/include/stk/FileWrite.h; sourceTree = "<absolute>"; };
+		CB3285AB1A1A6CAD0099E0E6 /* FileWvIn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FileWvIn.h; path = /usr/local/include/stk/FileWvIn.h; sourceTree = "<absolute>"; };
+		CB3285AC1A1A6CAD0099E0E6 /* FileWvOut.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FileWvOut.h; path = /usr/local/include/stk/FileWvOut.h; sourceTree = "<absolute>"; };
+		CB3285AD1A1A6CAD0099E0E6 /* Filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Filter.h; path = /usr/local/include/stk/Filter.h; sourceTree = "<absolute>"; };
+		CB3285AE1A1A6CAD0099E0E6 /* Fir.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Fir.h; path = /usr/local/include/stk/Fir.h; sourceTree = "<absolute>"; };
+		CB3285AF1A1A6CAD0099E0E6 /* Flute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Flute.h; path = /usr/local/include/stk/Flute.h; sourceTree = "<absolute>"; };
+		CB3285B01A1A6CAD0099E0E6 /* FM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FM.h; path = /usr/local/include/stk/FM.h; sourceTree = "<absolute>"; };
+		CB3285B11A1A6CAD0099E0E6 /* FMVoices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FMVoices.h; path = /usr/local/include/stk/FMVoices.h; sourceTree = "<absolute>"; };
+		CB3285B21A1A6CAD0099E0E6 /* FormSwep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FormSwep.h; path = /usr/local/include/stk/FormSwep.h; sourceTree = "<absolute>"; };
+		CB3285B31A1A6CAD0099E0E6 /* FreeVerb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FreeVerb.h; path = /usr/local/include/stk/FreeVerb.h; sourceTree = "<absolute>"; };
+		CB3285B41A1A6CAD0099E0E6 /* Function.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Function.h; path = /usr/local/include/stk/Function.h; sourceTree = "<absolute>"; };
+		CB3285B51A1A6CAD0099E0E6 /* Generator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Generator.h; path = /usr/local/include/stk/Generator.h; sourceTree = "<absolute>"; };
+		CB3285B61A1A6CAD0099E0E6 /* Granulate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Granulate.h; path = /usr/local/include/stk/Granulate.h; sourceTree = "<absolute>"; };
+		CB3285B71A1A6CAD0099E0E6 /* Guitar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Guitar.h; path = /usr/local/include/stk/Guitar.h; sourceTree = "<absolute>"; };
+		CB3285B81A1A6CAD0099E0E6 /* HevyMetl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HevyMetl.h; path = /usr/local/include/stk/HevyMetl.h; sourceTree = "<absolute>"; };
+		CB3285B91A1A6CAD0099E0E6 /* Iir.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Iir.h; path = /usr/local/include/stk/Iir.h; sourceTree = "<absolute>"; };
+		CB3285BA1A1A6CAD0099E0E6 /* InetWvIn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InetWvIn.h; path = /usr/local/include/stk/InetWvIn.h; sourceTree = "<absolute>"; };
+		CB3285BB1A1A6CAD0099E0E6 /* InetWvOut.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InetWvOut.h; path = /usr/local/include/stk/InetWvOut.h; sourceTree = "<absolute>"; };
+		CB3285BC1A1A6CAD0099E0E6 /* Instrmnt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Instrmnt.h; path = /usr/local/include/stk/Instrmnt.h; sourceTree = "<absolute>"; };
+		CB3285BD1A1A6CAD0099E0E6 /* JCRev.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JCRev.h; path = /usr/local/include/stk/JCRev.h; sourceTree = "<absolute>"; };
+		CB3285BE1A1A6CAD0099E0E6 /* JetTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JetTable.h; path = /usr/local/include/stk/JetTable.h; sourceTree = "<absolute>"; };
+		CB3285BF1A1A6CAD0099E0E6 /* LentPitShift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LentPitShift.h; path = /usr/local/include/stk/LentPitShift.h; sourceTree = "<absolute>"; };
+		CB3285C01A1A6CAD0099E0E6 /* Mandolin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mandolin.h; path = /usr/local/include/stk/Mandolin.h; sourceTree = "<absolute>"; };
+		CB3285C11A1A6CAD0099E0E6 /* Mesh2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mesh2D.h; path = /usr/local/include/stk/Mesh2D.h; sourceTree = "<absolute>"; };
+		CB3285C21A1A6CAD0099E0E6 /* Messager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Messager.h; path = /usr/local/include/stk/Messager.h; sourceTree = "<absolute>"; };
+		CB3285C31A1A6CAD0099E0E6 /* MidiFileIn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MidiFileIn.h; path = /usr/local/include/stk/MidiFileIn.h; sourceTree = "<absolute>"; };
+		CB3285C41A1A6CAD0099E0E6 /* Modal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Modal.h; path = /usr/local/include/stk/Modal.h; sourceTree = "<absolute>"; };
+		CB3285C51A1A6CAD0099E0E6 /* ModalBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModalBar.h; path = /usr/local/include/stk/ModalBar.h; sourceTree = "<absolute>"; };
+		CB3285C61A1A6CAD0099E0E6 /* Modulate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Modulate.h; path = /usr/local/include/stk/Modulate.h; sourceTree = "<absolute>"; };
+		CB3285C71A1A6CAD0099E0E6 /* Moog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Moog.h; path = /usr/local/include/stk/Moog.h; sourceTree = "<absolute>"; };
+		CB3285C81A1A6CAD0099E0E6 /* Mutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mutex.h; path = /usr/local/include/stk/Mutex.h; sourceTree = "<absolute>"; };
+		CB3285C91A1A6CAD0099E0E6 /* Noise.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Noise.h; path = /usr/local/include/stk/Noise.h; sourceTree = "<absolute>"; };
+		CB3285CA1A1A6CAD0099E0E6 /* NRev.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NRev.h; path = /usr/local/include/stk/NRev.h; sourceTree = "<absolute>"; };
+		CB3285CB1A1A6CAD0099E0E6 /* OnePole.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OnePole.h; path = /usr/local/include/stk/OnePole.h; sourceTree = "<absolute>"; };
+		CB3285CC1A1A6CAD0099E0E6 /* OneZero.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OneZero.h; path = /usr/local/include/stk/OneZero.h; sourceTree = "<absolute>"; };
+		CB3285CD1A1A6CAD0099E0E6 /* PercFlut.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PercFlut.h; path = /usr/local/include/stk/PercFlut.h; sourceTree = "<absolute>"; };
+		CB3285CE1A1A6CAD0099E0E6 /* Phonemes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Phonemes.h; path = /usr/local/include/stk/Phonemes.h; sourceTree = "<absolute>"; };
+		CB3285CF1A1A6CAD0099E0E6 /* PitShift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PitShift.h; path = /usr/local/include/stk/PitShift.h; sourceTree = "<absolute>"; };
+		CB3285D01A1A6CAD0099E0E6 /* Plucked.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Plucked.h; path = /usr/local/include/stk/Plucked.h; sourceTree = "<absolute>"; };
+		CB3285D11A1A6CAD0099E0E6 /* PluckTwo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluckTwo.h; path = /usr/local/include/stk/PluckTwo.h; sourceTree = "<absolute>"; };
+		CB3285D21A1A6CAD0099E0E6 /* PoleZero.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PoleZero.h; path = /usr/local/include/stk/PoleZero.h; sourceTree = "<absolute>"; };
+		CB3285D31A1A6CAD0099E0E6 /* PRCRev.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PRCRev.h; path = /usr/local/include/stk/PRCRev.h; sourceTree = "<absolute>"; };
+		CB3285D41A1A6CAD0099E0E6 /* ReedTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ReedTable.h; path = /usr/local/include/stk/ReedTable.h; sourceTree = "<absolute>"; };
+		CB3285D51A1A6CAD0099E0E6 /* Resonate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resonate.h; path = /usr/local/include/stk/Resonate.h; sourceTree = "<absolute>"; };
+		CB3285D61A1A6CAD0099E0E6 /* Rhodey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rhodey.h; path = /usr/local/include/stk/Rhodey.h; sourceTree = "<absolute>"; };
+		CB3285D71A1A6CAD0099E0E6 /* RtAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RtAudio.h; path = /usr/local/include/stk/RtAudio.h; sourceTree = "<absolute>"; };
+		CB3285D81A1A6CAD0099E0E6 /* RtMidi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RtMidi.h; path = /usr/local/include/stk/RtMidi.h; sourceTree = "<absolute>"; };
+		CB3285D91A1A6CAD0099E0E6 /* RtWvIn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RtWvIn.h; path = /usr/local/include/stk/RtWvIn.h; sourceTree = "<absolute>"; };
+		CB3285DA1A1A6CAD0099E0E6 /* RtWvOut.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RtWvOut.h; path = /usr/local/include/stk/RtWvOut.h; sourceTree = "<absolute>"; };
+		CB3285DB1A1A6CAD0099E0E6 /* Sampler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Sampler.h; path = /usr/local/include/stk/Sampler.h; sourceTree = "<absolute>"; };
+		CB3285DC1A1A6CAD0099E0E6 /* Saxofony.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Saxofony.h; path = /usr/local/include/stk/Saxofony.h; sourceTree = "<absolute>"; };
+		CB3285DD1A1A6CAD0099E0E6 /* Shakers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Shakers.h; path = /usr/local/include/stk/Shakers.h; sourceTree = "<absolute>"; };
+		CB3285DE1A1A6CAD0099E0E6 /* Simple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Simple.h; path = /usr/local/include/stk/Simple.h; sourceTree = "<absolute>"; };
+		CB3285DF1A1A6CAD0099E0E6 /* SineWave.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SineWave.h; path = /usr/local/include/stk/SineWave.h; sourceTree = "<absolute>"; };
+		CB3285E01A1A6CAD0099E0E6 /* SingWave.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SingWave.h; path = /usr/local/include/stk/SingWave.h; sourceTree = "<absolute>"; };
+		CB3285E11A1A6CAD0099E0E6 /* Sitar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Sitar.h; path = /usr/local/include/stk/Sitar.h; sourceTree = "<absolute>"; };
+		CB3285E21A1A6CAD0099E0E6 /* Skini.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Skini.h; path = /usr/local/include/stk/Skini.h; sourceTree = "<absolute>"; };
+		CB3285E31A1A6CAD0099E0E6 /* SKINI.msg */ = {isa = PBXFileReference; lastKnownFileType = text; name = SKINI.msg; path = /usr/local/include/stk/SKINI.msg; sourceTree = "<absolute>"; };
+		CB3285E41A1A6CAD0099E0E6 /* SKINI.tbl */ = {isa = PBXFileReference; lastKnownFileType = text; name = SKINI.tbl; path = /usr/local/include/stk/SKINI.tbl; sourceTree = "<absolute>"; };
+		CB3285E51A1A6CAD0099E0E6 /* SKINImsg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SKINImsg.h; path = /usr/local/include/stk/SKINImsg.h; sourceTree = "<absolute>"; };
+		CB3285E61A1A6CAD0099E0E6 /* SKINItbl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SKINItbl.h; path = /usr/local/include/stk/SKINItbl.h; sourceTree = "<absolute>"; };
+		CB3285E71A1A6CAD0099E0E6 /* Socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Socket.h; path = /usr/local/include/stk/Socket.h; sourceTree = "<absolute>"; };
+		CB3285E81A1A6CAD0099E0E6 /* Sphere.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Sphere.h; path = /usr/local/include/stk/Sphere.h; sourceTree = "<absolute>"; };
+		CB3285E91A1A6CAD0099E0E6 /* StifKarp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StifKarp.h; path = /usr/local/include/stk/StifKarp.h; sourceTree = "<absolute>"; };
+		CB3285EA1A1A6CAD0099E0E6 /* Stk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Stk.h; path = /usr/local/include/stk/Stk.h; sourceTree = "<absolute>"; };
+		CB3285EB1A1A6CAD0099E0E6 /* TapDelay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TapDelay.h; path = /usr/local/include/stk/TapDelay.h; sourceTree = "<absolute>"; };
+		CB3285EC1A1A6CAD0099E0E6 /* TcpClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TcpClient.h; path = /usr/local/include/stk/TcpClient.h; sourceTree = "<absolute>"; };
+		CB3285ED1A1A6CAD0099E0E6 /* TcpServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TcpServer.h; path = /usr/local/include/stk/TcpServer.h; sourceTree = "<absolute>"; };
+		CB3285EE1A1A6CAD0099E0E6 /* Thread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Thread.h; path = /usr/local/include/stk/Thread.h; sourceTree = "<absolute>"; };
+		CB3285EF1A1A6CAD0099E0E6 /* TubeBell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TubeBell.h; path = /usr/local/include/stk/TubeBell.h; sourceTree = "<absolute>"; };
+		CB3285F01A1A6CAD0099E0E6 /* Twang.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Twang.h; path = /usr/local/include/stk/Twang.h; sourceTree = "<absolute>"; };
+		CB3285F11A1A6CAD0099E0E6 /* TwoPole.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TwoPole.h; path = /usr/local/include/stk/TwoPole.h; sourceTree = "<absolute>"; };
+		CB3285F21A1A6CAD0099E0E6 /* TwoZero.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TwoZero.h; path = /usr/local/include/stk/TwoZero.h; sourceTree = "<absolute>"; };
+		CB3285F31A1A6CAD0099E0E6 /* UdpSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UdpSocket.h; path = /usr/local/include/stk/UdpSocket.h; sourceTree = "<absolute>"; };
+		CB3285F41A1A6CAD0099E0E6 /* Vector3D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vector3D.h; path = /usr/local/include/stk/Vector3D.h; sourceTree = "<absolute>"; };
+		CB3285F51A1A6CAD0099E0E6 /* Voicer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Voicer.h; path = /usr/local/include/stk/Voicer.h; sourceTree = "<absolute>"; };
+		CB3285F61A1A6CAD0099E0E6 /* VoicForm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VoicForm.h; path = /usr/local/include/stk/VoicForm.h; sourceTree = "<absolute>"; };
+		CB3285F71A1A6CAD0099E0E6 /* Whistle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Whistle.h; path = /usr/local/include/stk/Whistle.h; sourceTree = "<absolute>"; };
+		CB3285F81A1A6CAD0099E0E6 /* Wurley.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Wurley.h; path = /usr/local/include/stk/Wurley.h; sourceTree = "<absolute>"; };
+		CB3285F91A1A6CAD0099E0E6 /* WvIn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WvIn.h; path = /usr/local/include/stk/WvIn.h; sourceTree = "<absolute>"; };
+		CB3285FA1A1A6CAD0099E0E6 /* WvOut.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WvOut.h; path = /usr/local/include/stk/WvOut.h; sourceTree = "<absolute>"; };
+		CB3285FE1A1A6D7F0099E0E6 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CMakeLists.txt; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/CMakeLists.txt; sourceTree = "<absolute>"; };
+		CB3285FF1A1A6D7F0099E0E6 /* common.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = common.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/common.hpp; sourceTree = "<absolute>"; };
+		CB3286001A1A6D7F0099E0E6 /* detail */ = {isa = PBXFileReference; lastKnownFileType = folder; name = detail; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/detail; sourceTree = "<absolute>"; };
+		CB3286011A1A6D7F0099E0E6 /* exponential.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = exponential.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/exponential.hpp; sourceTree = "<absolute>"; };
+		CB3286021A1A6D7F0099E0E6 /* ext.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ext.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/ext.hpp; sourceTree = "<absolute>"; };
+		CB3286031A1A6D7F0099E0E6 /* fwd.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = fwd.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/fwd.hpp; sourceTree = "<absolute>"; };
+		CB3286041A1A6D7F0099E0E6 /* geometric.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = geometric.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/geometric.hpp; sourceTree = "<absolute>"; };
+		CB3286051A1A6D7F0099E0E6 /* glm.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = glm.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/glm.hpp; sourceTree = "<absolute>"; };
+		CB3286061A1A6D7F0099E0E6 /* gtc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = gtc; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/gtc; sourceTree = "<absolute>"; };
+		CB3286071A1A6D7F0099E0E6 /* gtx */ = {isa = PBXFileReference; lastKnownFileType = folder; name = gtx; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/gtx; sourceTree = "<absolute>"; };
+		CB3286081A1A6D7F0099E0E6 /* integer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = integer.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/integer.hpp; sourceTree = "<absolute>"; };
+		CB3286091A1A6D7F0099E0E6 /* mat2x2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mat2x2.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/mat2x2.hpp; sourceTree = "<absolute>"; };
+		CB32860A1A1A6D7F0099E0E6 /* mat2x3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mat2x3.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/mat2x3.hpp; sourceTree = "<absolute>"; };
+		CB32860B1A1A6D7F0099E0E6 /* mat2x4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mat2x4.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/mat2x4.hpp; sourceTree = "<absolute>"; };
+		CB32860C1A1A6D7F0099E0E6 /* mat3x2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mat3x2.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/mat3x2.hpp; sourceTree = "<absolute>"; };
+		CB32860D1A1A6D7F0099E0E6 /* mat3x3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mat3x3.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/mat3x3.hpp; sourceTree = "<absolute>"; };
+		CB32860E1A1A6D7F0099E0E6 /* mat3x4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mat3x4.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/mat3x4.hpp; sourceTree = "<absolute>"; };
+		CB32860F1A1A6D7F0099E0E6 /* mat4x2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mat4x2.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/mat4x2.hpp; sourceTree = "<absolute>"; };
+		CB3286101A1A6D7F0099E0E6 /* mat4x3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mat4x3.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/mat4x3.hpp; sourceTree = "<absolute>"; };
+		CB3286111A1A6D7F0099E0E6 /* mat4x4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mat4x4.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/mat4x4.hpp; sourceTree = "<absolute>"; };
+		CB3286121A1A6D7F0099E0E6 /* matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = matrix.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/matrix.hpp; sourceTree = "<absolute>"; };
+		CB3286131A1A6D7F0099E0E6 /* packing.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = packing.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/packing.hpp; sourceTree = "<absolute>"; };
+		CB3286141A1A6D7F0099E0E6 /* trigonometric.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = trigonometric.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/trigonometric.hpp; sourceTree = "<absolute>"; };
+		CB3286151A1A6D7F0099E0E6 /* vec2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = vec2.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/vec2.hpp; sourceTree = "<absolute>"; };
+		CB3286161A1A6D7F0099E0E6 /* vec3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = vec3.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/vec3.hpp; sourceTree = "<absolute>"; };
+		CB3286171A1A6D7F0099E0E6 /* vec4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = vec4.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/vec4.hpp; sourceTree = "<absolute>"; };
+		CB3286181A1A6D7F0099E0E6 /* vector_relational.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = vector_relational.hpp; path = /usr/local/Cellar/glm/0.9.5.4/include/glm/vector_relational.hpp; sourceTree = "<absolute>"; };
+		CB32861A1A1A6E680099E0E6 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		CB32861C1A1A6E700099E0E6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		CB32861E1A1A9B440099E0E6 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CB3285301A19981D0099E0E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB32861D1A1A6E700099E0E6 /* OpenGL.framework in Frameworks */,
+				CB32861B1A1A6E680099E0E6 /* GLUT.framework in Frameworks */,
+				CB32858D1A1A69FB0099E0E6 /* libfluidsynth.1.5.2.dylib in Frameworks */,
+				CB32858B1A1A67E30099E0E6 /* libfftw3.a in Frameworks */,
+				CB3285891A1A67A40099E0E6 /* libstk.a in Frameworks */,
+				CB32856C1A1A66AC0099E0E6 /* CoreMIDI.framework in Frameworks */,
+				CB3285561A19A4460099E0E6 /* CoreFoundation.framework in Frameworks */,
+				CB3285401A1998AF0099E0E6 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CB32852A1A19981D0099E0E6 = {
+			isa = PBXGroup;
+			children = (
+				CB32861E1A1A9B440099E0E6 /* main.cpp */,
+				CB32856A1A1A66560099E0E6 /* RtMidi */,
+				CB3285661A1A65D30099E0E6 /* RtAudio */,
+				CB3285871A1A67160099E0E6 /* slg */,
+				CB32858E1A1A6AD30099E0E6 /* Frameworks */,
+				CB3285341A19981D0099E0E6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CB3285341A19981D0099E0E6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB3285331A19981D0099E0E6 /* slgTest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CB3285661A1A65D30099E0E6 /* RtAudio */ = {
+			isa = PBXGroup;
+			children = (
+				CB3285621A1A64C50099E0E6 /* RtAudio.cpp */,
+				CB3285641A1A657C0099E0E6 /* RtError.h */,
+				CB3285651A1A65BD0099E0E6 /* RtAudio.h */,
+			);
+			name = RtAudio;
+			sourceTree = "<group>";
+		};
+		CB32856A1A1A66560099E0E6 /* RtMidi */ = {
+			isa = PBXGroup;
+			children = (
+				CB3285671A1A66460099E0E6 /* RtMidi.cpp */,
+				CB3285681A1A66460099E0E6 /* RtMidi.h */,
+			);
+			name = RtMidi;
+			sourceTree = "<group>";
+		};
+		CB3285871A1A67160099E0E6 /* slg */ = {
+			isa = PBXGroup;
+			children = (
+				CB3285601A1A63E70099E0E6 /* slgAudio.h */,
+				CB32856D1A1A66FE0099E0E6 /* Definitions.h */,
+				CB32856E1A1A66FE0099E0E6 /* realFFTW.cpp */,
+				CB32856F1A1A66FE0099E0E6 /* realFFTW.h */,
+				CB3285701A1A66FE0099E0E6 /* slgCircularBuffer.cpp */,
+				CB3285711A1A66FE0099E0E6 /* slgCircularBuffer.h */,
+				CB3285721A1A66FE0099E0E6 /* slgFluidSynth.cpp */,
+				CB3285731A1A66FE0099E0E6 /* slgFluidSynth.h */,
+				CB3285741A1A66FE0099E0E6 /* slgGen.cpp */,
+				CB3285751A1A66FE0099E0E6 /* slgGen.h */,
+				CB3285761A1A66FE0099E0E6 /* slgGraphics.cpp */,
+				CB3285771A1A66FE0099E0E6 /* slgGraphics.h */,
+				CB32857A1A1A66FE0099E0E6 /* slgMath.cpp */,
+				CB32857B1A1A66FE0099E0E6 /* slgMath.h */,
+				CB32857C1A1A66FE0099E0E6 /* slgMidi.cpp */,
+				CB32857D1A1A66FE0099E0E6 /* slgMidi.h */,
+				CB32857E1A1A66FE0099E0E6 /* utils.h */,
+				CB32855B1A19A6660099E0E6 /* slgAudio.cpp */,
+			);
+			name = slg;
+			sourceTree = "<group>";
+		};
+		CB32858E1A1A6AD30099E0E6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CB3286191A1A6DA70099E0E6 /* glm */,
+				CB3285FD1A1A6D640099E0E6 /* fluidsynth */,
+				CB3285FC1A1A6D5D0099E0E6 /* fftw */,
+				CB3285FB1A1A6D510099E0E6 /* stk */,
+				CB32861C1A1A6E700099E0E6 /* OpenGL.framework */,
+				CB32861A1A1A6E680099E0E6 /* GLUT.framework */,
+				CB32856B1A1A66AC0099E0E6 /* CoreMIDI.framework */,
+				CB32853F1A1998AF0099E0E6 /* CoreAudio.framework */,
+				CB3285551A19A4460099E0E6 /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CB3285FB1A1A6D510099E0E6 /* stk */ = {
+			isa = PBXGroup;
+			children = (
+				CB3285911A1A6CAD0099E0E6 /* ADSR.h */,
+				CB3285921A1A6CAD0099E0E6 /* Asymp.h */,
+				CB3285931A1A6CAD0099E0E6 /* BandedWG.h */,
+				CB3285941A1A6CAD0099E0E6 /* BeeThree.h */,
+				CB3285951A1A6CAD0099E0E6 /* BiQuad.h */,
+				CB3285961A1A6CAD0099E0E6 /* Blit.h */,
+				CB3285971A1A6CAD0099E0E6 /* BlitSaw.h */,
+				CB3285981A1A6CAD0099E0E6 /* BlitSquare.h */,
+				CB3285991A1A6CAD0099E0E6 /* BlowBotl.h */,
+				CB32859A1A1A6CAD0099E0E6 /* BlowHole.h */,
+				CB32859B1A1A6CAD0099E0E6 /* Bowed.h */,
+				CB32859C1A1A6CAD0099E0E6 /* BowTable.h */,
+				CB32859D1A1A6CAD0099E0E6 /* Brass.h */,
+				CB32859E1A1A6CAD0099E0E6 /* Chorus.h */,
+				CB32859F1A1A6CAD0099E0E6 /* Clarinet.h */,
+				CB3285A01A1A6CAD0099E0E6 /* Cubic.h */,
+				CB3285A11A1A6CAD0099E0E6 /* Delay.h */,
+				CB3285A21A1A6CAD0099E0E6 /* DelayA.h */,
+				CB3285A31A1A6CAD0099E0E6 /* DelayL.h */,
+				CB3285A41A1A6CAD0099E0E6 /* Drummer.h */,
+				CB3285A51A1A6CAD0099E0E6 /* Echo.h */,
+				CB3285A61A1A6CAD0099E0E6 /* Effect.h */,
+				CB3285A71A1A6CAD0099E0E6 /* Envelope.h */,
+				CB3285A81A1A6CAD0099E0E6 /* FileLoop.h */,
+				CB3285A91A1A6CAD0099E0E6 /* FileRead.h */,
+				CB3285AA1A1A6CAD0099E0E6 /* FileWrite.h */,
+				CB3285AB1A1A6CAD0099E0E6 /* FileWvIn.h */,
+				CB3285AC1A1A6CAD0099E0E6 /* FileWvOut.h */,
+				CB3285AD1A1A6CAD0099E0E6 /* Filter.h */,
+				CB3285AE1A1A6CAD0099E0E6 /* Fir.h */,
+				CB3285AF1A1A6CAD0099E0E6 /* Flute.h */,
+				CB3285B01A1A6CAD0099E0E6 /* FM.h */,
+				CB3285B11A1A6CAD0099E0E6 /* FMVoices.h */,
+				CB3285B21A1A6CAD0099E0E6 /* FormSwep.h */,
+				CB3285B31A1A6CAD0099E0E6 /* FreeVerb.h */,
+				CB3285B41A1A6CAD0099E0E6 /* Function.h */,
+				CB3285B51A1A6CAD0099E0E6 /* Generator.h */,
+				CB3285B61A1A6CAD0099E0E6 /* Granulate.h */,
+				CB3285B71A1A6CAD0099E0E6 /* Guitar.h */,
+				CB3285B81A1A6CAD0099E0E6 /* HevyMetl.h */,
+				CB3285B91A1A6CAD0099E0E6 /* Iir.h */,
+				CB3285BA1A1A6CAD0099E0E6 /* InetWvIn.h */,
+				CB3285BB1A1A6CAD0099E0E6 /* InetWvOut.h */,
+				CB3285BC1A1A6CAD0099E0E6 /* Instrmnt.h */,
+				CB3285BD1A1A6CAD0099E0E6 /* JCRev.h */,
+				CB3285BE1A1A6CAD0099E0E6 /* JetTable.h */,
+				CB3285BF1A1A6CAD0099E0E6 /* LentPitShift.h */,
+				CB3285C01A1A6CAD0099E0E6 /* Mandolin.h */,
+				CB3285C11A1A6CAD0099E0E6 /* Mesh2D.h */,
+				CB3285C21A1A6CAD0099E0E6 /* Messager.h */,
+				CB3285C31A1A6CAD0099E0E6 /* MidiFileIn.h */,
+				CB3285C41A1A6CAD0099E0E6 /* Modal.h */,
+				CB3285C51A1A6CAD0099E0E6 /* ModalBar.h */,
+				CB3285C61A1A6CAD0099E0E6 /* Modulate.h */,
+				CB3285C71A1A6CAD0099E0E6 /* Moog.h */,
+				CB3285C81A1A6CAD0099E0E6 /* Mutex.h */,
+				CB3285C91A1A6CAD0099E0E6 /* Noise.h */,
+				CB3285CA1A1A6CAD0099E0E6 /* NRev.h */,
+				CB3285CB1A1A6CAD0099E0E6 /* OnePole.h */,
+				CB3285CC1A1A6CAD0099E0E6 /* OneZero.h */,
+				CB3285CD1A1A6CAD0099E0E6 /* PercFlut.h */,
+				CB3285CE1A1A6CAD0099E0E6 /* Phonemes.h */,
+				CB3285CF1A1A6CAD0099E0E6 /* PitShift.h */,
+				CB3285D01A1A6CAD0099E0E6 /* Plucked.h */,
+				CB3285D11A1A6CAD0099E0E6 /* PluckTwo.h */,
+				CB3285D21A1A6CAD0099E0E6 /* PoleZero.h */,
+				CB3285D31A1A6CAD0099E0E6 /* PRCRev.h */,
+				CB3285D41A1A6CAD0099E0E6 /* ReedTable.h */,
+				CB3285D51A1A6CAD0099E0E6 /* Resonate.h */,
+				CB3285D61A1A6CAD0099E0E6 /* Rhodey.h */,
+				CB3285D71A1A6CAD0099E0E6 /* RtAudio.h */,
+				CB3285D81A1A6CAD0099E0E6 /* RtMidi.h */,
+				CB3285D91A1A6CAD0099E0E6 /* RtWvIn.h */,
+				CB3285DA1A1A6CAD0099E0E6 /* RtWvOut.h */,
+				CB3285DB1A1A6CAD0099E0E6 /* Sampler.h */,
+				CB3285DC1A1A6CAD0099E0E6 /* Saxofony.h */,
+				CB3285DD1A1A6CAD0099E0E6 /* Shakers.h */,
+				CB3285DE1A1A6CAD0099E0E6 /* Simple.h */,
+				CB3285DF1A1A6CAD0099E0E6 /* SineWave.h */,
+				CB3285E01A1A6CAD0099E0E6 /* SingWave.h */,
+				CB3285E11A1A6CAD0099E0E6 /* Sitar.h */,
+				CB3285E21A1A6CAD0099E0E6 /* Skini.h */,
+				CB3285E31A1A6CAD0099E0E6 /* SKINI.msg */,
+				CB3285E41A1A6CAD0099E0E6 /* SKINI.tbl */,
+				CB3285E51A1A6CAD0099E0E6 /* SKINImsg.h */,
+				CB3285E61A1A6CAD0099E0E6 /* SKINItbl.h */,
+				CB3285E71A1A6CAD0099E0E6 /* Socket.h */,
+				CB3285E81A1A6CAD0099E0E6 /* Sphere.h */,
+				CB3285E91A1A6CAD0099E0E6 /* StifKarp.h */,
+				CB3285EA1A1A6CAD0099E0E6 /* Stk.h */,
+				CB3285EB1A1A6CAD0099E0E6 /* TapDelay.h */,
+				CB3285EC1A1A6CAD0099E0E6 /* TcpClient.h */,
+				CB3285ED1A1A6CAD0099E0E6 /* TcpServer.h */,
+				CB3285EE1A1A6CAD0099E0E6 /* Thread.h */,
+				CB3285EF1A1A6CAD0099E0E6 /* TubeBell.h */,
+				CB3285F01A1A6CAD0099E0E6 /* Twang.h */,
+				CB3285F11A1A6CAD0099E0E6 /* TwoPole.h */,
+				CB3285F21A1A6CAD0099E0E6 /* TwoZero.h */,
+				CB3285F31A1A6CAD0099E0E6 /* UdpSocket.h */,
+				CB3285F41A1A6CAD0099E0E6 /* Vector3D.h */,
+				CB3285F51A1A6CAD0099E0E6 /* Voicer.h */,
+				CB3285F61A1A6CAD0099E0E6 /* VoicForm.h */,
+				CB3285F71A1A6CAD0099E0E6 /* Whistle.h */,
+				CB3285F81A1A6CAD0099E0E6 /* Wurley.h */,
+				CB3285F91A1A6CAD0099E0E6 /* WvIn.h */,
+				CB3285FA1A1A6CAD0099E0E6 /* WvOut.h */,
+				CB3285881A1A67A40099E0E6 /* libstk.a */,
+			);
+			name = stk;
+			sourceTree = "<group>";
+		};
+		CB3285FC1A1A6D5D0099E0E6 /* fftw */ = {
+			isa = PBXGroup;
+			children = (
+				CB3285901A1A6C7C0099E0E6 /* fftw3.h */,
+				CB32858A1A1A67E30099E0E6 /* libfftw3.a */,
+			);
+			name = fftw;
+			sourceTree = "<group>";
+		};
+		CB3285FD1A1A6D640099E0E6 /* fluidsynth */ = {
+			isa = PBXGroup;
+			children = (
+				CB32858F1A1A6BF70099E0E6 /* fluidsynth.h */,
+				CB32858C1A1A69FB0099E0E6 /* libfluidsynth.1.5.2.dylib */,
+			);
+			name = fluidsynth;
+			sourceTree = "<group>";
+		};
+		CB3286191A1A6DA70099E0E6 /* glm */ = {
+			isa = PBXGroup;
+			children = (
+				CB3285FE1A1A6D7F0099E0E6 /* CMakeLists.txt */,
+				CB3285FF1A1A6D7F0099E0E6 /* common.hpp */,
+				CB3286001A1A6D7F0099E0E6 /* detail */,
+				CB3286011A1A6D7F0099E0E6 /* exponential.hpp */,
+				CB3286021A1A6D7F0099E0E6 /* ext.hpp */,
+				CB3286031A1A6D7F0099E0E6 /* fwd.hpp */,
+				CB3286041A1A6D7F0099E0E6 /* geometric.hpp */,
+				CB3286051A1A6D7F0099E0E6 /* glm.hpp */,
+				CB3286061A1A6D7F0099E0E6 /* gtc */,
+				CB3286071A1A6D7F0099E0E6 /* gtx */,
+				CB3286081A1A6D7F0099E0E6 /* integer.hpp */,
+				CB3286091A1A6D7F0099E0E6 /* mat2x2.hpp */,
+				CB32860A1A1A6D7F0099E0E6 /* mat2x3.hpp */,
+				CB32860B1A1A6D7F0099E0E6 /* mat2x4.hpp */,
+				CB32860C1A1A6D7F0099E0E6 /* mat3x2.hpp */,
+				CB32860D1A1A6D7F0099E0E6 /* mat3x3.hpp */,
+				CB32860E1A1A6D7F0099E0E6 /* mat3x4.hpp */,
+				CB32860F1A1A6D7F0099E0E6 /* mat4x2.hpp */,
+				CB3286101A1A6D7F0099E0E6 /* mat4x3.hpp */,
+				CB3286111A1A6D7F0099E0E6 /* mat4x4.hpp */,
+				CB3286121A1A6D7F0099E0E6 /* matrix.hpp */,
+				CB3286131A1A6D7F0099E0E6 /* packing.hpp */,
+				CB3286141A1A6D7F0099E0E6 /* trigonometric.hpp */,
+				CB3286151A1A6D7F0099E0E6 /* vec2.hpp */,
+				CB3286161A1A6D7F0099E0E6 /* vec3.hpp */,
+				CB3286171A1A6D7F0099E0E6 /* vec4.hpp */,
+				CB3286181A1A6D7F0099E0E6 /* vector_relational.hpp */,
+			);
+			name = glm;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CB3285321A19981D0099E0E6 /* slgTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB32853A1A19981D0099E0E6 /* Build configuration list for PBXNativeTarget "slgTest" */;
+			buildPhases = (
+				CB32852F1A19981D0099E0E6 /* Sources */,
+				CB3285301A19981D0099E0E6 /* Frameworks */,
+				CB3285311A19981D0099E0E6 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = slgTest;
+			productName = slgCocoa;
+			productReference = CB3285331A19981D0099E0E6 /* slgTest */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CB32852B1A19981D0099E0E6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Sylvain Le Groux";
+				TargetAttributes = {
+					CB3285321A19981D0099E0E6 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = CB32852E1A19981D0099E0E6 /* Build configuration list for PBXProject "slgTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CB32852A1A19981D0099E0E6;
+			productRefGroup = CB3285341A19981D0099E0E6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CB3285321A19981D0099E0E6 /* slgTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CB32852F1A19981D0099E0E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB3285691A1A66460099E0E6 /* RtMidi.cpp in Sources */,
+				CB32855C1A19A6660099E0E6 /* slgAudio.cpp in Sources */,
+				CB32861F1A1A9B440099E0E6 /* main.cpp in Sources */,
+				CB3285851A1A66FE0099E0E6 /* slgMath.cpp in Sources */,
+				CB3285811A1A66FE0099E0E6 /* slgFluidSynth.cpp in Sources */,
+				CB3285821A1A66FE0099E0E6 /* slgGen.cpp in Sources */,
+				CB3285631A1A64C50099E0E6 /* RtAudio.cpp in Sources */,
+				CB3285801A1A66FE0099E0E6 /* slgCircularBuffer.cpp in Sources */,
+				CB32857F1A1A66FE0099E0E6 /* realFFTW.cpp in Sources */,
+				CB3285861A1A66FE0099E0E6 /* slgMidi.cpp in Sources */,
+				CB3285831A1A66FE0099E0E6 /* slgGraphics.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CB3285381A19981D0099E0E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CB3285391A19981D0099E0E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CB32853B1A19981D0099E0E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				HEADER_SEARCH_PATHS = (
+					"<Multiple",
+					"values>",
+					"../slg/**",
+					"../RtAudio/**",
+					"../RtMidi/**",
+					"/usr/loca/include/**",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/stk/4.5.0/lib,
+					/usr/local/Cellar/fftw/3.3.3/lib,
+					"/usr/local/Cellar/fluid-synth/1.1.6/lib",
+					/usr/local/lib,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D__MACOSX_CORE__",
+				);
+				PRODUCT_NAME = slgTest;
+			};
+			name = Debug;
+		};
+		CB32853C1A19981D0099E0E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				HEADER_SEARCH_PATHS = (
+					"<Multiple",
+					"values>",
+					"../slg/**",
+					"../RtAudio/**",
+					"../RtMidi/**",
+					"/usr/loca/include/**",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/stk/4.5.0/lib,
+					/usr/local/Cellar/fftw/3.3.3/lib,
+					"/usr/local/Cellar/fluid-synth/1.1.6/lib",
+					/usr/local/lib,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D__MACOSX_CORE__",
+				);
+				PRODUCT_NAME = slgTest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CB32852E1A19981D0099E0E6 /* Build configuration list for PBXProject "slgTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB3285381A19981D0099E0E6 /* Debug */,
+				CB3285391A19981D0099E0E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB32853A1A19981D0099E0E6 /* Build configuration list for PBXNativeTarget "slgTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB32853B1A19981D0099E0E6 /* Debug */,
+				CB32853C1A19981D0099E0E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CB32852B1A19981D0099E0E6 /* Project object */;
+}
