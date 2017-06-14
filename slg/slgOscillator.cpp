@@ -45,23 +45,31 @@ void slgOscillator::set_index(unsigned int index){
 SAMPLE slgOscillator::render(){
 	SAMPLE result;
 	switch(_mode){
-		case kSin:
+		case kSin: {
+			// result = sin(2*M_PI*_frequency*_index/(float)_sampling_rate);
+			// smoothly increment phase at each step to avoid glitch
 			result = sin(_phase);
 			_phase += 2*M_PI*_frequency/(float)_sampling_rate;
-			//result = sin(2*M_PI*_frequency*_index/(float)_sampling_rate);
-			/*if (_phase > (2 * M_PI)){
+
+			if (_phase > (2 * M_PI)){
 				_phase = _phase - (2 * M_PI);
-				std::cout<<"toto"<<std::endl;
-			}*/
-
+				// std::cout<<"phase reset"<<std::endl;
+			}
 			break;
+		}
 
-		case kNoise:
+		case kNoise: {
 			//normalized 
+			// RAND_MAX is a macro from <cstdlib>
 			float r = rand()/(float)RAND_MAX;
 			//from -1.0 to 1.0
 			result = r*2-1;
 			break;
+		}
+
+		default:
+			std::cerr<<"Oscillator not available"<<std::endl;
+			exit(0);
 	}
 	
 	_index++;

@@ -4,6 +4,7 @@
 #include "Definitions.h"
 
 enum oscillator_mode{
+	// TO DO: implement saw, pulse
 	kSin,
 	kSaw,
 	kPulse,
