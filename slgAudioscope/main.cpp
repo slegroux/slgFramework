@@ -13,6 +13,7 @@
 #include "slgCircularBuffer.h"
 #include "slgCircularBuffer2D.h"
 #include "Thread.h"
+#include "Mutex.h"
 #include <math.h>
 #include <iostream>
 #include <algorithm>

@@ -19,8 +19,9 @@ endif
 # include slg classes
 INC_PATH = -I../slg/ -I/usr/local/include/
 SLG_DIR = ../slg/
-INC_PATH += -I../RtAudio/
+INC_PATH += -I../RtAudio/ -I../stk/
 RTA_DIR = ../RtAudio/
+STK_DIR = ../stk/
 
 
 # LIBS
@@ -31,7 +32,7 @@ LIB_PATH = -L/usr/local/lib/
 # executable
 TARGET = test
 
-OBJS = Stk.o Thread.o RtAudio.o slgAudio.o slgCircularBuffer.o slgCircularBuffer2D.o slgGen.o realFFTW.o slgGraphics.o main.o
+OBJS = Stk.o Thread.o Mutex.o RtAudio.o slgAudio.o slgCircularBuffer.o slgCircularBuffer2D.o slgGen.o realFFTW.o slgGraphics.o main.o
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIB_PATH) $(LIBS)
@@ -61,10 +62,13 @@ RtAudio.o:
 	$(CXX) $(FLAGS) $(INC_PATH) $(RTA_DIR)RtAudio.cpp
 
 Thread.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)Thread.cpp
+	$(CXX) $(FLAGS) $(INC_PATH) $(STK_DIR)Thread.cpp
+
+Mutex.o:
+	$(CXX) $(FLAGS) $(INC_PATH) $(STK_DIR)Mutex.cpp
 
 Stk.o:
-	$(CXX) $(FLAGS) $(INC_PATH) $(SLG_DIR)Stk.cpp
+	$(CXX) $(FLAGS) $(INC_PATH) $(STK_DIR)Stk.cpp
 
 
 #slgGFX.o: slgGFX.h slgGFX.cpp

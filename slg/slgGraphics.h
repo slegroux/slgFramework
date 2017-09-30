@@ -14,8 +14,8 @@
 #include <algorithm>
 #include <string>
 #include "Definitions.h"
-//#include "vec3.hpp"// glm::vec3
-#include "glm.hpp"
+// #include "vec3.hpp"// glm::vec3
+#include <glm/glm.hpp>
 
 enum drawMode{
     kOutline= 0,
@@ -40,7 +40,7 @@ extern rectMode g_rectMode;// = kCenter;
 void go2D();
 void go3D();
 
-//glm::vec3 GetOGLPos(int x, int y);
+glm::vec3 GetOGLPos(int x, int y);
 
 //2D
 void BitmapString( GLfloat x, GLfloat y, GLfloat z, const char * str, GLfloat scale);

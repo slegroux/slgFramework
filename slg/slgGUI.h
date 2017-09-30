@@ -16,6 +16,7 @@
 #include "Definitions.h"
 
 
+
 class Slider{
 public:
 	Slider(int x, int y, int w, int h);

@@ -47,7 +47,7 @@ SAMPLE slgOscillator::render(){
 	switch(_mode){
 		case kSin: {
 			// result = sin(2*M_PI*_frequency*_index/(float)_sampling_rate);
-			// smoothly increment phase at each step to avoid glitch
+			// phase increment to avoid clicks
 			result = sin(_phase);
 			_phase += 2*M_PI*_frequency/(float)_sampling_rate;
 

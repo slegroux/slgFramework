@@ -15,6 +15,9 @@ using namespace std;
  
 #define N 100
 
+
+
+
 // global variables
 int g_refreshRateMs = 30; // refresh interval in milliseconds
 slgToggleButton *g_toggle;
