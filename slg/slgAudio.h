@@ -52,6 +52,7 @@ public:
      * @details give infor about open audio devices
      */
     void info();
+    void test();
     
 private:
     RtAudio * m_audio;

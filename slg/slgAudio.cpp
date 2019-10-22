@@ -10,6 +10,7 @@
 #include "slgAudio.h"
 #include <iostream>
 #include <cstdlib>
+using namespace std;
 
 // constructor
 slgAudio::slgAudio( unsigned int nChann, unsigned int sr, unsigned int buffSize ){
@@ -18,10 +19,11 @@ slgAudio::slgAudio( unsigned int nChann, unsigned int sr, unsigned int buffSize 
     m_sampleRate = sr;
     m_bufferSize = buffSize;
 
-    std::cout<<"--- Audio Settings---"<<std::endl;
+    std::cout<<"----------------------------- Audio Settings---------------------------"<<std::endl;
     std::cout<<"nchannels: "<<m_numChannels<<std::endl;
     std::cout<<"sr: "<<m_sampleRate<<std::endl;
     std::cout<<"m_bufferSize: "<<m_bufferSize<<std::endl;
+    //std::cout<<"-----------------------------------------------------------------------"<<std::endl;
 
     try{
         m_audio = new RtAudio();
@@ -68,7 +70,8 @@ void slgAudio::openStream( RtAudioCallback callback, void * userData ){
     
     RtAudio::StreamOptions options;
     //options.flags = RTAUDIO_NONINTERLEAVED;
-    options.flags = RTAUDIO_SCHEDULE_REALTIME;
+    //options.flags = RTAUDIO_SCHEDULE_REALTIME;
+    options.flags = RTAUDIO_MINIMIZE_LATENCY;
     options.priority = 1;
 
     // set input and output parameters to default
@@ -109,30 +112,41 @@ void slgAudio::openStream( RtAudioCallback callback, void * userData ){
     }
 }
 
+void slgAudio::test(){
+    std::cout<<"------------------------------ Test ------------------------------------"<<std::endl;
+    std::cout << "Number of audio device found: " << m_audio->getDeviceCount() << std::endl;
+}
+
+void print_vector(std::vector<unsigned int> const &input)
+{
+    for (auto const& i: input){
+        std::cout << i <<" ";
+    }
+}
 void slgAudio::info(){
-    RtAudio *audioTemp = NULL;
-    audioTemp = new RtAudio();
-    unsigned int devices = audioTemp->getDeviceCount();
+    unsigned int devices = m_audio->getDeviceCount();
     RtAudio::DeviceInfo info;
     
     for (int i=0;i<devices;i++){
-        info = audioTemp->getDeviceInfo(i);
+        info = m_audio->getDeviceInfo(i);
         // std::cout<<"default input: "<<m_audio->getDefaultInputDevice()<<std::endl;
         // std::cout<<"default output: "<<m_audio->getDefaultOutputDevice()<<std::endl;
-        if (info.probed ==true){
-            std::cout<<"----------------------------- Device "<<i<<" ---------------------------"<<std::endl;
+        if (info.probed == true){
+            std::cout<<"----------------------------- Device #"<<i<<" INFO-----------------------"<<std::endl;
             if (info.isDefaultInput)
-                std::cout << "--Default Input"<<std::endl;
+                std::cout << "Using Default Input"<<std::endl;
             if (info.isDefaultOutput)
-                std::cout << "--Default Output"<<std::endl;      
-            std::cout << "Name = " << info.name << '\n';
+                std::cout << "Using Default Output"<<std::endl;      
+            std::cout << "Name: " << info.name << '\n';
             std::cout << "Max Input Channels = " << info.inputChannels << '\n';
             std::cout << "Max Output Channels = " << info.outputChannels << '\n';
             std::cout << "Max Duplex Channels = " << info.duplexChannels << '\n';
+            std::cout << "Supported Sampling rates: ";
+            print_vector(info.sampleRates);
+            cout<<endl;
+            std::cout<<"-----------------------------------------------------------------------"<<std::endl;
         }
     }
-    delete audioTemp;
-    audioTemp = NULL;
 }
 
 // start audio stream

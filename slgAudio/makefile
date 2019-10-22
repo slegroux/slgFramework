@@ -5,8 +5,10 @@ INCLUDES=
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-FLAGS=-D__LINUX_ALSASEQ__ -D__UNIX_JACK__ -c
-LIBS=-lasound -lpthread -ljack -lstdc++ -lm
+# FLAGS=-D__LINUX_ALSASEQ__ -D__UNIX_JACK__ -c
+# LIBS=-lasound -lpthread -ljack -lstdc++ -lm
+FLAGS=-D__LINUX_PULSE__ -c
+LIBS=-Wall -lpthread -lpulse-simple -lpulse -lstdc++ -lm
 endif
 ifeq ($(UNAME), Darwin)
 FLAGS=-D__MACOSX_CORE__ -c
