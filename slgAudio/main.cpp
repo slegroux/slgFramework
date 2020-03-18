@@ -56,14 +56,14 @@ int mic_callback( void * outputBuffer, void * inputBuffer,
     SAMPLE * out = (SAMPLE *)outputBuffer;
     SAMPLE * in = (SAMPLE *)inputBuffer;
     
-    memset(out, 0, sizeof(SAMPLE)*nFrames*kNumChannels );
-    /*memset(in, 0, sizeof(SAMPLE)*nFrames); */
+    memset(out, 0, sizeof(SAMPLE)*nFrames*kNumChannels);
+    //memset(in, 0, sizeof(SAMPLE)*nFrames*kNumChannels);
         
     // fill
     for( int i = 0; i < nFrames; ++i )
     {
         // generate signal
-        out[i*kNumChannels] = 0.8 * in[i];
+        out[i*kNumChannels] = 0.9 * in[i*kNumChannels];
         out[i*kNumChannels + 1] = out[i*kNumChannels];
     }
     return 0;
@@ -71,7 +71,7 @@ int mic_callback( void * outputBuffer, void * inputBuffer,
 
 int main ( int argc, char *argv[] ){   
     std::cout<<"Running program: "<<argv[0]<<std::endl;
-    slgAudio audio(kNumChannels,kSampleRate,kFrameSize);    
+    slgAudio audio(kNumChannels, kSampleRate, kFrameSize);    
     audio.info();
     audio.getBufferSize();
     int opt, s, r, c;
