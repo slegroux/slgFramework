@@ -16,10 +16,12 @@ class slgAudioFile{
         slgAudioFile();
         ~slgAudioFile();
         float * Read(std::string path);
-        void Write(std::string path);
+        void Write(std::string path, float* buffer, int format, int channels, int sr);
         void Info();
         void Write2Csv(std::string path);
+        // get/set-ters
         float* buffer();
+        void set_buffer(float *buffer);
         float duration();
         int size();
 

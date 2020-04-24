@@ -4,7 +4,16 @@
 
 #include "slgAudioFile.h"
 
-slgAudioFile::slgAudioFile(std::string path){
+slgAudioFile::slgAudioFile(){
+    buffer_ = new float[n_frames_ * channels_];
+    memset(buffer_, 0, n_frames_ * channels_);
+}
+
+slgAudioFile::~slgAudioFile(){
+    delete[] buffer_;
+}
+
+float* slgAudioFile::Read(string path){
     path_ = path;
     SndfileHandle sfh(path_);
     sr_ = sfh.samplerate();
@@ -12,21 +21,30 @@ slgAudioFile::slgAudioFile(std::string path){
     format_ = sfh.format();
     n_frames_ = sfh.frames();
     duration_ = (float) n_frames_ / sr_ ;
-    buffer_ = new float[n_frames_];
-    memset(buffer_, 0, n_frames_);
     sfh.read(buffer_, n_frames_);
+    return(buffer_);
 }
 
-slgAudioFile::~slgAudioFile(){
-    delete[] buffer_;
+void slgAudioFile::Write(string path, float* buffer, int format, int channels, int sr){
+    SndfileHandle file;
+    format_ = format;
+    channels_ = channels;
+    sr_ = sr;
+    file = SndfileHandle(path,SFM_WRITE,format_, channels_, sr_);
+    buffer_ = buffer;
+    file.write(buffer_, n_frames_*channels_);
 }
 
 float* slgAudioFile::buffer(){
     return(buffer_);
 }
 
+void slgAudioFile::set_buffer(float *buffer){
+    buffer_ = buffer;
+}
+
 int slgAudioFile::size(){
-    return(n_frames_);
+    return(n_frames_*channels_);
 }
 
 float slgAudioFile::duration(){
