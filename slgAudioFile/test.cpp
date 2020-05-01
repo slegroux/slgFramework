@@ -4,6 +4,7 @@
  */
 
 #include "slgAudioFile.h"
+using namespace slg;
 
 int main(int argc, char *argv[]){
     std::string path = "../data/test.wav";

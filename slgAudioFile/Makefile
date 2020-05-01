@@ -9,12 +9,12 @@ ifeq ($(UNAME), Linux)
 	LDFLAGS=-Wall -lpthread -lpulse-simple -lpulse -lstdc++ -lm
 endif
 ifeq ($(UNAME), Darwin)
-	CFLAGS=-D__MACOSX_CORE__ -Wall -c -g #-Wextra
+	CFLAGS=-D__MACOSX_CORE__ -Wall -c -Wextra
 	LDFLAGS=-lsndfile
 endif
 
 INC_PATH += -I../slg/
-LIB_PATH += -L.
+LIB_PATH =
 
 # executable
 TARGET = test
@@ -46,6 +46,10 @@ $(TARGET_LIB): $(OBJS_LIB)
 test: ${TARGET}
 test: test.o
 	$(CXX) -o ${TARGET} test.cpp $(LIB_PATH) $(LDFLAGS) -lslgaudiofile
+
+install:
+	cp ${TARGET_LIB} /usr/local/lib
+	cp slgAudioFile.h /usr/local/include
 
 .PHONY: clean
 clean:

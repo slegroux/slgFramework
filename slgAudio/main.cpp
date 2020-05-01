@@ -21,6 +21,9 @@ const unsigned int g_buffSize = 1024;
 // global
 SAMPLE g_freq = 440.0;
 int g_t = 0;
+auto kNumChannels = 2;
+unsigned int kSampleRate = 44100;
+auto kFrameSize = 512;
 
 int sine_callback( void * outputBuffer, void * inputBuffer, 
                    unsigned int nFrames, double streamTime,
@@ -70,27 +73,31 @@ int mic_callback( void * outputBuffer, void * inputBuffer,
 }
 
 int main ( int argc, char *argv[] ){   
-    std::cout<<"Running program: "<<argv[0]<<std::endl;
+    std::cout << "Running program: " << argv[0] << std::endl;
     slgAudio audio(kNumChannels, kSampleRate, kFrameSize);    
     audio.info();
-    audio.getBufferSize();
-    int opt, s, r, c;
-    while ((opt = getopt(argc, argv,"s::r::")) != EOF)
-        switch(opt){
-            case 's':   s = 1; 
-                        std::cout<<"sine wave"<<std::endl;
-                        audio.openStream(&sine_callback);
-                        break;
-            case 'r':   r = 1;
-                        cout<<"record mic"<<endl;
-                        audio.openStream(&mic_callback);
-                        break;
-            default:    cout<<endl;
-                        abort();
-        }
+    //audio.test();
+    std::cout << "Buffer size: " << audio.buffer_size()<<std::endl;
+    // audio.set_input_device(0);
+    // audio.set_output_device(1);
+    int opt, s, r;
+    // while ((opt = getopt(argc, argv,"s:r:")) != -1)
+    //     switch(opt){
+    //         case 's':   s = 1; 
+    //                     std::cout << "sine wave" << std::endl;
+    //                     std::cout << "optarg: " << optarg << std::endl;
+    //                     audio.openStream(&sine_callback);
+    //                     break;
+    //         case 'r':   r = 1;
+    //                     cout<<"record mic"<<endl;
+    //                     //audio.openStream(&mic_callback);
+    //                     break;
+    //         default:    cout<<endl;
+    //                     abort();
+    //     }
 
    
-  
+    audio.openStream(&sine_callback);
     audio.startStream();
     
     // get input

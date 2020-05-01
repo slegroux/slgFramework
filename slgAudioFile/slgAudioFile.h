@@ -11,6 +11,7 @@ using namespace std;
 using std::cout;
 using std::endl;
 
+namespace slg{
 class slgAudioFile{
     public:
         slgAudioFile();
@@ -23,6 +24,7 @@ class slgAudioFile{
         float* buffer();
         void set_buffer(float *buffer);
         float duration();
+        int sr();
         int size();
 
     private:
@@ -34,3 +36,4 @@ class slgAudioFile{
         int n_frames_;
         float duration_;
 };
+}

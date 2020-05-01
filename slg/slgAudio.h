@@ -46,19 +46,23 @@ public:
      * @brief get buffer size
      * @return unsigned int for size of buffer
      */
-    unsigned int getBufferSize() { return m_bufferSize; };
+    unsigned int buffer_size();
     /**
      * @brief info
      * @details give infor about open audio devices
      */
     void info();
     void test();
+    void set_input_device(unsigned int input_id);
+    void set_output_device(unsigned int output_id);
     
 private:
     RtAudio * m_audio;
     unsigned int m_numChannels;
     unsigned int m_sampleRate;
     unsigned int m_bufferSize;
+    unsigned int m_input_device;
+    unsigned int m_output_device;
 };
 
 #endif

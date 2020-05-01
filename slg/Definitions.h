@@ -13,10 +13,10 @@
 // define is untyped, while const is typed
 
 // Audio
-const int kSampleRate = 44100;
+/*const int kSampleRate = 44100;
 const int kNumChannels = 2;
 const int kAudioBufferSize = 512;
-const int kFrameSize = 512;
+const int kFrameSize = 512;*/
 
 // Midi
 const int kMidiChannel = 0;
